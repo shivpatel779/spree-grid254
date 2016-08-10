@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Home</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="/assets/favicon.ico" type="image/x-icon">
+  <link rel="shortcut icon" href="/assets/favicon.ico" type="image/x-icon" />
+  <meta name="description" content="Your description">
+  <meta name="keywords" content="Your keywords">
+  <meta name="author" content="Your name">
+  <meta name = "format-detection" content = "telephone=no" />
+
+  <%= render partial: 'spree/shared/head' %>
+
+  <script src="//connect.facebook.net/en_US/sdk.js#xfbml=1&amp;version=v2.0"></script>
+  <!--[if (gt IE 9)|!(IE)]><!-->
+
+  <script>
+      $(document).ready(function () {
+          if ($('html').hasClass('desktop')) {
+              new WOW().init();
+          }
+      });
+  </script>
+  <!--<![endif]-->
+
+  <!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+  <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+
+  <div id="ie6-alert" style="width: 100%; text-align:center;">
+      <img src="http://beatie6.frontcube.com/images/ie6.jpg" alt="Upgrade IE 6" width="640" height="344" border="0" usemap="#Map" longdesc="http://die6.frontcube.com" />
+      <map name="Map" id="Map"><area shape="rect" coords="496,201,604,329" href="http://www.microsoft.com/windows/internet-explorer/default.aspx" target="_blank" alt="Download Interent Explorer" /><area shape="rect" coords="380,201,488,329" href="http://www.apple.com/safari/download/" target="_blank" alt="Download Apple Safari" /><area shape="rect" coords="268,202,376,330" href="http://www.opera.com/download/" target="_blank" alt="Download Opera" /><area shape="rect" coords="155,202,263,330" href="http://www.mozilla.com/" target="_blank" alt="Download Firefox" />
+          <area shape="rect" coords="35,201,143,329" href="http://www.google.com/chrome" target="_blank" alt="Download Google Chrome" />
+      </map>
+  </div>
+  <![endif]-->
+</head>
+<body>
+<!--header-->
+<header>
+  <div class="box">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-8">
+          <p class="title1">Free phone: <strong>800-2345-6789</strong></p>
+          <p class="title2">Hours:  8am-8pm PST M-Th;   6am-3pm PST Fri</p>
+        </div>
+        <div class="col-lg-4 col-md-4">
+          <a href="#" class="btn-default btn1">Register</a>
+          <a href="#" class="btn-default btn1">Sign In</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container">
+    <h1 class="navbar-brand navbar-brand_"><a href="index.html"><img src="/assets/logo.png" alt=""></a></h1>
+    <nav class="navbar navbar-default navbar-static-top tm_navbar clearfix" role="navigation">
+      <ul class="nav sf-menu clearfix">
+        <li class="active"><a href="index.html">Home</a></li>
+        <li class="sub-menu"><a href="index-1.html">About</a><span class="fa fa-angle-down"></span>
+          <ul class="submenu">
+            <li><a href="#">Lorem ipsum</a></li>
+            <li><a href="#">Dolor sit amet</a><span class="fa fa-angle-right"></span>
+              <ul class="submenu">
+                <li><a href="#">Dolore ipsu</a></li>
+                <li><a href="#">Consecte</a></li>
+                <li><a href="#">Elit Conseq</a></li>
+              </ul>
+            </li>
+            <li><a href="#">Conse ctetur</a></li>
+            <li><a href="#">Adipisicing</a></li>
+            <li><a href="#">Elit sed do</a></li>
+            <li><a href="#">Eiusmod tempor</a></li>
+            <li><a href="#">Incididunt ut labore</a></li>
+            <li><a href="#">Et dolore magna</a></li>
+          </ul>
+        </li>
+        <li><a href="index-2.html">Sell</a></li>
+        <li><a href="index-3.html">Buy</a></li>
+        <li><a href="index-4.html">Contact us</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+<!--content-->
+<div class="content">
+  <div class="thumb-box1">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-7 col-md-7 col-sm-12">
+          <p>The best place<strong>to buy and sell!</strong></p>
+          <a href="#" class="btn-default btn2">Register</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="thumb-box2">
+    <div class="container">
+      <h2><strong>Finished</strong> Auctions</h2>
+      <div class="row">
+        <div class="col-lg-3 col-md-6 col-sm-6 maxheight">
+          <div class="thumb-pad1">
+            <div class="badge">Final price<strong>876</strong></div>
+            <div class="thumbnail">
+              <figure><img src="/assets/page1_pic1.jpg" alt=""></figure>
+              <div class="caption">
+                <p>Excepteur sint occaecat cupidatat non</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-3 col-md-6 col-sm-6 maxheight">
+          <div class="thumb-pad1">
+            <div class="badge">Final price<strong>176</strong></div>
+            <div class="thumbnail">
+              <figure><img src="/assets/page1_pic2.jpg" alt=""></figure>
+              <div class="caption">
+                <p>Excepteur sint occaecat cupidatat non</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-3 col-md-6 col-sm-6 maxheight">
+          <div class="thumb-pad1">
+            <div class="badge">Final price<strong>16</strong></div>
+            <div class="thumbnail">
+              <figure><img src="/assets/page1_pic3.jpg" alt=""></figure>
+              <div class="caption">
+                <p>Excepteur sint occaecat cupidatat non</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-3 col-md-6 col-sm-6 maxheight">
+          <div class="thumb-pad1">
+            <div class="badge">Final price<strong>86</strong></div>
+            <div class="thumbnail">
+              <figure><img src="/assets/page1_pic4.jpg" alt=""></figure>
+              <div class="caption">
+                <p>Excepteur sint occaecat cupidatat non</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="thumb-box3">
+    <div class="container">
+      <h2><strong>Current</strong> Auctions</h2>
+      <div class="row">
+        <div class="col-lg-3 col-md-6 col-sm-6 maxheight2">
+          <div class="thumb-pad2">
+            <div class="thumbnail">
+              <span>23 : 15 : 25</span>
+              <figure><img src="/assets/page1_pic5.jpg" alt=""></figure>
+              <div class="caption">
+                <p class="price">Price: $258</p>
+                <strong>386</strong>
+                <a href="#">Excepteur sint occaecat cupidatat non</a><div class="clearfix"></div>
+                <a href="#" class="btn-default btn3">Submit a bid <em><i>X</i> 3</em></a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-3 col-md-6 col-sm-6 maxheight2">
+          <div class="thumb-pad2">
+            <div class="thumbnail">
+              <span>23 : 15 : 25</span>
+              <figure><img src="/assets/page1_pic6.jpg" alt=""></figure>
+              <div class="caption">
+                <p class="price">Price: $258</p>
+                <strong>11</strong>
+                <a href="#">Excepteur sint occaecat cupidatat non</a><div class="clearfix"></div>
+                <a href="#" class="btn-default btn3">Submit a bid <em><i>X</i> 3</em></a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-3 col-md-6 col-sm-6 maxheight2">
+          <div class="thumb-pad2">
+            <div class="thumbnail">
+              <span>23 : 15 : 25</span>
+              <figure><img src="/assets/page1_pic7.jpg" alt=""></figure>
+              <div class="caption">
+                <p class="price">Price: $258</p>
+                <strong>86</strong>
+                <a href="#">Excepteur sint occaecat cupidatat non</a><div class="clearfix"></div>
+                <a href="#" class="btn-default btn3">Submit a bid <em><i>X</i> 3</em></a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-3 col-md-6 col-sm-6 maxheight2">
+          <div class="thumb-pad2">
+            <div class="thumbnail">
+              <span>23 : 15 : 25</span>
+              <figure><img src="/assets/page1_pic8.jpg" alt=""></figure>
+              <div class="caption">
+                <p class="price">Price: $258</p>
+                <strong>27</strong>
+                <a href="#">Excepteur sint occaecat cupidatat non</a><div class="clearfix"></div>
+                <a href="#" class="btn-default btn3">Submit a bid <em><i>X</i> 3</em></a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <a href="#" class="btn-default btn4">See all auctions</a>
+    </div>
+  </div>
+  <div class="thumb-box4">
+    <div class="container">
+      <h2><strong>How it works</strong></h2>
+      <div class="row">
+        <div class="col-lg-3 col-md-6 col-sm-6 maxheight3">
+          <div class="box">
+            <div class="badge fa fa-user"></div>
+            <strong>Register</strong>
+            <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim</p>
+          </div>
+        </div>
+        <div class="col-lg-3 col-md-6 col-sm-6 maxheight3">
+          <div class="box">
+            <div class="badge fa fa-money"></div>
+            <strong>Buy or Bid</strong>
+            <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim</p>
+          </div>
+        </div>
+        <div class="col-lg-3 col-md-6 col-sm-6 maxheight3">
+          <div class="box">
+            <div class="badge fa fa-gavel"></div>
+            <strong>Submit a Bid</strong>
+            <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim</p>
+          </div>
+        </div>
+        <div class="col-lg-3 col-md-6 col-sm-6 maxheight3">
+          <div class="box">
+            <div class="badge fa fa-trophy"></div>
+            <strong>Win</strong>
+            <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="stellar-section">
+    <div class="thumb-box5" data-stellar-background-ratio="0.1">
+      <div class="container">
+        <h2><strong>Join</strong> the Winners</h2>
+        <div class="box1">
+          <figure><img src="/assets/page1_pic9.png" alt=""></figure>
+          <div class="caption">
+            <figure><img src="/assets/page1_pic10.png" alt=""></figure>
+            <figure><img src="/assets/page1_pic11.png" alt=""></figure>
+          </div>
+        </div>
+        <div class="box2">
+          <div class="caption">
+            <figure><img src="/assets/page1_pic12.png" alt=""></figure>
+            <figure><img src="/assets/page1_pic13.png" alt=""></figure>
+          </div>
+          <figure><img src="/assets/page1_pic22.png" alt=""></figure>
+        </div>
+        <div class="box3">
+          <figure><img src="/assets/page1_pic14.png" alt=""></figure>
+        </div>
+        <div class="box4">
+          <div class="caption">
+            <figure><img src="/assets/page1_pic15.png" alt=""></figure>
+            <figure><img src="/assets/page1_pic16.png" alt=""></figure>
+          </div>
+          <figure><img src="/assets/page1_pic17.png" alt=""></figure>
+        </div>
+        <div class="box5">
+          <figure><img src="/assets/page1_pic18.png" alt=""></figure>
+          <div class="caption">
+            <figure><img src="/assets/page1_pic19.png" alt=""></figure>
+            <figure><img src="/assets/page1_pic20.png" alt=""></figure>
+          </div>
+        </div>
+        <div class="box3">
+          <figure><img src="/assets/page1_pic21.png" alt=""></figure>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="thumb-box6">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-6 col-md-6 col-sm-6">
+          <h2><strong>About</strong> Us</h2>
+          <ul class="list1">
+            <li>
+              <div class="badge fa fa-laptop"></div>
+              <div class="extra-wrap">
+                <strong>Excepteur sint occaecat <br>cupidatat non</strong>
+              </div>
+              <p>Lorem ipsum dolor sit amet conse ctetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea.</p>
+            </li>
+            <li>
+              <div class="badge fa fa-thumbs-o-up"></div>
+              <div class="extra-wrap">
+                <strong>Excepteur sint occaecat <br>cupidatat non</strong>
+              </div>
+              <p>Lorem ipsum dolor sit amet conse ctetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea.</p>
+            </li>
+          </ul>
+        </div>
+        <div class="col-lg-6 col-md-6 col-sm-6">
+          <h2><strong>Events</strong></h2>
+          <ul class="list2">
+            <li>
+              <span>01/</span>
+              <div class="extra-wrap">
+                <strong>Excepteur sint occaecat <br>cupidatat non</strong>
+              </div>
+              <p>Lorem ipsum dolor sit amet conse ctetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea.</p>
+            </li>
+            <li>
+              <span>02/</span>
+              <div class="extra-wrap">
+                <strong>Excepteur sint occaecat <br>cupidatat non</strong>
+              </div>
+              <p>Lorem ipsum dolor sit amet conse ctetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea.</p>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!--footer-->
+<footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-3 col-md-6 col-sm-6 maxheight4">
+        <h2><strong>Information</strong></h2>
+        <ul class="list3">
+          <li><a href="index-1.html">About Us</a></li>
+          <li><a href="#">My Account</a></li>
+          <li><a href="#">Price list</a></li>
+          <li><a href="index-4.html">Contact</a></li>
+          <li><a href="#">Registration</a></li>
+          <li><a href="#">Blogs</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-3 col-md-6 col-sm-6 maxheight4">
+        <h2><strong>Help</strong> Center</h2>
+        <ul class="list3">
+          <li><a href="#">Assistance</a></li>
+          <li><a href="#">FAQ</a></li>
+          <li><a href="#">Winners&apos; comments</a></li>
+          <li><a href="#">Refill the account</a></li>
+          <li><a href="#">Payments</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-3 col-md-6 col-sm-6 maxheight4">
+        <h2><strong>Partners</strong></h2>
+        <ul class="list3">
+          <li><a href="#">Lorem ipsum dolor</a></li>
+          <li><a href="#">Conse ctetur adipisicing</a></li>
+          <li><a href="#">Elit sed do eiusmod tempor</a></li>
+          <li><a href="#">Incididunt ut labore</a></li>
+          <li><a href="#">Et dolore magna aliqua</a></li>
+          <li><a href="#">Ut enim ad minim</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-3 col-md-6 col-sm-6 maxheight4">
+        <h2><strong>Facebook</strong> Like Box</h2>
+        <div class="fw_facebook">
+          <div data-show-border="false" data-stream="false" data-header="false" data-show-faces="true" data-colorscheme="light" data-href="https://www.facebook.com/TemplateMonster" data-width="270px" class="fb-like-box fb_iframe_widget" id="fb-like-box"></div>
+        </div>
+      </div>
+    </div>
+    <div class="copyright">
+      <p class="privacy">Online Auction &copy; <em id="copyright-year"></em>. <a href="index-5.html">Privacy Policy</a></p>
+    </div>
+  </div>
+  More <a rel="nofollow" href="http://www.templatemonster.com/category/auction-website-templates/" target="_blank">Auction Website Templates at TemplateMonster.com</a>
+</footer>
+
+</body>
+</html>
