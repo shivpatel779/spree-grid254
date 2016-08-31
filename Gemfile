@@ -47,6 +47,9 @@ group :development do
 
 end
 
+gem 'stringex'
 gem 'spree', '~> 3.1.0'
 gem 'spree_auth_devise', '~> 3.1.0'
 gem 'spree_gateway', '~> 3.1.0'
+gem 'spree_social', github: 'spree-contrib/spree_social', branch: '3-1-stable'
+gem "omniauth-linkedin"
