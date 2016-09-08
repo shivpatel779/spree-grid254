@@ -6,5 +6,7 @@
  *= require spree/frontend/font-awesome
  *= require spree/frontend/style
  *= require spree/frontend/fontello
+ *= require chosen-compass
+ *= require chosen
  *= require_self
 */

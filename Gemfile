@@ -53,3 +53,10 @@ gem 'spree_auth_devise', '~> 3.1.0'
 gem 'spree_gateway', '~> 3.1.0'
 gem 'spree_social', github: 'spree-contrib/spree_social', branch: '3-1-stable'
 gem "omniauth-linkedin"
+
+# chosen jsuq
+gem 'compass-rails'
+gem 'chosen-rails'
+
+# google maps gem
+gem 'gmaps4rails'

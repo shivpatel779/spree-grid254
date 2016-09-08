@@ -28,3 +28,7 @@
 //= require spree/frontend/superfish
 //= require spree/frontend/TMForm
 //= require spree/frontend/tm-scripts
+
+//= require chosen-jquery
+//= require spree/frontend/underscore-min
+//= require gmaps/google
