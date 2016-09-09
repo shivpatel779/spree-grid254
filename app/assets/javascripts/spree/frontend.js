@@ -26,7 +26,7 @@
 //= require spree/frontend/jquery-migrate-1.2.1.min
 //= require spree/frontend/modal
 //= require spree/frontend/superfish
-//= require spree/frontend/TMForm
+// require spree/frontend/TMForm
 //= require spree/frontend/tm-scripts
 
 //= require chosen-jquery

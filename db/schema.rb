@@ -1037,17 +1037,9 @@ ActiveRecord::Schema.define(version: 20160830063203) do
     t.string   "confirmation_token"
     t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"
-    t.string   "first_name"
-    t.string   "middle_name"
-    t.string   "last_name"
-    t.date     "birth_date"
-    t.string   "national_id"
     t.string   "phone"
     t.string   "country"
     t.string   "state"
-    t.string   "constituency"
-    t.integer  "spree_country_id"
-    t.integer  "spree_state_id"
   end
 
   add_index "spree_users", ["bill_address_id"], name: "index_spree_users_on_bill_address_id", using: :btree
@@ -1055,8 +1047,6 @@ ActiveRecord::Schema.define(version: 20160830063203) do
   add_index "spree_users", ["email"], name: "email_idx_unique", unique: true, using: :btree
   add_index "spree_users", ["ship_address_id"], name: "index_spree_users_on_ship_address_id", using: :btree
   add_index "spree_users", ["spree_api_key"], name: "index_spree_users_on_spree_api_key", using: :btree
-  add_index "spree_users", ["spree_country_id"], name: "index_spree_users_on_spree_country_id", using: :btree
-  add_index "spree_users", ["spree_state_id"], name: "index_spree_users_on_spree_state_id", using: :btree
 
   create_table "spree_variants", force: :cascade do |t|
     t.string   "sku",                                        default: "",    null: false
@@ -1110,6 +1100,4 @@ ActiveRecord::Schema.define(version: 20160830063203) do
   add_index "spree_zones", ["default_tax"], name: "index_spree_zones_on_default_tax", using: :btree
   add_index "spree_zones", ["kind"], name: "index_spree_zones_on_kind", using: :btree
 
-  add_foreign_key "spree_users", "spree_countries"
-  add_foreign_key "spree_users", "spree_states"
 end

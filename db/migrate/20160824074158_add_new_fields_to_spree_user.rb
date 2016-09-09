@@ -15,5 +15,16 @@ class AddNewFieldsToSpreeUser < ActiveRecord::Migration
 
   end
 
+  def self.down
+    remove_column :spree_users, :first_name
+    remove_column :spree_users, :middle_name
+    remove_column :spree_users, :last_name
+    remove_column :spree_users, :birth_date
+    remove_column :spree_users, :national_id
+    remove_column :spree_users, :constituency
+    remove_column :spree_users, :spree_country_id
+    remove_column :spree_users, :spree_state_id
+  end
+
 
 end
