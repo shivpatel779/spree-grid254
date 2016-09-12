@@ -60,3 +60,5 @@ gem 'chosen-rails'
 
 # google maps gem
 gem 'gmaps4rails'
+
+gem 'rails_12factor'
