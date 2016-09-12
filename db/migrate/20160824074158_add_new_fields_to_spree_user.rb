@@ -1,5 +1,6 @@
 class AddNewFieldsToSpreeUser < ActiveRecord::Migration
   def self.up
+=begin
   	add_column :spree_users, :first_name, :string
   	add_column :spree_users, :middle_name, :string
   	add_column :spree_users, :last_name, :string
@@ -12,6 +13,7 @@ class AddNewFieldsToSpreeUser < ActiveRecord::Migration
       t.references :spree_country, index: true, foreign_key: true
       t.references :spree_state, index: true, foreign_key: true
     end
+=end
 
   end
 
