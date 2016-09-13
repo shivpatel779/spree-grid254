@@ -2,6 +2,7 @@
 //= require bootstrap-sprockets
 //= require jquery.payment
 //= require jquery.validate/jquery.validate.min
+//= require spree/frontend/tab_js
 //= require spree
 //= require spree/frontend/cart
 //= require spree/frontend/checkout
@@ -19,6 +20,7 @@
 //= require spree/frontend/jquery.easing.1.3
 //= require spree/frontend/jquery.equalheights
 
+
 //= require spree/frontend/jquery.mobilemenu
 //= require spree/frontend/jquery.mousewheel.min
 //= require spree/frontend/jquery.simplr.smoothscroll.min
@@ -28,8 +30,8 @@
 //= require spree/frontend/superfish
 // require spree/frontend/TMForm
 //= require spree/frontend/tm-scripts
-//= require spree/frontend/tab_js
 
-//= require chosen-jquery
+
+
 //= require spree/frontend/underscore-min
 //= require gmaps/google
