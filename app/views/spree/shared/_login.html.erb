@@ -44,7 +44,7 @@
 
                       <div class="btns">
 
-                        <%= link_to 'Submit', 'javascript:function()', :class => 'btn-default btn4', id: 'sbmt_lnk', 'data-type' => "submit" %>
+                        <%= f.submit 'Submit', :class => 'btn-default btn4' %>
                       </div>
 
 
@@ -64,11 +64,11 @@
 
 <script type="text/javascript">
 
-    $(document).ready(function () {
+  /*  $(document).ready(function () {
         $('#sbmt_lnk').click(function (e) {
             $("#contact-form").submit();
         });
     })
-
+*/
 
 </script>

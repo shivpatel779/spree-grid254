@@ -28,6 +28,7 @@
 //= require spree/frontend/superfish
 // require spree/frontend/TMForm
 //= require spree/frontend/tm-scripts
+//= require spree/frontend/tab_js
 
 //= require chosen-jquery
 //= require spree/frontend/underscore-min

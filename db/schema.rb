@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160830063203) do
+ActiveRecord::Schema.define(version: 20160912093134) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -210,6 +210,16 @@ ActiveRecord::Schema.define(version: 20160830063203) do
   add_index "spree_line_items", ["tax_category_id"], name: "index_spree_line_items_on_tax_category_id", using: :btree
   add_index "spree_line_items", ["variant_id"], name: "index_spree_line_items_on_variant_id", using: :btree
 
+  create_table "spree_location_infos", force: :cascade do |t|
+    t.string   "constituency"
+    t.string   "address"
+    t.decimal  "lat"
+    t.decimal  "lng"
+    t.integer  "user_id"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+  end
+
   create_table "spree_log_entries", force: :cascade do |t|
     t.integer  "source_id"
     t.string   "source_type"
@@ -365,6 +375,17 @@ ActiveRecord::Schema.define(version: 20160830063203) do
   add_index "spree_payments", ["order_id"], name: "index_spree_payments_on_order_id", using: :btree
   add_index "spree_payments", ["payment_method_id"], name: "index_spree_payments_on_payment_method_id", using: :btree
   add_index "spree_payments", ["source_id", "source_type"], name: "index_spree_payments_on_source_id_and_source_type", using: :btree
+
+  create_table "spree_personal_details", force: :cascade do |t|
+    t.string   "first_name"
+    t.string   "middle_name"
+    t.string   "last_name"
+    t.date     "date_of_birth"
+    t.string   "national_id"
+    t.integer  "user_id"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+  end
 
   create_table "spree_preferences", force: :cascade do |t|
     t.text     "value"

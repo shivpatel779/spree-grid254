@@ -62,3 +62,4 @@ gem 'chosen-rails'
 gem 'gmaps4rails'
 
 gem 'rails_12factor'
+gem 'thin'

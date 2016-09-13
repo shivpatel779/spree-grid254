@@ -1,6 +1,6 @@
 //----Include-Function----
 function include(url){ 
-  document.write('<script src="assets/spree/frontend/'+ url + '"></script>'); 
+  document.write('<script src="/assets/spree/frontend/'+ url + '"></script>');
   return false ;
 }
 
