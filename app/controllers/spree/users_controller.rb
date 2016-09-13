@@ -10,8 +10,8 @@ class Spree::UsersController < Spree::StoreController
   end
 
   def edit
-    @personal_detail = spree_current_user.personal_detail.nil? ?  Spree::PersonalDetail.new(user: @user) : @user.personal_detail
-    @location_info = spree_current_user.location_info.nil? ? Spree::LocationInfo.new(user: @user) : @user.location_info
+    @personal_detail = spree_current_user.personal_detail.nil? ? Spree::PersonalDetail.new(user: @user) : @user.personal_detail
+    @location_info   = spree_current_user.location_info.nil? ? Spree::LocationInfo.new(user: @user) : @user.location_info
   end
 
   def create
@@ -29,34 +29,84 @@ class Spree::UsersController < Spree::StoreController
   end
 
   def update
-    exit
-    if @user.update_attributes(user_params)
-      if params[:user][:password].present?
-        # this logic needed b/c devise wants to log us out after password changes
-        user = Spree::User.reset_password_by_token(params[:user])
-        sign_in(@user, :event => :authentication, :bypass => !Spree::Auth::Config[:signout_after_password_change])
+
+    if params.key?(:personal_detail)
+
+      pd_params = params[:personal_detail]
+
+      dob = Date.new pd_params["date_of_birth(1i)"].to_i, pd_params["date_of_birth(2i)"].to_i, pd_params["date_of_birth(3i)"].to_i
+      params[:personal_detail][:date_of_birth] = dob.to_formatted_s(:db)
+
+      params[:personal_detail].delete('date_of_birth(1i)')
+      params[:personal_detail].delete('date_of_birth(2i)')
+      params[:personal_detail].delete('date_of_birth(3i)')
+
+      params.permit!
+      personal_detail = spree_current_user.personal_detail.nil? ? Spree::PersonalDetail.new(user_id: spree_current_user.id) : spree_current_user.personal_detail
+      if personal_detail.update_attributes(params[:personal_detail])
+        redirect_to spree.edit_account_url+'#tab3', :notice => 'Personal info updated successfully'
+      else
+        render :edit
       end
-      redirect_to spree.account_url, :notice => Spree.t(:account_updated)
+
+    elsif params.key?(:location_info)
+      params.permit!
+      location_info   = spree_current_user.location_info.nil? ? Spree::LocationInfo.new(user_id: spree_current_user.id) : spree_current_user.location_info
+      if location_info.update_attributes(params[:location_info])
+        redirect_to spree.edit_account_url, :notice => 'Location info updated successfully'
+      else
+        render :edit
+      end
+
     else
-      render :edit
+      if params[:user][:password].present?
+        if @user.update_attributes(user_params)
+          if params[:user][:password].present?
+            # this logic needed b/c devise wants to log us out after password changes
+            user = Spree::User.reset_password_by_token(params[:user])
+            sign_in(@user, :event => :authentication, :bypass => !Spree::Auth::Config[:signout_after_password_change])
+          end
+          # redirect_to spree.account_url, :notice => Spree.t(:account_updated)
+          redirect_to spree.edit_account_url+'#tab2', :notice => Spree.t(:account_updated)
+        else
+          render :edit
+        end
+
+      else
+        if @user.update_without_password(user_params)
+          if params[:user][:password].present?
+            # this logic needed b/c devise wants to log us out after password changes
+            user = Spree::User.reset_password_by_token(params[:user])
+            sign_in(@user, :event => :authentication, :bypass => !Spree::Auth::Config[:signout_after_password_change])
+          end
+          # redirect_to spree.account_url, :notice => Spree.t(:account_updated)
+          redirect_to spree.edit_account_url+'#tab2', :notice => Spree.t(:account_updated)
+        else
+          render :edit
+        end
+      end
+
     end
+
+
   end
 
   private
-    def user_params
-      params.require(:user).permit(Spree::PermittedAttributes.user_attributes)
-    end
+  def user_params
+    params.require(:user).permit(Spree::PermittedAttributes.user_attributes)
+  end
 
-    def load_object
-      @user ||= spree_current_user
-      authorize! params[:action].to_sym, @user
-    end
+  def load_object
+    @user ||= spree_current_user
+    authorize! params[:action].to_sym, @user
+  end
 
-    def authorize_actions
-      authorize! params[:action].to_sym, Spree::User.new
-    end
+  def authorize_actions
+    authorize! params[:action].to_sym, Spree::User.new
+  end
 
-    def accurate_title
-      Spree.t(:my_account)
-    end
+  def accurate_title
+    Spree.t(:my_account)
+  end
+
 end

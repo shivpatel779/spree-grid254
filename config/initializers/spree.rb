@@ -21,5 +21,7 @@ Spree.user_class = "Spree::User"
 puts 'Initializing custom permitted attributes'
 
  Spree::Api::ApiHelpers.class_eval do
-   class_variable_set(:@@user_attributes, class_variable_get(:@@user_attributes).push(:first_name, :middle_name, :last_name, :birth_date, :national_id, :phone, :country, :state, :constituency))
+   class_variable_set(:@@user_attributes, class_variable_get(:@@user_attributes).push(:phone))
  end
+
+Spree::PermittedAttributes.user_attributes.push :phone, :personal_detail, :location_info
