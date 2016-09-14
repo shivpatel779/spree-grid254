@@ -11,3 +11,6 @@ development: &development
   username: postgres
   password: postgres
   host: localhost
+
+production:
+  url: <%= ENV['DATABASE_URL'] %>
