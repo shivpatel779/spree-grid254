@@ -2,50 +2,22 @@
     <div class="container">
       <h2><strong>Finished</strong> Auctions</h2>
       <div class="row">
-        <div class="col-lg-3 col-md-6 col-sm-6 maxheight">
-          <div class="thumb-pad1">
-            <div class="badge">Final price<strong>876</strong></div>
-            <div class="thumbnail">
-              <figure><img src="/assets/page1_pic1.jpg" alt=""></figure>
-              <div class="caption">
-                <p>Excepteur sint occaecat cupidatat non</p>
+
+        <% @products.first(4).each do |product| %>
+            <div class="col-lg-3 col-md-6 col-sm-6 maxheight">
+              <div class="thumb-pad1">
+                <div class="badge">Final price<strong>876</strong></div>
+                <div class="thumbnail">
+                  <figure>
+                    <%= product_image(product, itemprop: "image") %>
+                  </figure>
+                  <div class="caption">
+                    <%= content_tag(:p, truncate(product.name, length: 50), itemprop: "name", title: product.name) %>
+                  </div>
+                </div>
               </div>
             </div>
-          </div>
-        </div>
-        <div class="col-lg-3 col-md-6 col-sm-6 maxheight">
-          <div class="thumb-pad1">
-            <div class="badge">Final price<strong>176</strong></div>
-            <div class="thumbnail">
-              <figure><img src="/assets/page1_pic2.jpg" alt=""></figure>
-              <div class="caption">
-                <p>Excepteur sint occaecat cupidatat non</p>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-lg-3 col-md-6 col-sm-6 maxheight">
-          <div class="thumb-pad1">
-            <div class="badge">Final price<strong>16</strong></div>
-            <div class="thumbnail">
-              <figure><img src="/assets/page1_pic3.jpg" alt=""></figure>
-              <div class="caption">
-                <p>Excepteur sint occaecat cupidatat non</p>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-lg-3 col-md-6 col-sm-6 maxheight">
-          <div class="thumb-pad1">
-            <div class="badge">Final price<strong>86</strong></div>
-            <div class="thumbnail">
-              <figure><img src="/assets/page1_pic4.jpg" alt=""></figure>
-              <div class="caption">
-                <p>Excepteur sint occaecat cupidatat non</p>
-              </div>
-            </div>
-          </div>
-        </div>
+        <% end %>
       </div>
     </div>
   </div>
