@@ -1,4 +1,11 @@
 class Spree::Gateway::Lipisha < Spree::Gateway
+
+  attr_accessor :server, :test_mode
+
+  #preference :server,:string, default: 'test'
+  #preference :test_mode, :boolean, default: true
+
+
   def provider_class
     Spree::Gateway::Lipisha
   end
