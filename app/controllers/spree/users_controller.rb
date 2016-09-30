@@ -10,18 +10,13 @@ class Spree::UsersController < Spree::StoreController
   end
 
   def edit
-    @personal_detail = spree_current_user.personal_detail.nil? ? Spree::PersonalDetail.new(user: @user) : @user.personal_detail
-    @location_info   = spree_current_user.location_info.nil? ? Spree::LocationInfo.new(user: @user) : @user.location_info
+
   end
 
   def create
     @user = Spree::User.new(user_params)
     if @user.save
-
-      if current_order
-        session[:guest_token] = nil
-      end
-
+      session[:guest_token] = nil if current_order
       redirect_back_or_default(root_url)
     else
       render :new
@@ -34,7 +29,7 @@ class Spree::UsersController < Spree::StoreController
 
       pd_params = params[:personal_detail]
 
-      dob = Date.new pd_params["date_of_birth(1i)"].to_i, pd_params["date_of_birth(2i)"].to_i, pd_params["date_of_birth(3i)"].to_i
+      dob = Date.new pd_params['date_of_birth(1i)'].to_i, pd_params['date_of_birth(2i)'].to_i, pd_params['date_of_birth(3i)'].to_i
       params[:personal_detail][:date_of_birth] = dob.to_formatted_s(:db)
 
       params[:personal_detail].delete('date_of_birth(1i)')
@@ -42,8 +37,8 @@ class Spree::UsersController < Spree::StoreController
       params[:personal_detail].delete('date_of_birth(3i)')
 
       params.permit!
-      personal_detail = spree_current_user.personal_detail.nil? ? Spree::PersonalDetail.new(user_id: spree_current_user.id) : spree_current_user.personal_detail
-      if personal_detail.update_attributes(params[:personal_detail])
+      #personal_detail = spree_current_user.personal_detail.nil? ? Spree::PersonalDetail.new(user_id: spree_current_user.id) : spree_current_user.personal_detail
+      if @personal_detail.update_attributes(params[:personal_detail])
         redirect_to spree.edit_account_url+'#tab3', :notice => 'Personal info updated successfully'
       else
         render :edit
@@ -55,7 +50,7 @@ class Spree::UsersController < Spree::StoreController
       if location_info.update_attributes(params[:location_info])
         redirect_to spree.edit_account_url, :notice => 'Location info updated successfully'
       else
-        render :edit
+        redirect_to spree.edit_account_url+'#tab3'
       end
 
     else
@@ -69,7 +64,7 @@ class Spree::UsersController < Spree::StoreController
           # redirect_to spree.account_url, :notice => Spree.t(:account_updated)
           redirect_to spree.edit_account_url+'#tab2', :notice => Spree.t(:account_updated)
         else
-          render :edit
+          redirect_to spree.edit_account_url
         end
 
       else
@@ -98,6 +93,9 @@ class Spree::UsersController < Spree::StoreController
 
   def load_object
     @user ||= spree_current_user
+    @personal_detail = spree_current_user.personal_detail.nil? ? Spree::PersonalDetail.new(user: spree_current_user) : spree_current_user.personal_detail
+    @location_info   = spree_current_user.location_info.nil? ? Spree::LocationInfo.new(user: spree_current_user) : spree_current_user.location_info
+
     authorize! params[:action].to_sym, @user
   end
 

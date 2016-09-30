@@ -63,3 +63,13 @@ gem 'gmaps4rails'
 
 gem 'rails_12factor'
 gem 'thin'
+
+# sms sending api
+gem 'africastalking-ruby'
+
+# two factor authentication
+# gem 'devise-two-factor'
+gem 'rotp'
+
+# enable SMTP
+gem 'spree_mail_settings', github: 'spree-contrib/spree_mail_settings', branch: '3-1-stable'

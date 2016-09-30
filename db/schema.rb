@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160913025845) do
+ActiveRecord::Schema.define(version: 20160926112001) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1028,16 +1028,23 @@ ActiveRecord::Schema.define(version: 20160913025845) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "spree_user_wallets", force: :cascade do |t|
+    t.decimal  "wallet_balance"
+    t.integer  "user_id"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+  end
+
   create_table "spree_users", force: :cascade do |t|
-    t.string   "encrypted_password",     limit: 128
-    t.string   "password_salt",          limit: 128
+    t.string   "encrypted_password",        limit: 128
+    t.string   "password_salt",             limit: 128
     t.string   "email"
     t.string   "remember_token"
     t.string   "persistence_token"
     t.string   "reset_password_token"
     t.string   "perishable_token"
-    t.integer  "sign_in_count",                      default: 0, null: false
-    t.integer  "failed_attempts",                    default: 0, null: false
+    t.integer  "sign_in_count",                         default: 0,     null: false
+    t.integer  "failed_attempts",                       default: 0,     null: false
     t.datetime "last_request_at"
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
@@ -1050,9 +1057,9 @@ ActiveRecord::Schema.define(version: 20160913025845) do
     t.string   "unlock_token"
     t.datetime "locked_at"
     t.datetime "reset_password_sent_at"
-    t.datetime "created_at",                                     null: false
-    t.datetime "updated_at",                                     null: false
-    t.string   "spree_api_key",          limit: 48
+    t.datetime "created_at",                                            null: false
+    t.datetime "updated_at",                                            null: false
+    t.string   "spree_api_key",             limit: 48
     t.datetime "remember_created_at"
     t.datetime "deleted_at"
     t.string   "confirmation_token"
@@ -1061,6 +1068,14 @@ ActiveRecord::Schema.define(version: 20160913025845) do
     t.string   "phone"
     t.string   "country"
     t.string   "state"
+    t.string   "encrypted_otp_secret"
+    t.string   "encrypted_otp_secret_iv"
+    t.string   "encrypted_otp_secret_salt"
+    t.integer  "consumed_timestep"
+    t.boolean  "otp_required_for_login"
+    t.string   "otp_secret"
+    t.string   "current_otp"
+    t.boolean  "phone_verified",                        default: false
   end
 
   add_index "spree_users", ["bill_address_id"], name: "index_spree_users_on_bill_address_id", using: :btree
@@ -1097,6 +1112,16 @@ ActiveRecord::Schema.define(version: 20160913025845) do
   add_index "spree_variants", ["tax_category_id"], name: "index_spree_variants_on_tax_category_id", using: :btree
   add_index "spree_variants", ["track_inventory"], name: "index_spree_variants_on_track_inventory", using: :btree
 
+  create_table "spree_wallet_transactions", force: :cascade do |t|
+    t.integer  "spree_user_wallet_id"
+    t.integer  "order_id"
+    t.decimal  "payment_amount"
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
+  end
+
+  add_index "spree_wallet_transactions", ["spree_user_wallet_id"], name: "index_spree_wallet_transactions_on_spree_user_wallet_id", using: :btree
+
   create_table "spree_zone_members", force: :cascade do |t|
     t.integer  "zoneable_id"
     t.string   "zoneable_type"
@@ -1121,4 +1146,5 @@ ActiveRecord::Schema.define(version: 20160913025845) do
   add_index "spree_zones", ["default_tax"], name: "index_spree_zones_on_default_tax", using: :btree
   add_index "spree_zones", ["kind"], name: "index_spree_zones_on_kind", using: :btree
 
+  add_foreign_key "spree_wallet_transactions", "spree_user_wallets"
 end

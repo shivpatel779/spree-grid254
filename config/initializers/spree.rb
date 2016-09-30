@@ -17,11 +17,11 @@ end
 
 Spree.user_class = "Spree::User"
 
-
-puts 'Initializing custom permitted attributes'
-
  Spree::Api::ApiHelpers.class_eval do
    class_variable_set(:@@user_attributes, class_variable_get(:@@user_attributes).push(:phone))
  end
 
-Spree::PermittedAttributes.user_attributes.push :phone, :personal_detail, :location_info
+Spree::PermittedAttributes.user_attributes.push :phone, :personal_detail, :location_info, :wallet, :otp_secret, :current_otp, :phone_verified
+
+# register Lipisha payment gateway
+Rails.application.config.spree.payment_methods << Spree::Gateway::Lipisha

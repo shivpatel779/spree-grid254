@@ -58,6 +58,10 @@
     <div class="container">
       <h2><strong>Edit my account</strong></h2>
 
+      <%= render :partial => 'spree/shared/error_messages', :locals => { :target => @user } %>
+      <%= render :partial => 'spree/shared/error_messages', :locals => { :target => @personal_detail } %>
+      <%= render :partial => 'spree/shared/error_messages', :locals => { :target => @location_info } %>
+
 
       <div class="row">
         <div class="col-lg-12 col-md-12 col-sm-12">
@@ -113,6 +117,9 @@
                             <div class="tab-form-lable"> Phone Number</div>
                             <label class="email">
                               <%= f.text_field :phone, :placeholder => Spree.t(:phone) %>
+
+
+
                             </label>
                           </div>
 
@@ -126,7 +133,25 @@
 
                     <% end %>
 
+                    <%= link_to 'Send OTP to verify', '../verify_phone/send_otp', class: "btn", method: :post %>
+
                     <!-- <label class="recaptcha"><span class="empty-message">*This field is required.</span></label> -->
+
+                    <% unless spree_current_user.phone_verified %>
+
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-sm">Small modal</button>
+
+                        <div class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+                          <div class="modal-dialog modal-sm">
+                            <div class="modal-content">
+                              ...
+                            </div>
+                          </div>
+                        </div>
+
+
+                    <% end %>
+
 
                   </div>
 
@@ -302,6 +327,8 @@
     </div>
   </section>
 </div>
+
+
 
 <script type="text/javascript">
 

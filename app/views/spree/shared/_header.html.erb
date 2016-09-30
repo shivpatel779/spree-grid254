@@ -8,8 +8,10 @@
         </div>
         <div class="col-lg-4 col-md-4">
           <% if spree_current_user %>
-            <%= link_to Spree.t(:logout), spree.logout_path, class: 'btn-default btn1' %>
-            <%= link_to Spree.t(:my_account), spree.account_path, class: 'btn-default btn1' %>
+              <%= link_to Spree.t(:logout), spree.logout_path, class: 'btn-default btn1' %>
+              <%= link_to Spree.t(:my_account), spree.edit_account_path, class: 'btn-default btn1' %>
+              <%= link_to "Wallet #{number_to_currency(spree_current_user.wallet.wallet_balance)}",'javascript:void(0)', class: 'btn-default btn1' %>
+
           <% else %>
             <%= link_to 'Register', spree.signup_path, class: 'btn-default btn1' %>
             <%= link_to 'Sign In', spree.login_path, class: 'btn-default btn1' %>
@@ -51,3 +53,11 @@
     </nav>
   </div>
 </header>
+
+
+<%if spree_current_user && !spree_current_user.phone_verified %>
+<div class="alert alert-warning">
+  You haven't verified your phone number. <strong><%= link_to 'Click', spree.edit_account_path %></strong> to verify.
+</div>
+
+<% end %>
