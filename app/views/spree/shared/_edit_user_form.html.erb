@@ -133,21 +133,11 @@
 
                     <% end %>
 
-                    <%= link_to 'Send OTP to verify', '../verify_phone/send_otp', class: "btn", method: :post %>
-
                     <!-- <label class="recaptcha"><span class="empty-message">*This field is required.</span></label> -->
 
                     <% unless spree_current_user.phone_verified %>
 
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-sm">Small modal</button>
-
-                        <div class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
-                          <div class="modal-dialog modal-sm">
-                            <div class="modal-content">
-                              ...
-                            </div>
-                          </div>
-                        </div>
+                        <%= link_to 'Send OTP to verify phone', '../verify_phone/send_otp', class: "btn", method: :post %>
 
 
                     <% end %>
