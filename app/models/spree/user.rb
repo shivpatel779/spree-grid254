@@ -12,9 +12,14 @@ module Spree
     acts_as_paranoid
     after_destroy :scramble_email_and_password
 
-    validates :phone,:presence => true,
-              :numericality => true,
-              :length => { :minimum => 10, :maximum => 15 }
+    validates :phone, :presence => true,
+              :numericality     => true,
+              :length           => { :minimum => 10, :maximum => 15 }
+
+    validates :phone, format: {
+                        with:    /\A(\+\d{1,2})?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}\z/,
+                        message: 'is invalid'
+                    }
 
     has_many :orders
 
@@ -40,7 +45,7 @@ module Spree
     def generate_otp
       otp = ROTP::TOTP.new OTP_SECRET
       update_attributes(current_otp: otp.now)
-      return otp
+      return otp.now
     end
 
     def self.admin_created?
@@ -52,23 +57,23 @@ module Spree
     end
 
     protected
-      def password_required?
-        !persisted? || password.present? || password_confirmation.present?
-      end
+    def password_required?
+      !persisted? || password.present? || password_confirmation.present?
+    end
 
     private
 
-      def set_login
-        # for now force login to be same as email, eventually we will make this configurable, etc.
-        self.login ||= self.email if self.email
-      end
+    def set_login
+      # for now force login to be same as email, eventually we will make this configurable, etc.
+      self.login ||= self.email if self.email
+    end
 
-      def scramble_email_and_password
-        self.email = SecureRandom.uuid + "@example.net"
-        self.login = self.email
-        self.password = SecureRandom.hex(8)
-        self.password_confirmation = self.password
-        self.save
-      end
+    def scramble_email_and_password
+      self.email                 = SecureRandom.uuid + "@example.net"
+      self.login                 = self.email
+      self.password              = SecureRandom.hex(8)
+      self.password_confirmation = self.password
+      self.save
+    end
   end
 end

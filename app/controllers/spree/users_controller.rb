@@ -80,9 +80,7 @@ class Spree::UsersController < Spree::StoreController
           render :edit
         end
       end
-
     end
-
 
   end
 
