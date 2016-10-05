@@ -6,5 +6,11 @@ module Spree
       mail(to: invited_email, from: @sender.email, subject: subject)
     end
 
+    def invite_earned(user, invited_user)
+      @user, @invited_user = user, invited_user
+      subject = "Congratulations! You've earned the Referral Credits"
+      mail(to: @user.email, from: 'noreply@grid254.com', subject: subject)
+    end
+
   end
 end

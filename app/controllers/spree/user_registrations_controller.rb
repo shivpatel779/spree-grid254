@@ -11,23 +11,24 @@ class Spree::UserRegistrationsController < Devise::RegistrationsController
 
   # GET /resource/sign_up
   def new
-
     if params.key?(:c) && spree_current_user
       sign_out(resource_name)
+
+      super
+      @user = resource
+
     elsif spree_current_user
       redirect_to :root
     else
       super
       @user = resource
     end
-
-
   end
 
   # POST /resource/sign_up
   def create
 
-    @user = build_resource(spree_user_params)
+    @user          = build_resource(spree_user_params)
     resource_saved = resource.save
     yield resource if block_given?
     if resource_saved
@@ -36,13 +37,15 @@ class Spree::UserRegistrationsController < Devise::RegistrationsController
       resource.create_referral_credit
 
       if params.key?(:ref_code)
-        resource.update_attributes(is_invited: true)
         user = Spree::User.find_by(referral_code: params[:ref_code])
         if user
-          user.spree_referral_credit.update_attributes(credit: (user.spree_referral_credit.credit + 10))
+          if user.eligible_to_earn_invite?(resource.email)
+            user.earn_referral_credit
+            Spree::ReferralMailer.invite_earned(user, resource).deliver
+          end
+
         end
       end
-
 
       if resource.active_for_authentication?
         set_flash_message :notice, :signed_up

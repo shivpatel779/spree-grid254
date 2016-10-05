@@ -39,6 +39,20 @@ module Spree
     after_create :create_wallet, :create_referral_credit
     before_create :set_referral_code
 
+    def earn_referral_credit
+      ref_cr = spree_referral_credit
+      ref_cr.update_attributes(credit: (ref_cr.credit + 10))
+    end
+
+    def eligible_to_earn_invite?(invited_user)
+      eligible = false
+      if spree_user_invites.find_by(invited_email: invited_user)
+        u = Spree::User.where(email: invited_user, is_invited: false).first
+          u.update_attributes(is_invited: true)
+          eligible = true
+      end
+      eligible
+    end
 
     def send_invite(to)
       spree_user_invites.create(invited_email: to)
