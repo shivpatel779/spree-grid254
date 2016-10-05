@@ -1,3 +1,11 @@
-<%= @sender.email %> has invited you to try Grid254
+<strong><%= @sender.email %></strong> has invited you to try Grid254
 
-<%= link_to 'Sign Up', "http://localhost:3000/signup?c=#{@sender.referral_code}" %>
+<br/>
+
+<strong>
+<% if Rails.env == 'production' %>
+    <%= link_to 'Sign Up Here', "http://fierce-reef-22139.herokuapp.com/signup?c=#{@sender.referral_code}" %>
+<% else %>
+    <%= link_to 'Sign Up Here', "http://localhost:3000/signup?c=#{@sender.referral_code}" %>
+<% end %>
+</strong>
