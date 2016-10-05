@@ -42,7 +42,7 @@ module Spree
 
     def send_invite(to)
       spree_user_invites.create(invited_email: to)
-      Spree::ReferralMailer.send_invite(spree_current_user, to).deliver
+      Spree::ReferralMailer.send_invite(self, to).deliver
     end
 
     # this will deduct the referral credit by the size given

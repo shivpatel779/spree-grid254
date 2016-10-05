@@ -11,8 +11,17 @@ class Spree::UserRegistrationsController < Devise::RegistrationsController
 
   # GET /resource/sign_up
   def new
-    super
-    @user = resource
+
+    if params.key?(:c) && spree_current_user
+      sign_out(resource_name)
+    elsif spree_current_user
+      redirect_to :root
+    else
+      super
+      @user = resource
+    end
+
+
   end
 
   # POST /resource/sign_up
@@ -22,6 +31,9 @@ class Spree::UserRegistrationsController < Devise::RegistrationsController
     resource_saved = resource.save
     yield resource if block_given?
     if resource_saved
+
+      resource.create_wallet
+      resource.create_referral_credit
 
       if params.key?(:ref_code)
         resource.update_attributes(is_invited: true)

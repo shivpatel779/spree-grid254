@@ -3,7 +3,7 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
 
-  before_filter :initialize_user_data
+  # before_filter :initialize_user_data
 
   def initialize_user_data
     if spree_current_user

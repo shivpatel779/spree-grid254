@@ -1,6 +1,8 @@
 class Spree::UserInvitesController < ApplicationController
 
+  before_filter :authenticate_spree_user!
   before_filter :split_emails, only: :create
+
   def index
 
   end
