@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160926112001) do
+ActiveRecord::Schema.define(version: 20161003115303) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -586,6 +586,13 @@ ActiveRecord::Schema.define(version: 20160926112001) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "spree_referral_credits", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "credit",     default: 10
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+  end
+
   create_table "spree_refund_reasons", force: :cascade do |t|
     t.string   "name"
     t.boolean  "active",     default: true
@@ -1028,6 +1035,13 @@ ActiveRecord::Schema.define(version: 20160926112001) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "spree_user_invites", force: :cascade do |t|
+    t.integer  "user_id"
+    t.string   "invited_email"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+  end
+
   create_table "spree_user_wallets", force: :cascade do |t|
     t.decimal  "wallet_balance"
     t.integer  "user_id"
@@ -1076,6 +1090,8 @@ ActiveRecord::Schema.define(version: 20160926112001) do
     t.string   "otp_secret"
     t.string   "current_otp"
     t.boolean  "phone_verified",                        default: false
+    t.boolean  "is_invited",                            default: false
+    t.string   "referral_code"
   end
 
   add_index "spree_users", ["bill_address_id"], name: "index_spree_users_on_bill_address_id", using: :btree

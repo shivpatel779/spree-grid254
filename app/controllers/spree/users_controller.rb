@@ -14,6 +14,7 @@ class Spree::UsersController < Spree::StoreController
   end
 
   def create
+
     @user = Spree::User.new(user_params)
     if @user.save
       session[:guest_token] = nil if current_order

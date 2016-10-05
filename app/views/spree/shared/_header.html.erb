@@ -49,6 +49,10 @@
         <li><a href="index-2.html">Sell</a></li>
         <li><a href="index-3.html">Buy</a></li>
         <li><a href="index-4.html">Contact us</a></li>
+        <% if spree_current_user %>
+
+        <li><%= link_to 'Invite & Earn', '/invite'%>(<%= spree_current_user.spree_referral_credit.credit%>)</li>
+        <% end %>
       </ul>
     </nav>
   </div>

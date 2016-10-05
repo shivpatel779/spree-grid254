@@ -17,7 +17,7 @@ module Spree
               :length           => { :minimum => 10, :maximum => 15 }
 
     validates :phone, format: {
-                        with:    /\A(\+\d{1,2})?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}\z/,
+                        with:    /\+[1-9]{1}[0-9]{3,14}/,
                         message: 'is invalid'
                     }
 
@@ -25,8 +25,9 @@ module Spree
 
     has_one :personal_detail, :class_name => 'Spree::PersonalDetail', foreign_key: 'user_id'
     has_one :location_info, :class_name => 'Spree::LocationInfo', foreign_key: 'user_id'
-
     has_one :wallet, :class_name => 'Spree::UserWallet', foreign_key: 'user_id'
+    has_one :spree_referral_credit, :class_name => 'Spree::ReferralCredit', foreign_key: 'user_id'
+    has_many :spree_user_invites, :class_name => 'Spree::UserInvite', foreign_key: 'user_id'
 
     before_validation :set_login
 
@@ -35,7 +36,28 @@ module Spree
 
     scope :admin, -> { includes(:spree_roles).where("#{roles_table_name}.name" => "admin") }
 
-    after_create :create_wallet
+    after_create :create_wallet, :create_referral_credit
+    before_create :set_referral_code
+
+
+    def send_invite(to)
+      spree_user_invites.create(invited_email: to)
+      Spree::ReferralMailer.send_invite(spree_current_user, to).deliver
+    end
+
+    # this will deduct the referral credit by the size given
+    def deduct_invite_credit(size)
+      spree_referral_credit.update_attributes(credit: (spree_referral_credit.credit - size))
+    end
+
+    def set_referral_code
+      self.referral_code = (0...8).map { (65 + rand(26)).chr }.join
+    end
+
+    def create_referral_credit
+      referral_credit = Spree::ReferralCredit.new(user_id: self.id, credit: 10)
+      referral_credit.save
+    end
 
     def create_wallet
       wallet = Spree::UserWallet.new(wallet_balance: 0.0, user_id: self.id)

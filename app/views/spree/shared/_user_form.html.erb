@@ -55,6 +55,10 @@
 
                       </fieldset>
 
+                      <% if params.key?(:c)%>
+                        <%= hidden_field_tag :ref_code, params[:c]%>
+                      <% end %>
+
                   <% end %>
 
                   <!--<div class="contact-form-loader"></div>-->

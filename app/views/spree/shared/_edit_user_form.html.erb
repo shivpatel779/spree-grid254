@@ -53,6 +53,9 @@
     }
 </style>
 
+
+<%= link_to 'Invite & Earn', '/invite' %>
+
 <div class="content indent">
   <div class="thumb-box">
     <div class="container">
@@ -138,7 +141,6 @@
                     <% unless spree_current_user.phone_verified %>
 
                         <%= link_to 'Send OTP to verify phone', '../verify_phone/send_otp', class: "btn", method: :post %>
-
 
                     <% end %>
 
