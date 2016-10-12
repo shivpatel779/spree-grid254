@@ -48,6 +48,8 @@ module ActiveMerchant #:nodoc:
 
       def commit(action, money, parameters)
         response = ssl_post self.live_url , parameters.collect { |key, value| "#{key}=#{CGI.escape(value.to_s)}" }.join("&")
+        p 'TRANSACTION RESPONSE FROM LIPISHA'
+        p response.inspect
 
         Response.new(response[:success] , response[:message], response,
                      :authorization => response[:transaction_id],
