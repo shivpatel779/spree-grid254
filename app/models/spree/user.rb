@@ -14,6 +14,7 @@ module Spree
     acts_as_paranoid
     after_destroy :scramble_email_and_password
 
+=begin
     validates :phone, :presence => true,
               :numericality     => true,
               :length           => { :minimum => 10, :maximum => 15 }
@@ -22,6 +23,7 @@ module Spree
                         with:    /\+[1-9]{1}[0-9]{3,14}/,
                         message: 'is invalid'
                     }
+=end
 
     has_many :orders
 
