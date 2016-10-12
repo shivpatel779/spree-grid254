@@ -1,3 +1,5 @@
+require 'active_merchant/billing/gateways/lipisha'
+
 module Spree
   class User < Spree::Base
     include UserAddress
@@ -28,6 +30,7 @@ module Spree
     has_one :wallet, :class_name => 'Spree::UserWallet', foreign_key: 'user_id'
     has_one :spree_referral_credit, :class_name => 'Spree::ReferralCredit', foreign_key: 'user_id'
     has_many :spree_user_invites, :class_name => 'Spree::UserInvite', foreign_key: 'user_id'
+    has_one :payment_account, :class_name => 'Spree::LipishaPaymentAccount', foreign_key: 'user_id'
 
     before_validation :set_login
 
@@ -36,8 +39,37 @@ module Spree
 
     scope :admin, -> { includes(:spree_roles).where("#{roles_table_name}.name" => "admin") }
 
-    after_create :create_wallet, :create_referral_credit
+    after_create :create_wallet, :create_referral_credit, :create_payment_account
     before_create :set_referral_code
+
+    def create_payment_account
+      lipisha_payment_method = Spree::PaymentMethod.find_by(name: 'Lipisha')
+
+      payment_account_create_url = 'https://lipisha.com/payments/accounts/index.php/v2/api/create_payment_account'
+      post = {}
+      post[:api_key] = '1ffc8c725ff816ed8fa3f9c9185a1bec'
+      post[:api_signature] = 'k9BRQLhM0MU4OP/ewMbfcnqyVscBTtqnK//75OVh04rIZjUrc1UwhIxLvVG7bJ4/SXwIAJg3eC6M0RAd7gokyhUkJetfL4ctjIy+7JAaujtsb57y+i8gmTmEVjTIftYbKLRxiywt4Y8PGPEOSJi/of/0n296DKoB2M5leL0gUxc='
+      post[:api_version] = '1.3.0'
+      post[:api_type] = 'Callback'
+      post[:transaction_account_type] = 1
+      post[:transaction_account_name] = self.email.split('@').first
+      post[:transaction_account_manager] = lipisha_payment_method.preferences[:login]
+
+      response = JSON.parse ActiveMerchant::Billing::LipishaGateway.new.create_lipisha_payment_account(self, post, payment_account_create_url)
+
+      status = response['status']['status']
+      if status == 'SUCCESS'
+        payment_acc_info = {
+            account_num: response['content']['transaction_account_number'],
+            account_name: response['content']['transaction_account_name'],
+            account_manager: response['content']['transaction_account_manager'],
+            user_id: self.id
+        }
+
+        Spree::LipishaPaymentAccount.create(payment_acc_info)
+      end
+
+    end
 
     def earn_referral_credit
       ref_cr = spree_referral_credit

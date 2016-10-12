@@ -1,13 +1,16 @@
+require 'active_merchant/billing/gateways/lipisha'
 class Spree::Gateway::Lipisha < Spree::Gateway
 
-  attr_accessor :server, :test_mode
+  preference :login, :string
+  preference :password, :string
+  preference :server, :string, default: "test"
 
   #preference :server,:string, default: 'test'
   #preference :test_mode, :boolean, default: true
 
 
   def provider_class
-    Spree::Gateway::Lipisha
+    ActiveMerchant::Billing::LipishaGateway
   end
   def payment_source_class
     Spree::CreditCard
