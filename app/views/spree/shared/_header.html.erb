@@ -10,7 +10,7 @@
           <% if spree_current_user %>
               <%= link_to Spree.t(:logout), spree.logout_path, class: 'btn-default btn1' %>
               <%= link_to Spree.t(:my_account), spree.edit_account_path, class: 'btn-default btn1' %>
-              <%= link_to "Wallet #{number_to_currency(spree_current_user.wallet.wallet_balance)}",'javascript:void(0)', class: 'btn-default btn1' %>
+              <%= link_to "Wallet #{number_to_currency(spree_current_user.wallet.wallet_balance)}",'/wallet', class: 'btn-default btn1' %>
 
           <% else %>
             <%= link_to 'Register', spree.signup_path, class: 'btn-default btn1' %>
