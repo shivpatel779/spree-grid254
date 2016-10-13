@@ -8,8 +8,10 @@ module ActiveMerchant #:nodoc:
 
       self.supported_cardtypes = [:visa, :master, :american_express, :discover]
 
-      self.live_url = 'https://lipisha.com/payments/accounts/index.php/v2/api/authorize_card_transaction'
-      #self.api_key = '218c31c2d9934f802a12d44acf619a0f'
+      # self.live_url = 'https://lipisha.com/payments/accounts/index.php/v2/api/authorize_card_transaction' # PRODUCTION URL
+      self.live_url = 'http://developer.lipisha.com/index.php/v2/api/authorize_card_transaction' # STAGING URL
+
+          #self.api_key = '218c31c2d9934f802a12d44acf619a0f'
       #self.api_signature = 'nl1HSEeTGcGe6KAAyWPXgD316L6WGNVdWVXUR/20rupoGu4VPUTinvisBuTao0DnsBLW+TYimpBsMKXvlozLlAQDXfNKk7vurwc6ydqzPBk42BjqsUe3Jkoz+o3x/fz28tsQlR3WPt1PIcRWtW7mqX7JJP5RZQUyfmBXXhyDGKw='
 
 
@@ -22,14 +24,19 @@ module ActiveMerchant #:nodoc:
 
       def fields_required_for_cc_transaction(amount, credit_card, options)
         post = {}
-        #post[:api_key] = '15d2c925e9ffba7134f4b31d1c6a9123'
-        #post[:api_signature] = '7AzJLsSYQZKME/t5X1jcBD0B2YW7JiHN1cFUNZyzJfd6N3icngqv8v6qb95Pm1Mzj/7AwCJFSH+KhZWJKRgCERFmMX6aGtpXQA7C9oPCArvlwbyMjGlDUaVdUTVKgfKkIrYEILadXyXXDcwdXOhYH6bpnoQNp556uR0y+SzyKtQ='
 
-        post[:api_key] = '1ffc8c725ff816ed8fa3f9c9185a1bec'
-        post[:api_signature] = 'k9BRQLhM0MU4OP/ewMbfcnqyVscBTtqnK//75OVh04rIZjUrc1UwhIxLvVG7bJ4/SXwIAJg3eC6M0RAd7gokyhUkJetfL4ctjIy+7JAaujtsb57y+i8gmTmEVjTIftYbKLRxiywt4Y8PGPEOSJi/of/0n296DKoB2M5leL0gUxc='
+        # DEV OPS KEYS
+        #post[:api_key] = '1ffc8c725ff816ed8fa3f9c9185a1bec'
+        #post[:api_signature] = 'k9BRQLhM0MU4OP/ewMbfcnqyVscBTtqnK//75OVh04rIZjUrc1UwhIxLvVG7bJ4/SXwIAJg3eC6M0RAd7gokyhUkJetfL4ctjIy+7JAaujtsb57y+i8gmTmEVjTIftYbKLRxiywt4Y8PGPEOSJi/of/0n296DKoB2M5leL0gUxc='
+
+        # UMA KEYS
+        post[:api_key] = '08d17fe398450430c20ed24963ad38cd'
+        post[:api_signature] = 'ZEIosXGjxTUpAByigXQ1EQZxu58ZyEZBl+nQNEvTPrnDLsVIOHgorxYcqQhts6hf4+W5MYl1tUOYyqrwH0oRXUWOWmnXhqMq8jYhtcVcuC22N1LVwVmKCesPoib7/Wvk7y6lEe3nuOWA2GMbhA9btSjFY9F0pPoA/DWR45OGE0A='
+
+
         post[:api_version] = '1.3.0'
         post[:api_type] = 'Callback'
-        post[:account_number] = '06934'
+        post[:account_number] = '02749'
         post[:card_number] = credit_card.number
         post[:address1] = options[:billing_address][:address1]
         post[:address2] = options[:billing_address][:address2]
@@ -51,11 +58,27 @@ module ActiveMerchant #:nodoc:
         p 'TRANSACTION RESPONSE FROM LIPISHA'
         p response.inspect
 
-        Response.new(response[:success] , response[:message], response,
-                     :authorization => response[:transaction_id],
-                     :avs_result => { :code => response[:avs_result] },
-                     :cvv_result => response[:cvv_result]
-        )
+        #  def initialize(success, message, params = {}, options = {})
+
+        response = JSON.parse(response)
+
+        if success?(response)
+          return Response.new(true,
+                              response['status']['status'],
+                              response,
+                              :test => true,
+                              :authorization => response['content']['transaction_reference'])
+
+        else
+          return Response.new(false,
+                              response['status']['status'],
+                              response,
+                              :test => true)
+        end
+      end
+
+      def success?(response)
+        response['status']['status'] == 'SUCCESS'
       end
 
       def post_data(action, parameters = {})

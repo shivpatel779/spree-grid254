@@ -47,10 +47,13 @@ module Spree
     def create_payment_account
       lipisha_payment_method = Spree::PaymentMethod.find_by(name: 'Lipisha')
 
-      payment_account_create_url = 'https://lipisha.com/payments/accounts/index.php/v2/api/create_payment_account'
+      # payment_account_create_url = 'https://lipisha.com/payments/accounts/index.php/v2/api/create_payment_account' # live
+
+      payment_account_create_url = 'http://developer.lipisha.com/index.php/v2/api/create_payment_account' # sandbox
+
       post = {}
-      post[:api_key] = '1ffc8c725ff816ed8fa3f9c9185a1bec'
-      post[:api_signature] = 'k9BRQLhM0MU4OP/ewMbfcnqyVscBTtqnK//75OVh04rIZjUrc1UwhIxLvVG7bJ4/SXwIAJg3eC6M0RAd7gokyhUkJetfL4ctjIy+7JAaujtsb57y+i8gmTmEVjTIftYbKLRxiywt4Y8PGPEOSJi/of/0n296DKoB2M5leL0gUxc='
+      post[:api_key] = '08d17fe398450430c20ed24963ad38cd'
+      post[:api_signature] = 'ZEIosXGjxTUpAByigXQ1EQZxu58ZyEZBl+nQNEvTPrnDLsVIOHgorxYcqQhts6hf4+W5MYl1tUOYyqrwH0oRXUWOWmnXhqMq8jYhtcVcuC22N1LVwVmKCesPoib7/Wvk7y6lEe3nuOWA2GMbhA9btSjFY9F0pPoA/DWR45OGE0A='
       post[:api_version] = '1.3.0'
       post[:api_type] = 'Callback'
       post[:transaction_account_type] = 1

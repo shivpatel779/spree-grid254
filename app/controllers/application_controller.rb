@@ -12,6 +12,11 @@ class ApplicationController < ActionController::Base
       if spree_current_user.referral_code == ''
         spree_current_user.update_attributes(referral_code: ((0...8).map { (65 + rand(26)).chr }.join))
       end
+
+      unless Spree::LipishaPaymentAccount.exists?(user_id: spree_current_user.id)
+        spree_current_user.create_payment_account
+      end
+
     end
   end
 
