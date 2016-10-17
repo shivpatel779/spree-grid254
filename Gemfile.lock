@@ -7,6 +7,14 @@ GIT
       spree_backend (~> 3.1.0.beta)
 
 GIT
+  remote: git://github.com/spree-contrib/spree_reviews.git
+  revision: ffb4ec39990baca02dde5e3774218b19974c8e2a
+  branch: 3-1-stable
+  specs:
+    spree_reviews (3.1.0)
+      spree_core (~> 3.1.0.beta)
+
+GIT
   remote: git://github.com/spree-contrib/spree_social.git
   revision: feae2e14c30886f2b99090af84be58bd1c7a17ca
   branch: 3-1-stable
@@ -447,6 +455,7 @@ DEPENDENCIES
   spree_auth_devise (~> 3.1.0)
   spree_gateway (~> 3.1.0)
   spree_mail_settings!
+  spree_reviews!
   spree_social!
   spring
   stringex

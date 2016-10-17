@@ -52,6 +52,11 @@ gem 'spree', '~> 3.1.0'
 gem 'spree_auth_devise', '~> 3.1.0'
 gem 'spree_gateway', '~> 3.1.0'
 gem 'spree_social', github: 'spree-contrib/spree_social', branch: '3-1-stable'
+
+# enable SMTP in admin
+gem 'spree_mail_settings', github: 'spree-contrib/spree_mail_settings', branch: '3-1-stable'
+gem 'spree_reviews', github: 'spree-contrib/spree_reviews', branch: '3-1-stable'
+
 gem "omniauth-linkedin"
 
 # chosen jsuq
@@ -71,5 +76,3 @@ gem 'africastalking-ruby'
 # gem 'devise-two-factor'
 gem 'rotp'
 
-# enable SMTP
-gem 'spree_mail_settings', github: 'spree-contrib/spree_mail_settings', branch: '3-1-stable'
