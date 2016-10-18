@@ -1,0 +1,39 @@
+<div data-hook="admin_user_form_fields" class="row">
+  <div class="col-md-6">
+
+    <%= f.field_container :first_name, class: ['form-group'] do %>
+        <%= f.label :first_name, Spree.t(:first_name) %>
+        <%= f.text_field :first_name, :class => 'form-control' %>
+        <%= f.error_message_on :first_name %>
+    <% end %>
+
+    <%= f.field_container :middle_name, class: ['form-group'] do %>
+        <%= f.label :middle_name, Spree.t(:middle_name) %>
+        <%= f.text_field :middle_name, :class => 'form-control' %>
+        <%= f.error_message_on :middle_name %>
+    <% end %>
+
+    <%= f.field_container :last_name, class: ['form-group'] do %>
+        <%= f.label :last_name, Spree.t(:last_name) %>
+        <%= f.text_field :last_name, :class => 'form-control' %>
+        <%= f.error_message_on :last_name %>
+    <% end %>
+
+  </div>
+
+  <div data-hook="admin_user_form_password_fields" class="col-md-6">
+    <%= f.field_container :date_of_birth, class: ['form-group'] do %>
+        <%= f.label :date_of_birth, Spree.t(:date_of_birth) %>
+        <%= f.date_field :date_of_birth, :class => 'form-control' %>
+        <%= f.error_message_on :date_of_birth %>
+    <% end %>
+
+    <%= f.field_container :national_id, class: ['form-group'] do %>
+        <%= f.label :national_id, 'National ID' %>
+        <%= f.text_field :national_id, :class => 'form-control' %>
+        <%= f.error_message_on :national_id %>
+    <% end %>
+
+  </div>
+
+</div>

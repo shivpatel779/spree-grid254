@@ -75,5 +75,9 @@ Rails.application.routes.draw do
   get '/wallet' => 'spree/wallet#show'
   post '/wallet/credit_money' => 'spree/wallet#credit_money'
 
+  Spree::Core::Engine.routes.draw do
+    get "/sale" => "home#sale"
+  end
+
 
 end
