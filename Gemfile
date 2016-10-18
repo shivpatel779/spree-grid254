@@ -77,5 +77,6 @@ gem 'africastalking-ruby'
 # gem 'devise-two-factor'
 gem 'rotp'
 
- gem 'spree_simple_sales', '3.1.0', :path => '/home/mkrorfolk/my_work/SkywideSys/projects/spree_simple_sales'
+# gem 'spree_simple_sales', '3.1.0', :path => '/home/mkrorfolk/my_work/SkywideSys/projects/spree_simple_sales'
 
+gem 'spree_simple_sales', git: 'https://skywidesys:ror12345@bitbucket.org/mnkrew/sale_extension.git', branch: 'master'

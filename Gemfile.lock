@@ -41,10 +41,13 @@ GIT
       routing-filter (~> 0.5.0)
       spree_core (~> 3.1.0.beta)
 
-PATH
-  remote: /home/mkrorfolk/my_work/SkywideSys/projects/spree_simple_sales
+GIT
+  remote: https://skywidesys:ror12345@bitbucket.org/mnkrew/sale_extension.git
+  revision: 588ac51981db749f389252b61264849bed88e1a9
+  branch: master
   specs:
     spree_simple_sales (3.1.0)
+      spree_core (~> 3.1.0)
 
 GEM
   remote: https://rubygems.org/
@@ -484,7 +487,7 @@ DEPENDENCIES
   spree_i18n!
   spree_mail_settings!
   spree_reviews!
-  spree_simple_sales (= 3.1.0)!
+  spree_simple_sales!
   spree_social!
   spring
   stringex
