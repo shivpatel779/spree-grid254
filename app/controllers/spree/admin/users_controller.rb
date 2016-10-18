@@ -35,7 +35,7 @@ module Spree
           params[:user].delete(:password_confirmation)
         end
 
-        if params[:commit].eql?('Update Personal detail')
+        if params[:commit].eql?('Update Personal detail' || 'Create Personal detail')
           params.permit!
           if @user.personal_detail.nil?
             personal_detail_params = params[:user].merge!(user_id: @user.id)
@@ -45,7 +45,7 @@ module Spree
           end
         end
 
-        if params[:commit].eql?('Update Location info')
+        if params[:commit].eql?('Update Location info' || 'Create Location info')
           params.permit!
           if @user.location_info.nil?
             personal_detail = Spree::LocationInfo.create(params[:user])
