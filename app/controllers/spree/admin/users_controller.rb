@@ -48,7 +48,8 @@ module Spree
         if params[:commit].eql?('Update Location info') || params[:commit].eql?('Create Location info')
           params.permit!
           if @user.location_info.nil?
-            personal_detail = Spree::LocationInfo.create(params[:user])
+            location_params = params[:user].merge!(user_id: params[:id])
+            personal_detail = Spree::LocationInfo.create(location_params)
           else
             @user.location_info.update_attributes(params[:user])
           end
@@ -59,7 +60,7 @@ module Spree
           flash.now[:success] = Spree.t(:account_updated)
         end
 
-        render :edit
+        redirect_to edit_admin_user_path(@user)
       end
 
       def addresses
