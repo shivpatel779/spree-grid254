@@ -74,8 +74,17 @@
 
     window.initMap = function () {
 
-        var lat = <%= f.object.lat != '' ? f.object.lat : 23.0225 %>
-        var lng = <%= f.object.lng != '' ? f.object.lng : 72.5714 %>
+        <% if f.object.lat %>
+            var lat = <%= f.object.lat %>
+        <% else %>
+            var lat = 23.0225
+        <% end %>
+
+        <% if f.object.lng %>
+            var lng = <%= f.object.lng %>
+        <% else %>
+            var lng = 72.5714
+        <% end %>
 
         var map = new google.maps.Map(document.getElementById('map'), {
             mapTypeControl: false,
