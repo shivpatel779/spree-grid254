@@ -3,6 +3,9 @@
 //= require jquery_ujs
 
 //= require bootstrap-sprockets
+
+//= require spree/frontend/social-share-button.coffee
+
 //= require jquery.payment
 // require jquery.validate/jquery.validate.min
 //= require spree/frontend/tab_js
@@ -39,4 +42,3 @@
 //= require spree/frontend/underscore-min
 //= require gmaps/google
 
-//= require spree/frontend/social-share-button.coffee
