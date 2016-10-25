@@ -80,3 +80,7 @@ gem 'rotp'
 # gem 'spree_simple_sales', '3.1.0', :path => '/home/mkrorfolk/my_work/SkywideSys/projects/spree_simple_sales'
 
 gem 'spree_simple_sales', '3.1.0', git: 'https://skywidesys:ror12345@bitbucket.org/mnkrew/sale_extension.git'
+
+gem 'shareable'
+
+gem 'social-share-button'

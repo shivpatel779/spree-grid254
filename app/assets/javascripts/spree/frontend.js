@@ -38,3 +38,5 @@
 
 //= require spree/frontend/underscore-min
 //= require gmaps/google
+
+//= require spree/frontend/social-share-button

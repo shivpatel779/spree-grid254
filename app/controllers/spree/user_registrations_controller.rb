@@ -11,6 +11,12 @@ class Spree::UserRegistrationsController < Devise::RegistrationsController
 
   # GET /resource/sign_up
   def new
+
+    @from_url = request.referrer.nil?
+
+    p '===================='
+    p @from_url.inspect
+
     if params.key?(:c) && spree_current_user
       sign_out(resource_name)
 
@@ -39,6 +45,10 @@ class Spree::UserRegistrationsController < Devise::RegistrationsController
       if params.key?(:ref_code)
         user = Spree::User.find_by(referral_code: params[:ref_code])
         if user
+
+
+
+
           if user.eligible_to_earn_invite?(resource.email)
             user.earn_referral_credit
             Spree::ReferralMailer.invite_earned(user, resource).deliver

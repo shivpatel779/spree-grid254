@@ -9,5 +9,6 @@
  *= require spree/frontend/fontello
  *= require chosen-compass
  *= require chosen
+ *= require social-share-button
  *= require_self
 */
