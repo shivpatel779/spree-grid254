@@ -25,7 +25,7 @@ module Spree::UserInvitesHelper
         if touch_device?
           html<< link_to('Register on Grid254', ("whatsapp://send?text=#{name.downcase} #{opts[:url]}").html_safe)
         else
-          html << link_to(image_tag('1477405766_whatsapp.png', height: '18', width: '18'), 'https://web.whatsapp.com')
+          html << link_to(image_tag('1477405766_whatsapp.png', height: '18', width: '18'), 'https://web.whatsapp.com', target: '_false')
         end
 
       else
