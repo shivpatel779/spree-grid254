@@ -57,11 +57,6 @@
 
                       <% if params.key?(:c)%>
                         <%= hidden_field_tag :ref_code, params[:c]%>
-
-                        <% unless @from_url.nil? %>
-                              <%= hidden_field_tag :from_url, @from_url%>
-                        <% end %>
-
                       <% end %>
 
                   <% end %>
