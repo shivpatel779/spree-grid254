@@ -22,25 +22,35 @@ module Spree::UserInvitesHelper
     opts[:allow_sites].each do |name|
 
       if name.eql?('whatsapp')
+
         if touch_device?
-          html<< link_to('Register on Grid254', ("whatsapp://send?text=#{name.downcase} #{opts[:url]}").html_safe)
+          html<< link_to(image_tag('1477405766_whatsapp.png', height: '18', width: '18'), ("whatsapp://send?text=#{name.downcase} #{opts[:url]}").html_safe)
         else
           html << link_to(image_tag('1477405766_whatsapp.png', height: '18', width: '18'), 'https://web.whatsapp.com', target: '_false')
         end
 
       else
 
-        extra_data = opts.select { |k, _| k.to_s.start_with?('data') } if name.eql?('tumblr')
-        special_data = opts.select { |k, _| k.to_s.start_with?('data-' + name) }
+        if name.eql?('telegram')
+          html << link_to(image_tag('1477523495_Telegram.png', height: '18', width: '18'), "https://telegram.me/share/url?url=#{opts[:url]}", target: '_false')
+        else
+          extra_data = opts.select { |k, _| k.to_s.start_with?('data') } if name.eql?('tumblr')
+          special_data = opts.select { |k, _| k.to_s.start_with?('data-' + name) }
 
-        special_data["data-wechat-footer"] = t "social_share_button.wechat_footer" if name == "wechat"
+          special_data["data-wechat-footer"] = t "social_share_button.wechat_footer" if name == "wechat"
 
-        link_title = t "social_share_button.share_to", :name => t("social_share_button.#{name.downcase}")
-        html << link_to("", "#", { :rel => ["nofollow", rel],
-                                   "data-site" => name,
-                                   :class => "ssb-icon ssb-#{name}",
-                                   :onclick => "return SocialShareButton.share(this);",
-                                   :title => h(link_title) }.merge(extra_data).merge(special_data)).html_safe
+          link_title = t "social_share_button.share_to", :name => t("social_share_button.#{name.downcase}")
+          html << link_to("", "#", { :rel => ["nofollow", rel],
+                                     "data-site" => name,
+                                     :class => "ssb-icon ssb-#{name}",
+                                     :onclick => "return SocialShareButton.share(this);",
+                                     :title => h(link_title) }.merge(extra_data).merge(special_data)).html_safe
+        end
+
+
+
+
+
 
       end
 

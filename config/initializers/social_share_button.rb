@@ -4,7 +4,7 @@ SocialShareButton.configure do |config|
   #                         xing reddit hacker_news)
 
  # SocialShareButton.configure do |config|
-    config.allow_sites = %w(twitter facebook whatsapp)
+    config.allow_sites = %w(twitter facebook whatsapp telegram)
  # end
 
 end
