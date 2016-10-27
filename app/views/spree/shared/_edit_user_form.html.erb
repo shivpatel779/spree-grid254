@@ -120,9 +120,20 @@
                             <div class="tab-form-lable"> Phone Number</div>
                             <label class="email">
                               <%= f.text_field :phone, :placeholder => Spree.t(:phone) %>
+                            </label>
+                          </div>
 
+                          <div>
+                            <div class="tab-form-lable">My Referral Code</div>
+                            <label class="email">
+                              <%= text_field_tag :referral_code, f.object.referral_code, readonly: true, style: 'color: red; font-weight: bold' %>
+                            </label>
+                          </div>
 
-
+                          <div>
+                            <div>Share via </div>
+                            <label class="email">
+                              <%= social_share_button_tag('', {url: referral_url_string}) %>
                             </label>
                           </div>
 
