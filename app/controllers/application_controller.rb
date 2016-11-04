@@ -6,7 +6,6 @@ class ApplicationController < ActionController::Base
   before_filter :initialize_user_data
 
   def initialize_user_data
-    p 'yesssssssssssssssssssssssssssssss'
     if spree_current_user
       spree_current_user.create_wallet if spree_current_user.wallet.nil?
       spree_current_user.create_referral_credit if spree_current_user.spree_referral_credit.nil?

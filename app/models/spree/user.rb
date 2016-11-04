@@ -44,6 +44,11 @@ module Spree
     after_create :create_wallet, :create_referral_credit, :create_payment_account
     before_create :set_referral_code
 
+    def full_name
+      detail = personal_detail
+      "#{detail.first_name} #{detail.last_name}"
+    end
+
     def create_payment_account
       lipisha_payment_method = Spree::PaymentMethod.find_by(name: 'Lipisha')
 
@@ -100,6 +105,8 @@ module Spree
     def deduct_invite_credit(size)
       spree_referral_credit.update_attributes(credit: (spree_referral_credit.credit - size))
     end
+
+
 
     def set_referral_code
       self.referral_code = (0...8).map { (65 + rand(26)).chr }.join
