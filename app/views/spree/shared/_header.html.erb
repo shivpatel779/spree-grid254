@@ -1,67 +1,318 @@
-<header>
-  <div class="box">
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-8 col-md-8">
-          <p class="title1">Free phone: <strong>800-2345-6789</strong></p>
-          <p class="title2">Hours:  8am-8pm PST M-Th;   6am-3pm PST Fri</p>
-        </div>
-        <div class="col-lg-4 col-md-4">
+<nav class="navbar navbar-default navbar-fixed-top">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="/"><img src="assets/logo1.png" class="img-responsive"></a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse" style="margin-top:10px;">
+      <ul class="nav navbar-nav">
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Browse
+            <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="#">Brands</a>
+            </li>
+            <li><a href="#">Discounts</a>
+            </li>
+            <li><a href="#">Category</a>
+            </li>
+            <li role="separator" class="divider"></li>
+            <li class="dropdown-header">Nearby</li>
+            <li><a href="#">location</a>
+            </li>
+            <li><a href="#">Newest</a>
+            </li>
+          </ul>
+        </li>
+        <form class="navbar-form pull-left" role="search">
+          <div class="input-group">
+            <input type="text" class="form-control" placeholder="Search by your choise">
+
+            <div class="input-group-btn">
+              <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search"></span>
+              </button>
+            </div>
+          </div>
+        </form>
+        <li class="dropdown">
+          <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">OR</a>
+        </li>
+        <form class="navbar-form pull-left" role="search">
+          <div class="input-group">
+            <input type="text" class="form-control" placeholder="Choose your location">
+
+            <div class="input-group-btn">
+              <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search"></span>
+              </button>
+            </div>
+          </div>
+        </form>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="/cart">Cart <span class="glyphicon glyphicon-shopping-cart"></span></a>
+        </li>
+        <li><a style="padding-left: 0;padding-right: 0px;">|</a>
+        </li>
+        <li>
           <% if spree_current_user %>
-              <%= link_to Spree.t(:logout), spree.logout_path, class: 'btn-default btn1' %>
-              <%= link_to Spree.t(:my_account), spree.edit_account_path, class: 'btn-default btn1' %>
-              <%= link_to "Wallet #{number_to_currency(spree_current_user.wallet.wallet_balance)}",'/wallet', class: 'btn-default btn1' %>
+              <%= link_to spree.logout_path do %>
+                  <span class="glyphicon glyphicon-user"></span> Logout
+              <% end %>
 
           <% else %>
-            <%= link_to 'Register', spree.signup_path, class: 'btn-default btn1' %>
-            <%= link_to 'Sign In', spree.login_path, class: 'btn-default btn1' %>
+
+              <%= link_to '#', 'data-toggle' => 'modal', 'data-target' => '#login' do %>
+                  <span class="glyphicon glyphicon-user"></span> Login
+              <% end %>
+
           <% end %>
 
+          <li><a style="padding-left: 0;padding-right: 0px;">|</a>
+          </li>
+          <li>
+            <% if spree_current_user %>
+                <%= link_to spree.edit_account_path do %>
+                    <span class="glyphicon glyphicon-user"></span> My Account
+                <% end %>
+            <% else %>
+                <%= link_to '#', 'data-toggle' => 'modal', 'data-target' => '#signup' do %>
+                    <span class="glyphicon glyphicon-user"></span> Sign up
+                <% end %>
+            <% end %>
+
+          </li>
+          <!-- <li class="active"><a href="./">Fixed top <span class="sr-only">(current)</span></a></li> -->
+          </ul>
+    </div>
+    <!--/.nav-collapse -->
+  </div>
+</nav>
+
+<!-- Modal -->
+<!-- <div class="modal fade" id="myModal" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Modal Header</h4>
+      </div>
+      <div class="modal-body">
+        <p>Some text in the modal.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div> -->
+<div class="modal fade" id="login" role="dialog">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="omb_login" id="loginbox">
+        <!-- <h3 class="omb_authTitle">Login or <a href="#">Sign up</a></h3> -->
+        <div class="col-sm-12 col-xs-12">
+          <h3 class="omb_authTitle"><a>Login</a></h3>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        <div class="row omb_row-sm-offset-3 omb_socialButtons">
+
+          <% Spree::AuthenticationMethod.available_for(@spree_user).each do |method| %>
+
+              <div class="col-xs-4 col-sm-3">
+
+                <% c_name = if method.provider.downcase.include?('facebook')
+                              'facebook'
+                            elsif method.provider.downcase.include?('google')
+                              'google'
+                            elsif method.provider.downcase.include?('twitter')
+                              'twitter'
+                            end
+                %>
+
+                <%= link_to spree.spree_user_omniauth_authorize_url(provider: method.provider), class: "btn btn-lg btn-block omb_btn-#{c_name}" do %>
+                    <i class="fa fa-<%= c_name %> visible-xs"></i>
+                    <span class="hidden-xs"><%= c_name.titlecase %></span>
+                <% end %>
+
+              </div>
+
+          <% end %>
+
+        </div>
+
+        <div class="row omb_row-sm-offset-3 omb_loginOr">
+          <div class="col-xs-12 col-sm-9">
+            <hr class="omb_hrOr">
+            <span class="omb_spanOr">or</span>
+          </div>
+        </div>
+
+        <div class="row omb_row-sm-offset-3">
+          <div class="col-xs-12 col-sm-9">
+
+            <%= form_for Spree::User.new, :as => :spree_user, html: { class: 'omb_loginForm' }, :url => spree.create_new_session_path do |f| %>
+
+                <div class="input-group">
+                  <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                  <%= f.text_field :email, :placeholder => Spree.t(:email), class: 'form-control' %>
+                </div>
+
+                <span class="help-block"></span>
+
+                <div class="input-group">
+                  <span class="input-group-addon"><i class="fa fa-lock"></i></span>
+                  <%= f.password_field :password, :placeholder => Spree.t(:password), class: 'form-control' %>
+                </div>
+                <!--<span class="help-block">Password error</span>-->
+
+                <%= button_tag(type: 'submit', class: 'btn btn-lg btn-primary btn-block') do %>
+                    Login
+                <% end %>
+
+                </div>
+                </div>
+                <div class="row omb_row-sm-offset-3">
+                  <div class="col-xs-12 col-sm-4 col-sm-offset-1">
+                    <label class="checkbox">
+                      <%= f.check_box :remember_me, :tabindex => 3 %>Remember me
+                    </label>
+                  </div>
+                  <div class="col-xs-12 col-sm-4">
+                    <p class="omb_forgotPwd">
+                      <%= link_to Spree.t(:forgot_password), spree.recover_password_path %>
+                    </p>
+                  </div>
+            <% end %>
+            </div>
+            </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="signup" role="dialog">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div id="signupbox" class="omb_login">
+        <div class="col-sm-12 col-xs-12">
+          <h3 class="omb_authTitle" style="line-height: 200%"><a>Sign up</a></h3>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        <div class="row omb_row-sm-offset-3 omb_socialButtons">
+          <% Spree::AuthenticationMethod.available_for(@spree_user).each do |method| %>
+
+              <div class="col-xs-4 col-sm-3">
+
+                <% c_name = if method.provider.downcase.include?('facebook')
+                              'facebook'
+                            elsif method.provider.downcase.include?('google')
+                              'google'
+                            elsif method.provider.downcase.include?('twitter')
+                              'twitter'
+                            end
+                %>
+
+                <%= link_to spree.spree_user_omniauth_authorize_url(provider: method.provider), class: "btn btn-lg btn-block omb_btn-#{c_name}" do %>
+                    <i class="fa fa-<%= c_name %> visible-xs"></i>
+                    <span class="hidden-xs"><%= c_name.titlecase %></span>
+                <% end %>
+
+              </div>
+
+          <% end %>
+        </div>
+
+        <div class="row omb_row-sm-offset-3 omb_loginOr">
+          <div class="col-xs-12 col-sm-9">
+            <hr class="omb_hrOr">
+            <span class="omb_spanOr">or</span>
+          </div>
+        </div>
+
+        <div class="col-sm-12 col-xs-12">
+          <h3 class="omb_authTitle" style="line-height: 100%"><a>Sign up with Email</a></h3>
+        </div>
+      </div>
+
+      <div class="row omb_row-sm-offset-3">
+        <div class="col-xs-12 col-sm-9">
+
+          <% @user = Spree::User.new %>
+
+          <%= form_for @user, :as => :spree_user, html: { class: "omb_loginForm" }, :url => spree.registration_path do |f| %>
+
+              <%= fields_for Spree::PersonalDetail.new do |ff| %>
+
+                  <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                    <%= ff.text_field :first_name, :placeholder => 'First Name', class: 'form-control' %>
+                  </div>
+                  <span class="help-block"></span>
+
+                  <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                    <%= ff.text_field :middle_name, :placeholder => 'Middle Name', class: 'form-control' %>
+                  </div>
+                  <span class="help-block"></span>
+
+                  <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                    <%= ff.text_field :last_name, :placeholder => 'Last Name', class: 'form-control' %>
+                  </div>
+                  <span class="help-block"></span>
+
+              <% end %>
+
+              <div class="input-group">
+                <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
+                <%= f.text_field :email, :placeholder => Spree.t(:email), class: 'form-control' %>
+              </div>
+              <span class="help-block"></span>
+
+              <div class="input-group">
+                <span class="input-group-addon"><i class="fa fa-lock"></i></span>
+                <%= f.password_field :password, :placeholder => Spree.t(:password), class: 'form-control' %>
+              </div>
+              <span class="help-block"></span>
+
+              <div class="input-group">
+                <span class="input-group-addon"><i class="fa fa-lock"></i></span>
+                <%= f.password_field :password_confirmation, :placeholder => Spree.t(:confirm_password), class: 'form-control' %>
+              </div>
+              <span class="help-block"></span>
+
+
+              <%= button_tag(type: 'submit', class: 'btn btn-lg btn-primary btn-block') do %>
+                  Sign Up
+              <% end %>
+
+              <a href="#" onClick="$('#signupbox').hide(); $('#loginbox').show()">Login</a>
+
+          <% end %>
+
+
+        </div>
+      </div>
+      <div class="row omb_row-sm-offset-3">
+        <div class="col-xs-12 col-sm-4 col-sm-offset-1">
+          <label class="checkbox">
+            <input value="remember-me" type="checkbox">Remember Me
+          </label>
+        </div>
+        <div class="col-xs-12 col-sm-4">
+          <p class="omb_forgotPwd">
+            <a href="#">Forgot password?</a>
+          </p>
         </div>
       </div>
     </div>
   </div>
-  <div class="container">
-    <h1 class="navbar-brand navbar-brand_">
-      <%= link_to image_tag('logo.png'), spree.root_path %>
-    </h1>
-    <nav class="navbar navbar-default navbar-static-top tm_navbar clearfix" role="navigation">
-      <ul class="nav sf-menu clearfix">
-        <li class="active"><a href="index.html">Home</a></li>
-        <li class="sub-menu"><!--<a href="">About</a>--><span class="fa fa-angle-down"></span>
-          <ul class="submenu">
-            <li><a href="#">Lorem ipsum</a></li>
-            <li><a href="#">Dolor sit amet</a><span class="fa fa-angle-right"></span>
-              <ul class="submenu">
-                <li><a href="#">Dolore ipsu</a></li>
-                <li><a href="#">Consecte</a></li>
-                <li><a href="#">Elit Conseq</a></li>
-              </ul>
-            </li>
-            <li><a href="#">Conse ctetur</a></li>
-            <li><a href="#">Adipisicing</a></li>
-            <li><a href="#">Elit sed do</a></li>
-            <li><a href="#">Eiusmod tempor</a></li>
-            <li><a href="#">Incididunt ut labore</a></li>
-            <li><a href="#">Et dolore magna</a></li>
-          </ul>
-        </li>
-        <li><a href="index-2.html">Sell</a></li>
-        <li><a href="index-3.html">Buy</a></li>
-        <li><a href="index-4.html">Contact us</a></li>
-        <% if spree_current_user %>
-
-        <li><%= link_to 'Invite & Earn', '/invite'%>(<%= spree_current_user.spree_referral_credit.credit%>)</li>
-        <% end %>
-      </ul>
-    </nav>
-  </div>
-</header>
-
-
-<%if spree_current_user && !spree_current_user.phone_verified %>
-<div class="alert alert-warning">
-  You haven't verified your phone number. <strong><%= link_to 'Click', spree.edit_account_path %></strong> to verify.
 </div>
-
-<% end %>
+</div>

@@ -28,10 +28,16 @@ class Spree::UserRegistrationsController < Devise::RegistrationsController
   # POST /resource/sign_up
   def create
 
+    params[:personal_detail].permit!
+    @personal_detail = Spree::PersonalDetail.new(params[:personal_detail])
+
     @user          = build_resource(spree_user_params)
     resource_saved = resource.save
     yield resource if block_given?
     if resource_saved
+
+      @personal_detail.user = resource
+      @personal_detail.save
 
       resource.create_wallet
       resource.create_referral_credit

@@ -3,5 +3,9 @@ module Spree
     def sale
       @products = Product.joins(:variants_including_master).where('spree_variants.sale_price is not null').uniq
     end
+
+    def index
+      @products = Spree::Product.first(5)
+    end
   end
 end

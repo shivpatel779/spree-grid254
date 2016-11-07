@@ -2,18 +2,153 @@
   <title>Home</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="icon" href="/assets/favicon.ico" type="image/x-icon">
-  <link rel="shortcut icon" href="/assets/favicon.ico" type="image/x-icon" />
+  <link rel="icon" href="assets/favicon.ico" type="image/x-icon">
+  <link rel="shortcut icon" href="assets/favicon.ico" type="image/x-icon" />
   <meta name="description" content="Your description">
   <meta name="keywords" content="Your keywords">
   <meta name="author" content="Your name">
-  <meta name = "format-detection" content = "telephone=no" />
+  <meta name="format-detection" content="telephone=no" />
 
-<%= stylesheet_link_tag 'spree/frontend' %>
-<%= csrf_meta_tags %>
-<%= javascript_include_tag 'spree/frontend' %>
+  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,700" rel="stylesheet">
 
-<script src="//connect.facebook.net/en_US/sdk.js#xfbml=1&amp;version=v2.0"></script>
+  <%= stylesheet_link_tag 'spree/frontend' %>
+  <%= csrf_meta_tags %>
+  <%= javascript_include_tag 'spree/frontend' %>
+
+
+  <script>
+      // Starrr plugin (https://github.com/dobtco/starrr)
+      var __slice = [].slice;
+
+      (function($, window) {
+          var Starrr;
+
+          Starrr = (function() {
+              Starrr.prototype.defaults = {
+                  rating: void 0,
+                  numStars: 5,
+                  change: function(e, value) {}
+              };
+
+              function Starrr($el, options) {
+                  var i, _, _ref,
+                          _this = this;
+
+                  this.options = $.extend({}, this.defaults, options);
+                  this.$el = $el;
+                  _ref = this.defaults;
+                  for (i in _ref) {
+                      _ = _ref[i];
+                      if (this.$el.data(i) != null) {
+                          this.options[i] = this.$el.data(i);
+                      }
+                  }
+                  this.createStars();
+                  this.syncRating();
+                  this.$el.on('mouseover.starrr', 'i', function(e) {
+                      return _this.syncRating(_this.$el.find('i').index(e.currentTarget) + 1);
+                  });
+                  this.$el.on('mouseout.starrr', function() {
+                      return _this.syncRating();
+                  });
+                  this.$el.on('click.starrr', 'i', function(e) {
+                      return _this.setRating(_this.$el.find('i').index(e.currentTarget) + 1);
+                  });
+                  this.$el.on('starrr:change', this.options.change);
+              }
+
+              Starrr.prototype.createStars = function() {
+                  var _i, _ref, _results;
+
+                  _results = [];
+                  for (_i = 1, _ref = this.options.numStars; 1 <= _ref ? _i <= _ref : _i >= _ref; 1 <= _ref ? _i++ : _i--) {
+                      _results.push(this.$el.append("<i class='fa fa-star-o'></i>"));
+                  }
+                  return _results;
+              };
+
+              Starrr.prototype.setRating = function(rating) {
+                  if (this.options.rating === rating) {
+                      rating = void 0;
+                  }
+                  this.options.rating = rating;
+                  this.syncRating();
+                  return this.$el.trigger('starrr:change', rating);
+              };
+
+              Starrr.prototype.syncRating = function(rating) {
+                  var i, _i, _j, _ref;
+
+                  rating || (rating = this.options.rating);
+                  if (rating) {
+                      for (i = _i = 0, _ref = rating - 1; 0 <= _ref ? _i <= _ref : _i >= _ref; i = 0 <= _ref ? ++_i : --_i) {
+                          this.$el.find('i').eq(i).removeClass('fa-star-o').addClass('fa-star');
+                      }
+                  }
+                  if (rating && rating < 5) {
+                      for (i = _j = rating; rating <= 4 ? _j <= 4 : _j >= 4; i = rating <= 4 ? ++_j : --_j) {
+                          this.$el.find('i').eq(i).removeClass('fa-star').addClass('fa-star-o');
+                      }
+                  }
+                  if (!rating) {
+                      return this.$el.find('i').removeClass('fa-star').addClass('fa-star-o');
+                  }
+              };
+
+              return Starrr;
+
+          })();
+          return $.fn.extend({
+              starrr: function() {
+                  var args, option;
+
+                  option = arguments[0], args = 2 <= arguments.length ? __slice.call(arguments, 1) : [];
+                  return this.each(function() {
+                      var data;
+
+                      data = $(this).data('star-rating');
+                      if (!data) {
+                          $(this).data('star-rating', (data = new Starrr($(this), option)));
+                      }
+                      if (typeof option === 'string') {
+                          return data[option].apply(data, args);
+                      }
+                  });
+              }
+          });
+      })(window.jQuery, window);
+
+      $(function() {
+          return $(".starrr").starrr();
+      });
+      $(document).ready(function() {
+          if ($('html').hasClass('desktop')) {
+              new WOW().init();
+          }
+
+          $("[rel='tooltip']").tooltip();
+
+          $('.thumbnailnew').hover(
+                  function() {
+                      $(this).find('.captionnew').slideDown(500); //.fadeIn(250)
+                  },
+                  function() {
+                      $(this).find('.captionnew').slideUp(500); //.fadeOut(205)
+                  }
+          );
+
+
+          $('#stars').on('starrr:change', function(e, value) {
+              $('#count').html(value);
+          });
+
+          $('#stars-existing').on('starrr:change', function(e, value) {
+              $('#count-existing').html(value);
+          });
+      });
+  </script>
+  <!--<![endif]-->
+
   <!--[if (gt IE 9)|!(IE)]><!-->
 
   <script>
@@ -36,4 +171,568 @@
       </map>
   </div>
   <![endif]-->
+  <style type="text/css">
+      body,html{
+          font-family: 'Roboto', sans-serif;
+      }
+
+      .f-section .box_inner {
+          border: 1px solid #d1d0c9;
+      ;
+      }
+      .f-section .maxheight {
+          height: auto !important;
+      }
+      .f-section .thumb-pad1 {
+          padding: 0px;
+      }
+      .f-section .caption {
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          padding: 1em;
+          width: 100%;
+          background-color: rgba(0, 0, 0, .8);
+      }
+      .f-section .caption .img-logo {
+          background-color: #fff;
+          display: block;
+          float: left;
+          margin: 0 .5em 0 0;
+          height: 75px;
+          width: 75px;
+          position: relative;
+      }
+      .f-section .caption h3.white-left-font {
+          color: #fff;
+          overflow: hidden;
+          text-align: left;
+          margin: 0px;
+          line-height: 24px;
+      }
+      .f-section .caption p.white-left-font {
+          color: #fff;
+          overflow: hidden;
+          text-align: left;
+          font-size: 14px;
+          margin: 0px;
+          line-height: 20px;
+      }
+      .thumb-box2 {
+          padding: 25px 0px 0px;
+      }
+      .trending-deals figure {
+          min-height: 100px !important;
+          border: 1px solid #d1d0c9;
+          margin-bottom: 5px !important;
+      }
+      .trending-deals .thumb-pad1 .caption p {
+          font: 93.75%/1.6 "Helvetica Neue", sans-serif;
+          color: #646464;
+          padding: 1em;
+          text-align: center;
+      }
+      .recomended-deals .box_inner {
+          border: 1px solid #d1d0c9;
+          padding: 1em;
+      }
+      .recomended-deals .left-txt {
+          width: 40%;
+          font-size: .8em;
+          white-space: nowrap;
+          float: left;
+          padding-top: 12px;
+          margin-top: 25px;
+      }
+      .recomended-deals .btn-default {
+          white-space: nowrap;
+          width: 130px;
+          float: right;
+          margin-bottom: 18px;
+          padding: 12px 5px;
+          background-color: #259fc4;
+          border-radius: 3px;
+          border: 0;
+          color: #fff;
+          cursor: pointer;
+          display: inline-block;
+          font-size: 1em !important;
+          font-weight: 600 !important;
+          line-height: 1em !important;
+          color: #fff !important;
+          margin-top: 25px !important;
+          text-align: center;
+          transition: background-color .2s linear, border-color .2s linear, color .2s linear, height .2s linear, width .2s linear;
+      }
+      .recomended-deals .thumb-pad2 {
+          padding: 0px;
+      }
+      .recomended-deals .maxheight2 {
+          margin-bottom: 35px;
+      }
+
+      .new-rec {
+          padding: 0px;
+          margin: 15px 0px;
+      }
+      .new-rec .thumb-pad2 {
+          padding: 15px 15px;
+      }
+      .new-rec:hover .thumb-pad2 {
+          box-shadow: 1px solid #eee;
+          z-index: 50;
+          border-radius: 3px;
+          text-decoration: none;
+          box-shadow: 0 7px 17px 0 rgba(23, 84, 116, 0.18);
+          border: solid 0.9px #f3f3f3;
+      }
+      .abs-disc-btn {
+          padding: 4px;
+          background-color: #595959;
+          border: 1px solid #595959;
+          font-size: 13px !important;
+          font-weight: 400 !important;
+          position: absolute;
+          top: 5px;
+          right: 5px;
+          color: #fff !important;
+          border-radius: 50%;
+      }
+      .thumbnail {
+          position: relative;
+          overflow: hidden;
+      }
+      .thumbnailnew {
+          background-color: #fff !important;
+          position: relative;
+          overflow: hidden;
+      }
+      .maxheightnew .thumbnailnew:hover > .captionnew,
+      .maxheightnew:hover > .captionnew {
+          display: block;
+      }
+      .captionnew {
+          position: absolute;
+          top: 0;
+          right: 0;
+          background: rgba(0, 0, 0, 0.50);
+          width: 100%;
+          height: 70%;
+          padding: 2%;
+          display: none;
+          text-align: center;
+          color: #fff !important;
+          z-index: 2;
+      }
+      .cpt-div .buy-now-div {
+          width: 100%;
+      }
+      .cpt-div .buy-now-div button.full-btn {
+          width: 100%;
+          border: 1px solid #ccc;
+          color: #888;
+          background-color: #fff;
+          margin-top: 5px;
+          padding: 5px;
+      }
+      .cpt-div .buy-now-div button.half-btn {
+          width: 45%;
+          border: 1px solid #ccc;
+          color: #888;
+          background-color: #fff;
+          margin: 5px 5% 0px 2%;
+          padding: 5px;
+          font-size: 14px;
+          text-transform: capitalize;
+          float: right;
+      }
+      .cpt-div .price {
+          margin-right: 5px;
+          margin-top: 7px;
+          font-size: 12px;
+          color: #344c55;
+      }
+      .cpt-div .price b {
+          font-size: 14px;
+          color: #32323e;
+      }
+      .cpt-div .price del {
+          color: #32323e;
+      }
+      .sale-div {
+          position: absolute;
+          top: 10px;
+          right: 10px;
+          border: 1px solid #8e8d8d;
+          border-radius: 50%;
+          text-align: center;
+          padding: 10px;
+          transform: 0.3 ease;
+      }
+      .cartshare-btn {
+          display: none;
+          background-color: rgba(255, 255, 255, 0.8);
+          position: absolute;
+          top: 70%;
+          right: 0px;
+          left: 0;
+          text-align: center;
+          padding: 5px;
+          margin: 0 auto;
+          transform: 0.3 ease;
+      }
+      .cartshare-btn button {
+          border: 1px solid #ccc;
+          color: #888;
+          background-color: #fff;
+      }
+      .new-rec:hover .cartshare-btn,
+      .new-rec .thumbnail:hover .cartshare-btn {
+          display: block;
+      }
+      .hover-state {
+          display: none;
+          transform: 0.3 ease;
+      }
+      .cpt-div:hover .show_hover .hover-state,
+      .show_hover:hover .hover-state,
+      .show_hover .thumbnail:hover .hover-state,
+      .show_hover .thumbnail .caption:hover .hover-state {
+          display: block;
+      }
+      .cpt-div:hover .show_hover .default-state,
+      .show_hover:hover .default-state,
+      .show_hover .thumbnail:hover .default-state,
+      .show_hover .thumbnail .caption:hover .default-state {
+          display: none;
+      }
+      /* For testimonial section */
+      /* carousel */
+
+      #quote-carousel {
+          padding: 0 10px 30px 10px;
+          margin-top: 30px;
+      }
+      /* Control buttons  */
+
+      #quote-carousel .carousel-control {
+          background: none;
+          color: #222;
+          font-size: 2.3em;
+          text-shadow: none;
+          margin-top: 30px;
+      }
+      /* Previous button  */
+
+      #quote-carousel .carousel-control.left {
+          left: -12px;
+      }
+      /* Next button  */
+
+      #quote-carousel .carousel-control.right {
+          right: -12px !important;
+      }
+      /* Changes the position of the indicators */
+
+      #quote-carousel .carousel-indicators {
+          right: 50%;
+          top: auto;
+          bottom: 0px;
+          margin-right: -19px;
+      }
+      /* Changes the color of the indicators */
+
+      #quote-carousel .carousel-indicators li {
+          background: #c0c0c0;
+      }
+      #quote-carousel .carousel-indicators .active {
+          background: #333333;
+      }
+      #quote-carousel img {
+          width: 250px;
+          height: 100px
+      }
+      .carousel-fade .carousel-inner .item {
+          opacity: 0;
+          visibility: hidden;
+          transition: visibility 0s 2s, opacity 2s linear;
+      }
+      .carousel-fade .carousel-inner .active {
+          opacity: 1;
+          visibility: visible;
+          transition: opacity 2s linear;
+      }
+      .carousel-fade .carousel-inner .active.left,
+      .carousel-fade .carousel-inner .active.right {
+          left: 0;
+          opacity: 0;
+          z-index: 1;
+      }
+      .carousel-fade .carousel-inner .next.left,
+      .carousel-fade .carousel-inner .prev.right {
+          opacity: 1;
+      }
+      .carousel-fade .carousel-control {
+          z-index: 2;
+      }
+      /* End carousel */
+
+      .item blockquote {
+          border-left: none;
+          margin: 0;
+      }
+      .item blockquote img {
+          margin-bottom: 10px;
+      }
+      .item blockquote p:before {
+          content: "\f10d";
+          font-family: 'Fontawesome';
+          float: left;
+          margin-right: 10px;
+      }
+
+      /**MEDIA QUERIES*/
+      /* Small devices (tablets, 768px and up) */
+
+      @media (min-width: 768px) {
+          #quote-carousel {
+              margin-bottom: 0;
+              padding: 0 40px 30px 40px;
+          }
+      }
+
+      #quote-carousel .item blockquote,
+      #quote-carousel .item small {
+          border-left: none;
+          margin: 0;
+          color: #fff;
+      }
+
+      /* Small devices (tablets, up to 768px) */
+      @media (max-width: 768px) {
+          /* Make the indicators larger for easier clicking with fingers/thumb on mobile */
+
+          #quote-carousel .carousel-indicators {
+              bottom: -20px !important;
+          }
+          #quote-carousel .carousel-indicators li {
+              display: inline-block;
+              margin: 0px 5px;
+              width: 15px;
+              height: 15px;
+          }
+          #quote-carousel .carousel-indicators li.active {
+              margin: 0px 5px;
+              width: 20px;
+              height: 20px;
+          }
+      }
+
+
+      .animated.fadeIn {
+          -webkit-animation-name: fadeIn;
+          -moz-animation-name: fadeIn;
+          -o-animation-name: fadeIn;
+          animation-name: fadeIn;
+      }
+
+      .animated {
+          -webkit-animation-duration: 1.5s;
+          -moz-animation-duration: 1.5s;
+          -o-animation-duration: 1.5s;
+          animation-duration: 1.5s;
+          -webkit-animation-fill-mode: both;
+          -moz-animation-fill-mode: both;
+          -o-animation-fill-mode: both;
+          animation-fill-mode: both;
+      }
+
+      .social-icon-list ul.social_icons{
+          text-align: center;
+          margin-top: 10px;
+          margin-bottom: 10px;
+      }
+
+      ul.social_icons li {
+          display: inline-block;
+          margin: 10px 0 !important;
+          padding: 0 30px !important;
+          text-align: center;
+          line-height: 100% !important;
+      }
+
+
+
+      ul.social_icons {
+          display: block;
+          width: 100%;
+          max-width: 1140px;
+      }
+
+      ul.social_icons li a{
+          margin-bottom: 25px;
+          font-size: 16px;
+          line-height: 24px;
+          font-weight: 300;
+          color: #757575;
+      }
+
+
+      ul.social_icons li a i{
+          font-size: 36px;
+          line-height: 36px;
+          color: #757575;
+          transition: all .5s ease-in-out;
+          -moz-transition: all .25s ease-in-out;
+          -webkit-transition: all .25s ease-in-out;
+      }
+
+
+      ul.social_icons li a i:hover {
+          transition: all .5s ease-in-out;
+          -moz-transition: all .25s ease-in-out;
+          -webkit-transition: all .25s ease-in-out;
+          color: #112027;
+      }
+
+      footer ul.social_icons li a i:hover {
+          color: #fff;
+      }
+
+      /* login form Css */
+      @media (min-width: 768px) {
+          .omb_row-sm-offset-3 div:first-child[class*="col-"] {
+              margin-left: 10%;
+          }
+      }
+
+      #signin .modal-dialog{
+          position: fixed;
+          top: 50%;
+          right: 0;
+          bottom: 0;
+          left: 0;
+          z-index: 1050;
+          transform: translateY(-50%);
+          margin: 0 auto;
+      }
+
+      .omb_login .close{
+          position: absolute;
+          right: 15px;
+          top:5px;
+
+      }
+
+      .omb_login .omb_authTitle {
+          text-align: center;
+          line-height: 300%;
+      }
+
+      .omb_login .omb_socialButtons a {
+          color: white; // In yourUse @body-bg
+      opacity:0.9;
+      }
+      .omb_login .omb_socialButtons a:hover {
+          color: white;
+          opacity:1;
+      }
+      .omb_login .omb_socialButtons .omb_btn-facebook {background: #3b5998;}
+      .omb_login .omb_socialButtons .omb_btn-twitter {background: #00aced;}
+      .omb_login .omb_socialButtons .omb_btn-google {background: #c32f10;}
+
+
+      .omb_login .omb_loginOr {
+          position: relative;
+          font-size: 1.5em;
+          color: #aaa;
+          margin-top: 1em;
+          margin-bottom: 1em;
+          padding-top: 0.5em;
+          padding-bottom: 0.5em;
+      }
+      .omb_login .omb_loginOr .omb_hrOr {
+          background-color: #cdcdcd;
+          height: 1px;
+          margin-top: 0px !important;
+          margin-bottom: 0px !important;
+      }
+      .omb_login .omb_loginOr .omb_spanOr {
+          display: block;
+          position: absolute;
+          left: 50%;
+          top: -0.6em;
+          margin-left: -1.5em;
+          background-color: white;
+          width: 3em;
+          text-align: center;
+      }
+
+      .omb_login .omb_loginForm .input-group.i {
+          width: 2em;
+      }
+      .omb_login .omb_loginForm  .help-block {
+          color: red;
+      }
+
+
+      @media (min-width: 768px) {
+          .omb_login .omb_forgotPwd {
+              text-align: right;
+              margin-top:10px;
+          }
+      }
+
+      /* Banner slider Css */
+      .banner-slider .item img{
+          width: 100%;
+      }
+
+      .banner-slider .carousel-control.left,
+      .banner-slider .carousel-control.right{
+          background-image: none;
+          opacity: 1;
+      }
+
+
+      .cart-div  .descr-div{
+          padding:5px 0px 2px;
+      }
+      .cart-div  .descr-txt{
+          color:#999;font-size:14px;line-height:16px;font-weight:400;text-overflow: ellipsis;max-height:40px;margin-bottom: 0px;
+      }
+
+      .cart-div:hover .thumb-pad2 {
+          box-shadow: 1px solid #eee;
+          z-index: 50;
+          border-radius: 3px;
+          text-decoration: none;
+          box-shadow: 0 7px 17px 0 rgba(23, 84, 116, 0.18);
+          border: solid 0.9px #f3f3f3;
+      }
+
+      .cart-div {
+          padding: 0px;
+          margin: 15px 0px;
+      }
+
+      .cart-div .product-price {
+          text-align:center;font-weight:700;margin: 0px;
+      }
+
+      .cart-div .product-price .money{
+          color:#EA4545;font: 500 14px/1.75;
+      }
+
+      .cart-div .product-price s,
+      .cart-div .product-price s .money{
+          color: #848484;
+      }
+  </style>
+  <script type="js/javascript">
+        $("#close1_open2").click(function() {
+            $("#login").modal('hide');
+            $("#signup").modal('show');
+        });
+    </script>
 </head>
