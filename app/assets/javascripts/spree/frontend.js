@@ -2,6 +2,9 @@
 
 //= require jquery_ujs
 
+//= require spree/frontend/bootstrap.min
+//= require spree/frontend/bootstrap-filestyle
+
 // require bootstrap-sprockets
 
 //= require spree/frontend/social-share-button.coffee
@@ -17,8 +20,7 @@
 //= require spree/frontend/wow/device.min
 //= require spree/frontend/wow/wow
 //= require spree/frontend/wow/wow-spec
-//= require spree/frontend/bootstrap.min
-//= require spree/frontend/bootstrap-filestyle
+
 
 
 //= require spree/frontend/html5shiv
