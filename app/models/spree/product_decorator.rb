@@ -2,7 +2,7 @@ Spree::Product.class_eval do
   has_many :favorites, class_name: 'Spree::Favorite', foreign_key: :product_id
 
   def total_favorites
-    favorites.count
+    favorites.count.to_s
   end
 
   def favorited_by?(user_id)

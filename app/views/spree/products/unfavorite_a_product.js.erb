@@ -1,1 +1,2 @@
 $('#fav_lnk').replaceWith("<%= escape_javascript link_to('Favorite', product_favorite_a_product_path(@product), remote: true, method: :post, id: 'fav_lnk') %>")
+$('#total_fav_cnt').html("(<%= escape_javascript @total_favorites%>)")

@@ -36,13 +36,14 @@
 
           <% if spree_current_user %>
 
-              <% if @product.favorited_by?(spree_current_user) %>
+              <% if @product.favorited_by?(spree_current_user.id) %>
                   <%= link_to 'Unfavorite', product_unfavorite_a_product_path(@product), remote: true, method: :post, id: 'fav_lnk' %>
               <% else %>
                   <%= link_to 'Favorite', product_favorite_a_product_path(@product), remote: true, method: :post, id: 'fav_lnk' %>
               <% end %>
 
           <% end %>
+                <span id="total_fav_cnt">(<%= @product.total_favorites %>)</span>
 
           <div id="cart-form" data-hook="cart_form">
             <%= render :partial => 'cart_form' %>
