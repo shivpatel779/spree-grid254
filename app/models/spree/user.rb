@@ -33,6 +33,8 @@ module Spree
     has_one :spree_referral_credit, :class_name => 'Spree::ReferralCredit', foreign_key: 'user_id'
     has_many :spree_user_invites, :class_name => 'Spree::UserInvite', foreign_key: 'user_id'
     has_one :payment_account, :class_name => 'Spree::LipishaPaymentAccount', foreign_key: 'user_id'
+    has_many :product_favorites, class_name: 'Spree::Favorite', foreign_key: 'user_id'
+
 
     before_validation :set_login
 

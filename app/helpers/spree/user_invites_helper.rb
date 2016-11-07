@@ -56,12 +56,9 @@ module Spree::UserInvitesHelper
                                        :title      => h(link_title) }.merge(extra_data).merge(special_data).merge('data-quote' => ref_text)).html_safe
           end
 
-
         end
 
-
       end
-
 
     end
     html << "</div>"
