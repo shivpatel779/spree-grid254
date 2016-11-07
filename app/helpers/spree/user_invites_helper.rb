@@ -20,12 +20,16 @@ module Spree::UserInvitesHelper
     html << "<div class='social-share-button' data-title='#{h title}' data-img='#{opts[:image]}'"
     html << "data-url='#{opts[:url]}' data-desc='#{opts[:desc]}' data-via='#{opts[:via]}'>"
 
+
+    ref_text = "Join #{spree_current_user.full_name} and thousands of households in Kenya using Grid254 to stay informed and access the discount offers on different products and services in your location"
+
+
     opts[:allow_sites].each do |name|
 
       if name.eql?('whatsapp')
 
         if touch_device?
-          html<< link_to(image_tag('1477405766_whatsapp.png', height: '18', width: '18'), ("whatsapp://send?text=#{name.downcase} #{opts[:url]}").html_safe)
+          html<< link_to(image_tag('1477405766_whatsapp.png', height: '18', width: '18'), ("whatsapp://send?text=#{ref_text} #{opts[:url]}").html_safe)
         else
           html << link_to(image_tag('1477405766_whatsapp.png', height: '18', width: '18'), 'https://web.whatsapp.com', target: '_false')
         end
@@ -33,7 +37,7 @@ module Spree::UserInvitesHelper
       else
 
         if name.eql?('telegram')
-          html << link_to(image_tag('1477523495_Telegram.png', height: '18', width: '18'), "https://telegram.me/share/url?url=#{opts[:url]}", target: '_false')
+          html << link_to(image_tag('1477523495_Telegram.png', height: '18', width: '18'), "#{ref_text} https://telegram.me/share/url?url=#{opts[:url]}", target: '_false')
         else
 
           if name.eql?('email')
