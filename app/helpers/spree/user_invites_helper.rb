@@ -23,7 +23,6 @@ module Spree::UserInvitesHelper
 
     ref_text = "Join #{spree_current_user.full_name} and thousands of households in Kenya using Grid254 to stay informed and access the discount offers on different products and services in your location"
 
-
     opts[:allow_sites].each do |name|
 
       if name.eql?('whatsapp')
@@ -43,6 +42,7 @@ module Spree::UserInvitesHelper
           if name.eql?('email')
             html << link_to(image_tag('1477606885_mail-icon.png', height: '18', width: '18'), "/invite")
           else
+
             extra_data                         = opts.select { |k, _| k.to_s.start_with?('data') } if name.eql?('tumblr')
             special_data                       = opts.select { |k, _| k.to_s.start_with?('data-' + name) }
 
@@ -53,7 +53,7 @@ module Spree::UserInvitesHelper
                                        "data-site" => name,
                                        :class      => "ssb-icon ssb-#{name}",
                                        :onclick    => "return SocialShareButton.share(this);",
-                                       :title      => h(link_title) }.merge(extra_data).merge(special_data)).html_safe
+                                       :title      => h(link_title) }.merge(extra_data).merge(special_data).merge('data-quote' => ref_text)).html_safe
           end
 
 
