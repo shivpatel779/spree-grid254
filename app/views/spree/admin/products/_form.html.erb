@@ -12,6 +12,14 @@
         <% end %>
       </div>
 
+      <div data-hook="admin_product_form_seller_id">
+        <%= f.field_container :seller_id, class: ['form-group'] do %>
+            <%= f.label :seller_id, Spree.t(:seller) %>
+            <%= f.collection_select(:seller_id, Spree::Seller.all, :id, :name,{selected: (f.object.seller_id != '' ? f.object.seller_id.split(',').map(&:to_i) : ''), include_blank: Spree.t('match_choices.none'), }, { multiple: true, class: 'select2', disabled: (cannot? :edit, Spree::Seller) }) %>
+            <%= f.error_message_on :seller_id %>
+        <% end %>
+      </div>
+
       <div data-hook="admin_product_form_slug">
         <%= f.field_container :slug, class: ['form-group'] do %>
           <%= f.label :slug, raw(Spree.t(:slug) + content_tag(:span, ' *', class: "required")) %>
@@ -56,6 +64,7 @@
           <%= f.error_message_on :cost_price %>
         <% end %>
       </div>
+
       <div data-hook="admin_product_form_cost_currency" class="omega two columns">
         <%= f.field_container :cost_currency, class: ['form-group'] do %>
           <%= f.label :cost_currency, Spree.t(:cost_currency) %>
@@ -71,6 +80,8 @@
           <%= f.text_field :available_on, value: datepicker_field_value(@product.available_on), class: 'datepicker form-control' %>
         <% end %>
       </div>
+
+
 
       <div data-hook="admin_product_form_discontinue_on">
         <%= f.field_container :discontinue_on, class: ['form-group'] do %>

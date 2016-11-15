@@ -25,6 +25,11 @@ module Spree
         if params[:product][:option_type_ids].present?
           params[:product][:option_type_ids] = params[:product][:option_type_ids].split(',')
         end
+
+        if params[:product][:seller_id].present?
+          params[:product][:seller_id] = params[:product][:seller_id].join(',')
+        end
+
         invoke_callbacks(:update, :before)
 
         if params[:product].key?(:variant)
