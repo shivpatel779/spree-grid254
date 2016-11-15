@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+
   # This line mounts Spree's routes at the root of your application.
   # This means, any requests to URLs such as /products, will go to Spree::ProductsController.
   # If you would like to change where this engine is mounted, simply change the :at option to something different.
@@ -72,17 +73,24 @@ Rails.application.routes.draw do
   get '/wallet' => 'spree/wallet#show'
   post '/wallet/credit_money' => 'spree/wallet#credit_money'
 
-  Spree::Core::Engine.routes.draw do
     resources :products do
       post 'favorite_a_product'
       post 'unfavorite_a_product'
     end
-  end
 
-
-  Spree::Core::Engine.routes.draw do
     get "/sale" => "home#sale"
-  end
+
+    get '/admin/sellers' => 'spree/admin/sellers#index', as: :admin_sellers
+    get '/admin/sellers/new' => 'spree/admin/sellers#new', as: :new_admin_seller
+    post '/admin/sellers/create' => 'spree/admin/sellers#create', as: :admin_seller
+    get '/admin/sellers/:id/edit' => 'spree/admin/sellers#edit', as: :edit_admin_seller
+    post '/admin/sellers/update' => 'spree/admin/sellers#update', as: :update_admin_seller
+
+    get '/admin/store_locations' => 'spree/admin/store_location#index'
+    get '/admin/store_locations/new' => 'spree/admin/store_location#new'
+    post '/admin/store_locations/create' => 'spree/admin/store_location#create'
+    get '/admin/store_locations/:id/edit' => 'spree/admin/store_location#edit'
+    post '/admin/store_locations/update' => 'spree/admin/store_location#update'
 
 
 end

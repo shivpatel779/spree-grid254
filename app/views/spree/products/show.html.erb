@@ -42,12 +42,22 @@
                   <%= link_to 'Favorite', product_favorite_a_product_path(@product), remote: true, method: :post, id: 'fav_lnk' %>
               <% end %>
 
-          <% end %>
-                <span id="total_fav_cnt">(<%= @product.total_favorites %>)</span>
+              <span id="total_fav_cnt">
+                <%= @product.total_favorites.to_i.zero? ? '' : "(#{@product.total_favorites})" %>
+              </span>
 
-          <div id="cart-form" data-hook="cart_form">
-            <%= render :partial => 'cart_form' %>
-          </div>
+          <% else %>
+
+              <span id="total_fav_cnt">
+                <%= @product.total_favorites.to_i.zero? ? '' : "Favorites (#{@product.total_favorites})" %>
+              </span>
+
+          <% end %>
+
+
+          <!-- <div id="cart-form" data-hook="cart_form">
+            <%#= render :partial => 'cart_form' %>
+          </div> -->
         </div>
 
         <div id="taxon-crumbs" class=" five " data-hook="product_taxons">

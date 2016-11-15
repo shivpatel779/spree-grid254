@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  country_id: 
+  state: MyString
+  constituency: MyString
+  address1: MyString
+  address2: MyString
+  latitude: 1.5
+  longitude: 1.5
+
+two:
+  country_id: 
+  state: MyString
+  constituency: MyString
+  address1: MyString
+  address2: MyString
+  latitude: 1.5
+  longitude: 1.5

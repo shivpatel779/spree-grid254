@@ -1,0 +1,44 @@
+<% content_for :page_title do %>
+    Store Locations
+<% end %>
+
+<% content_for :page_actions do %>
+    <%= button_link_to Spree.t(:new_store_location), '/admin/store_locations/new', { :class => "btn-success", :icon => 'add', :id => 'admin_new_store_location' } %>
+<% end if can? :create, Spree::StoreLocation %>
+
+<% if @store_locations.any? %>
+    <table class="table" id='listing_store_locations' data-hook>
+      <thead>
+      <tr data-hook="store_locations_header">
+        <th><%= Spree.t(:name) %></th>
+        <th><%= Spree.t(:state) %></th>
+        <th class="actions"></th>
+      </tr>
+      </thead>
+      <tbody>
+      <% @store_locations.each do |store_location|
+        #@edit_url = edit_admin_store_location_path(store_location)
+        #@delete_url = admin_store_location_path(store_location)
+      %>
+          <tr id="<%= spree_dom_id store_location %>" data-hook="store_location_row">
+            <td><%= store_location.name %></td>
+            <td><span class="state <%= state(store_location) %>"><%= Spree.t(state(store_location)) %></span></td>
+            <td class="actions actions-2 text-center">
+              <%= link_to "/admin/store_locations/#{store_location.id}/edit" , 'data-action'=>"edit", class: "btn btn-primary btn-sm icon-link with-tip action-edit no-text", title: "", 'data-original-title'=> "Edit" do %>
+                  <span class="icon icon-edit"></span>
+              <% end %>
+
+              <%= link_to "/admin/store_locations/#{store_location.id}/delete", class: "btn btn-danger btn-sm delete-resource icon-link with-tip action-delete no-text",  'data-confirm'=> "Are you sure?",  'data-action' => "remove", 'data-original-title' => "Delete"  do %>
+                  <span class="icon icon-delete"></span>
+              <% end %>
+            </td>
+          </tr>
+      <% end %>
+      </tbody>
+    </table>
+<% else %>
+    <div class="alert alert-info no-objects-found">
+      <%= Spree.t(:no_resource_found, resource: plural_resource_name(Spree::StoreLocation)) %>,
+      <%= link_to(Spree.t(:add_one), '/admin/store_locations/new') if can? :create, Spree::StoreLocation %>!
+    </div>
+<% end %>

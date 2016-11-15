@@ -1,0 +1,19 @@
+<% content_for :page_title do %>
+    <%= link_to Spree.t(:sellers), '/admin/sellers' %> /
+    <%= Spree.t(:new_seller) %>
+<% end %>
+
+<div data-hook="admin_seller_new_form_header">
+  <%= render :partial => 'spree/admin/shared/error_messages', :locals => { :target => @seller } %>
+</div>
+
+<div data-hook="admin_user_new_form">
+  <%= form_for [:admin, @seller], url: '/admin/sellers/create', method: :post do |f| %>
+      <%= render :partial => 'form', :locals => { :f => f } %>
+
+      <div data-hook="admin_user_new_form_buttons">
+        <%#= render :partial => 'spree/admin/shared/new_resource_links' %>
+      </div>
+  <% end %>
+
+</div>

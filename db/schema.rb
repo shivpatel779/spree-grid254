@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161107081926) do
+ActiveRecord::Schema.define(version: 20161115100619) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -489,6 +489,7 @@ ActiveRecord::Schema.define(version: 20161107081926) do
     t.datetime "discontinue_on"
     t.decimal  "avg_rating",           precision: 7, scale: 5, default: 0.0,  null: false
     t.integer  "reviews_count",                                default: 0,    null: false
+    t.integer  "seller_id"
   end
 
   add_index "spree_products", ["available_on"], name: "index_spree_products_on_available_on", using: :btree
@@ -754,6 +755,28 @@ ActiveRecord::Schema.define(version: 20161107081926) do
 
   add_index "spree_roles", ["name"], name: "index_spree_roles_on_name", using: :btree
 
+  create_table "spree_seller_addresses", force: :cascade do |t|
+    t.integer  "seller_id"
+    t.integer  "country_id"
+    t.integer  "state_id"
+    t.string   "constituency"
+    t.string   "address1"
+    t.string   "address2"
+    t.string   "phone"
+    t.float    "latitude"
+    t.float    "longitude"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+  end
+
+  create_table "spree_sellers", force: :cascade do |t|
+    t.string   "name"
+    t.string   "email"
+    t.string   "phone"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "spree_shipments", force: :cascade do |t|
     t.string   "tracking"
     t.string   "number"
@@ -982,6 +1005,28 @@ ActiveRecord::Schema.define(version: 20161107081926) do
   add_index "spree_store_credits", ["originator_id", "originator_type"], name: "spree_store_credits_originator", using: :btree
   add_index "spree_store_credits", ["type_id"], name: "index_spree_store_credits_on_type_id", using: :btree
   add_index "spree_store_credits", ["user_id"], name: "index_spree_store_credits_on_user_id", using: :btree
+
+  create_table "spree_store_locations", force: :cascade do |t|
+    t.integer  "country_id"
+    t.integer  "state_id"
+    t.string   "constituency"
+    t.string   "address1"
+    t.string   "address2"
+    t.float    "latitude"
+    t.float    "longitude"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+    t.integer  "seller_id"
+    t.string   "phone"
+    t.string   "state_name"
+    t.string   "city"
+    t.string   "zipcode"
+    t.boolean  "active"
+    t.string   "name"
+  end
+
+  add_index "spree_store_locations", ["country_id"], name: "index_spree_store_locations_on_country_id", using: :btree
+  add_index "spree_store_locations", ["state_id"], name: "index_spree_store_locations_on_state_id", using: :btree
 
   create_table "spree_stores", force: :cascade do |t|
     t.string   "name"

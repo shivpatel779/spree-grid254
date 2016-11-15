@@ -1,0 +1,40 @@
+<% content_for :page_title do %>
+    <%= Spree.t(:sellers) %>
+<% end %>
+
+<% content_for :page_actions do %>
+    <%= button_link_to Spree.t(:new_seller), '/admin/sellers/new', :class => "btn-success", :icon => 'add', :id => 'admin_new_seller_link' %>
+<% end %>
+
+<table class="table" id="listing_sellers" data-hook>
+  <thead>
+  <tr data-hook="admin_sellers_index_headers">
+    <th>Name</th>
+    <th>Email</th>
+    <th>Timestamp</th>
+    <th data-hook="admin_sellers_index_header_actions" class="actions"></th>
+  </tr>
+  </thead>
+  <tbody>
+  <% @sellers.each do |seller|%>
+      <tr id="<%= spree_dom_id seller %>" data-hook="admin_sellers_index_rows">
+        <td class='user_email'><%= seller.name %></td>
+        <td class='user_email'><%=link_to seller.email, "/admin/sellers/#{seller.id}/edit" %></td>
+        <td class='user_email'><%= seller.created_at.strftime('%Y-%m-%d %H:%M %p') %></td>
+        <td data-hook="admin_sellers_index_row_actions" class="actions actions-2 text-right">
+
+          <%= link_to "/admin/sellers/#{seller.id}/edit" , 'data-action'=>"edit", class: "btn btn-primary btn-sm icon-link with-tip action-edit no-text", title: "", 'data-original-title'=> "Edit" do %>
+            <span class="icon icon-edit"></span>
+          <% end %>
+
+          <%= link_to "/admin/sellers/#{seller.id}/delete", class: "btn btn-danger btn-sm delete-resource icon-link with-tip action-delete no-text",  'data-confirm'=> "Are you sure?",  'data-action' => "remove", 'data-original-title' => "Delete"  do %>
+              <span class="icon icon-delete"></span>
+          <% end %>
+
+        </td>
+      </tr>
+  <% end %>
+  </tbody>
+</table>
+
+<%#= paginate @users %>

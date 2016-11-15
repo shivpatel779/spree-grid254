@@ -1,0 +1,17 @@
+<% content_for :page_title do %>
+  <%= link_to Spree.t(:store_locations), '/admin/store_locations' %> /
+  <%= @store_location.name %>
+<% end %>
+
+<%= render :partial => 'spree/admin/shared/error_messages', :locals => { :target => @store_location } %>
+
+<%= form_for [:admin, @store_location], url: '/admin/store_locations/update', method: :post do |f| %>
+  <fieldset>
+    <%= render :partial => 'form', :locals => { :f => f } %>
+    <div class="form-actions" data-hook="buttons">
+      <%= button Spree.t('actions.update'), 'ok', 'submit', {class: 'btn-success'} %>
+      <span class="or"><%= Spree.t(:or) %></span>
+      <%= button_link_to Spree.t('actions.cancel'), '/admin/store_locations', :icon => 'remove' %>
+    </div>
+  </fieldset>
+<% end %>
