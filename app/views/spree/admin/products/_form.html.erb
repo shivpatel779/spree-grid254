@@ -15,7 +15,7 @@
       <div data-hook="admin_product_form_seller_id">
         <%= f.field_container :seller_id, class: ['form-group'] do %>
             <%= f.label :seller_id, Spree.t(:seller) %>
-            <%= f.collection_select(:seller_id, Spree::Seller.all, :id, :name,{selected: (f.object.seller_id != '' ? f.object.seller_id.split(',').map(&:to_i) : ''), include_blank: Spree.t('match_choices.none'), }, { multiple: true, class: 'select2', disabled: (cannot? :edit, Spree::Seller) }) %>
+            <%= f.collection_select(:seller_id, Spree::Seller.all, :id, :name,{selected: (!f.object.seller_id.nil?  ? f.object.seller_id.split(',').map(&:to_i) : ''), include_blank: Spree.t('match_choices.none'), }, { multiple: true, class: 'select2', disabled: (cannot? :edit, Spree::Seller) }) %>
             <%= f.error_message_on :seller_id %>
         <% end %>
       </div>
