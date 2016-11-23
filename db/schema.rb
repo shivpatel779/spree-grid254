@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161115124952) do
+ActiveRecord::Schema.define(version: 20161123082425) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -117,6 +117,15 @@ ActiveRecord::Schema.define(version: 20161115124952) do
   add_index "spree_calculators", ["calculable_id", "calculable_type"], name: "index_spree_calculators_on_calculable_id_and_calculable_type", using: :btree
   add_index "spree_calculators", ["deleted_at"], name: "index_spree_calculators_on_deleted_at", using: :btree
   add_index "spree_calculators", ["id", "type"], name: "index_spree_calculators_on_id_and_type", using: :btree
+
+  create_table "spree_constituencies", force: :cascade do |t|
+    t.integer  "spree_state_id"
+    t.string   "name"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+  end
+
+  add_index "spree_constituencies", ["spree_state_id"], name: "index_spree_constituencies_on_spree_state_id", using: :btree
 
   create_table "spree_countries", force: :cascade do |t|
     t.string   "iso_name"
@@ -251,6 +260,15 @@ ActiveRecord::Schema.define(version: 20161115124952) do
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
   end
+
+  create_table "spree_locations", force: :cascade do |t|
+    t.integer  "spree_constituency_id"
+    t.string   "name"
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
+  end
+
+  add_index "spree_locations", ["spree_constituency_id"], name: "index_spree_locations_on_spree_constituency_id", using: :btree
 
   create_table "spree_log_entries", force: :cascade do |t|
     t.integer  "source_id"
@@ -767,6 +785,10 @@ ActiveRecord::Schema.define(version: 20161115124952) do
     t.float    "longitude"
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
+    t.string   "state_name"
+    t.string   "city"
+    t.string   "zipcode"
+    t.string   "location"
   end
 
   create_table "spree_sellers", force: :cascade do |t|
@@ -1260,5 +1282,7 @@ ActiveRecord::Schema.define(version: 20161115124952) do
   add_index "spree_zones", ["default_tax"], name: "index_spree_zones_on_default_tax", using: :btree
   add_index "spree_zones", ["kind"], name: "index_spree_zones_on_kind", using: :btree
 
+  add_foreign_key "spree_constituencies", "spree_states"
+  add_foreign_key "spree_locations", "spree_constituencies"
   add_foreign_key "spree_wallet_transactions", "spree_user_wallets"
 end

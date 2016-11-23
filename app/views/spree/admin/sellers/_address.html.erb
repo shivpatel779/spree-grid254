@@ -50,31 +50,116 @@
         font-size: 13px;
         font-weight: 300;
     }
+
+        .select2{
+            width: 100%;
+        }
 </style>
 
 
 
   <div class="col-md-6">
     <h4> Address </h4>
-    <%= f.field_container :constituency, class: ['form-group'] do %>
 
-        <%= f.label :constituency, Spree.t(:constituency) %>
-        <%= f.text_field :constituency, :class => 'form-control' %>
+    <%= f.field_container :address1, class: ['form-group'] do %>
+        <%= f.label :address1, 'Street address 1' %><span class="required">*</span><br />
+        <%= f.text_field :address1, :class => 'form-control', required: true %>
+        <%#= f.error_message_on :name %>
+    <% end %>
+
+    <%= f.field_container :address1, class: ['form-group'] do %>
+        <%= f.label :address2, 'Street address 2' %>
+        <%= f.text_field :address2, :class => 'form-control' %>
+        <%#= f.error_message_on :name %>
+    <% end %>
+
+
+    <% if f.object.persisted? %>
+
+        <%# p f.object.inspect %>
+
+        <div class="form-group" data-hook="store_location_country">
+          <%= f.label :country_id, Spree.t(:country) %><span class="required">*</span><br />
+          <span id="country"><%= f.collection_select :country_id, available_countries, :id, :name, {selected: f.object.country_id}, { class: 'select2' } %></span>
+        </div>
+
+        <div class="form-group" data-hook="store_location_state">
+          <% if f.object.country %>
+              <%= f.label :state_id, Spree.t(:state) %><span class="required">*</span><br />
+              <span id="state" class="region">
+                <%= f.text_field :state_name, style: "#{f.object.country.states.empty? ? '' : 'display: none;'}", disabled: !f.object.country.states.empty?, class: 'state_name form-control' %>
+                <%= f.collection_select :state_id, f.object.country.states.sort, :id, :name, { include_blank: true }, {class: 'select2', style: "#{f.object.country.states.empty? ? 'display: none;' : '' };", disabled: f.object.country.states.empty?} %>
+              </span>
+          <% end %>
+
+        </div>
+
+    <% else %>
+
+        <%# p available_countries.first.states.sort %>
+
+        <div class="form-group" data-hook="store_location_country">
+          <%= f.label :country_id, Spree.t(:country) %><span class="required">*</span><br />
+          <span id="country"><%= f.collection_select :country_id, available_countries, :id, :name, {selected: available_countries.first.id}, { class: 'select2' } %></span>
+        </div>
+
+        <div class="form-group" data-hook="store_location_state">
+
+              <%= f.label :state_id, Spree.t(:state) %><span class="required">*</span><br />
+              <span id="state" class="region">
+                <%= f.text_field :state_name, style: "#{available_countries.first.states.empty? ? '' : 'display: none;'}", disabled: available_countries.first.states.empty?, class: 'state_name form-control' %>
+                <%= f.collection_select :state_id, available_countries.first.states.sort, :id, :name, { include_blank: true }, {class: 'select2', style: "#{available_countries.first.states.empty? ? 'display: none;' : '' };", disabled: available_countries.first.states.empty?} %>
+              </span>
+
+        </div>
+
+    <% end %>
+
+    <%= f.field_container :city, class: ['form-group'] do %>
+
+        <%= f.label :city, Spree.t(:city) %><span class="required">*</span><br />
+        <%= f.text_field :city, :class => 'form-control', required: true %>
         <%#= f.error_message_on :name %>
 
     <% end %>
 
-    <%= f.field_container :constituency, class: ['form-group'] do %>
+    <%= f.field_container :zipcode, class: ['form-group'] do %>
 
-        <%= f.label :address1, 'Address' %>
-        <input id="pac-input" class="controls" type="text" placeholder="Enter your address" name="seller_address[address1]">
-        <div id="map" style='width: 100%; height: 400px;'></div>
+        <%= f.label :zipcode, Spree.t(:zipcode) %><span class="required">*</span><br />
+        <%= f.text_field :zipcode, :class => 'form-control', required: true %>
+        <%#= f.error_message_on :name %>
 
     <% end %>
 
-    <%= f.hidden_field :address1, value: f.object.address1 %>
-    <%= f.hidden_field :latitude, value: f.object.latitude %>
-    <%= f.hidden_field :longitude, value: f.object.longitude %>
+
+    <%= f.field_container :constituency, class: ['form-group'] do %>
+
+        <%= f.label :constituency, Spree.t(:constituency) %><span class="required">*</span><br />
+        <%= f.text_field :constituency, :class => 'form-control', required: true %>
+        <%#= f.error_message_on :name %>
+
+    <% end %>
+
+    <%= f.field_container :location, class: ['form-group'] do %>
+
+        <%= f.label :location, Spree.t(:location) %><span class="required">*</span><br />
+        <%= f.text_field :location, :class => 'form-control', required: true     %>
+        <%#= f.error_message_on :name %>
+
+    <% end %>
+
+
+    <%#= f.field_container :constituency, class: ['form-group'] do %>
+
+        <%#= f.label :address1, 'Address' %>
+        <!--<input id="pac-input" class="controls" type="text" placeholder="Enter your address" name="seller_address[address1]">
+        <div id="map" style='width: 100%; height: 400px;'></div>-->
+
+    <%# end %>
+
+    <%#= f.hidden_field :address1, value: f.object.address1 %>
+    <%#= f.hidden_field :latitude, value: f.object.latitude %>
+    <%#= f.hidden_field :longitude, value: f.object.longitude %>
 
     <%= f.hidden_field :seller_id, value: seller_id %>
 
@@ -89,6 +174,15 @@
     <% end %>
 
   </div>
+
+<% content_for :head do %>
+    <%= javascript_tag do %>
+        $(document).ready(function(){
+        $('span#country .select2').on('change', function() { update_state(''); });
+        });
+    <% end %>
+<% end %>
+
 
 <script type="text/javascript">
 

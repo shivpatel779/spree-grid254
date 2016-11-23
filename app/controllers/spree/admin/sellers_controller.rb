@@ -43,10 +43,16 @@ class Spree::Admin::SellersController < Spree::Admin::BaseController
       @seller = Spree::Seller.find(params[:seller_address][:seller_id])
       address = @seller.address.nil? ? @seller.build_address : @seller.address
       if address.persisted?
-        address.update_attributes(params[:seller_address])
+        if address.update_attributes(params[:seller_address])
+          flash.now[:error] = Spree.t(:address_updated)
+        end
       else
         address.assign_attributes(params[:seller_address])
-        address.save
+        if address.save
+          flash.now[:success] = Spree.t(:account_updated)
+        else
+          flash.now[:error] = 'Error updating address'
+        end
       end
 
     else
