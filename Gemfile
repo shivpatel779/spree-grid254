@@ -1,5 +1,8 @@
 source 'https://rubygems.org'
 
+
+gem 'bundler', '1.11.2'
+
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.6'
 # Use SCSS for stylesheets
