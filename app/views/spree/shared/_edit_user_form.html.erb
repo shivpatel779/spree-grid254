@@ -84,7 +84,7 @@
 
                   <div class="col-lg-10 col-md-10 col-sm-10">
 
-                    <%= form_for spree_current_user, :url => spree.user_path(@user), html: { id: 'contact-form' }, :method => :put do |f| %>
+                    <%= form_for spree_current_user, :url => spree.user_path(@user), html: { id: 'contact-form', class: 'edit_account' }, :method => :put do |f| %>
                         <fieldset>
 
                           <%= hidden_field_tag :serialized_params %>
@@ -180,7 +180,7 @@
 
                   <div class="col-lg-10 col-md-10 col-sm-10">
 
-                    <%= form_for @personal_detail, :url => spree.user_path(@user), html: { id: 'contact-form' }, :method => :put do |f| %>
+                    <%= form_for @personal_detail, :url => spree.user_path(@user), html: { id: 'contact-form', class: 'edit_account' }, :method => :put do |f| %>
                         <fieldset>
 
                           <div>
@@ -258,7 +258,7 @@
 
                   <div class="col-lg-10 col-md-10 col-sm-10">
 
-                    <%= form_for @location_info, :url => spree.user_path(@user), html: { id: 'contact-form' }, :method => :put do |f| %>
+                    <%= form_for @location_info, :url => spree.user_path(@user), html: { id: 'contact-form', class: 'edit_account' }, :method => :put do |f| %>
                         <fieldset>
                           <div>
                             <div class="tab-form-lable">Constituency</div>
