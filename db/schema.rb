@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161123082425) do
+ActiveRecord::Schema.define(version: 20161124090215) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1036,8 +1036,8 @@ ActiveRecord::Schema.define(version: 20161123082425) do
     t.string   "address2"
     t.float    "latitude"
     t.float    "longitude"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
     t.integer  "seller_id"
     t.string   "phone"
     t.string   "state_name"
@@ -1045,6 +1045,8 @@ ActiveRecord::Schema.define(version: 20161123082425) do
     t.string   "zipcode"
     t.boolean  "active"
     t.string   "name"
+    t.integer  "constituency_id"
+    t.integer  "location_id"
   end
 
   add_index "spree_store_locations", ["country_id"], name: "index_spree_store_locations_on_country_id", using: :btree

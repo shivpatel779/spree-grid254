@@ -6,6 +6,22 @@ class Spree::Admin::SellersController < Spree::Admin::BaseController
     @sellers = Spree::Seller.all
   end
 
+  def get_constituencies
+    state = Spree::State.find(params[:state_id])
+    respond_to do |format|
+      format.json {render json: {constituencies: state.constituencies.select('id, name')}}
+    end
+
+  end
+
+  def get_locations
+    constituency = Spree::Constituency.find(params[:constituency_id])
+    respond_to do |format|
+      format.json {render json: {locations: constituency.locations.select('id, name')}}
+    end
+
+  end
+
   def new
     @seller = Spree::Seller.new
   end
@@ -38,6 +54,10 @@ class Spree::Admin::SellersController < Spree::Admin::BaseController
 
     if params.key?('seller_address')
 
+      if params[:address_option] == false
+
+      end
+
       # update address
       params[:seller_address].permit!
       @seller = Spree::Seller.find(params[:seller_address][:seller_id])
@@ -51,6 +71,7 @@ class Spree::Admin::SellersController < Spree::Admin::BaseController
         if address.save
           flash.now[:success] = Spree.t(:account_updated)
         else
+          p address.errors.inspect
           flash.now[:error] = 'Error updating address'
         end
       end

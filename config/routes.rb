@@ -86,11 +86,15 @@ Rails.application.routes.draw do
     get '/admin/sellers/:id/edit' => 'spree/admin/sellers#edit', as: :edit_admin_seller
     post '/admin/sellers/update' => 'spree/admin/sellers#update', as: :update_admin_seller
 
+
+
     get '/admin/store_locations' => 'spree/admin/store_location#index'
     get '/admin/store_locations/new' => 'spree/admin/store_location#new'
     post '/admin/store_locations/create' => 'spree/admin/store_location#create'
     get '/admin/store_locations/:id/edit' => 'spree/admin/store_location#edit'
     post '/admin/store_locations/update' => 'spree/admin/store_location#update'
 
+    get '/get_constituencies' => 'spree/admin/sellers#get_constituencies'
+    get '/get_locations' => 'spree/admin/sellers#get_locations'
 
 end

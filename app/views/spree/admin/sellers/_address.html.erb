@@ -61,105 +61,135 @@
   <div class="col-md-6">
     <h4> Address </h4>
 
-    <%= f.field_container :address1, class: ['form-group'] do %>
-        <%= f.label :address1, 'Street address 1' %><span class="required">*</span><br />
-        <%= f.text_field :address1, :class => 'form-control', required: true %>
-        <%#= f.error_message_on :name %>
+
+    <%if !f.object.persisted? %>
+        <%= radio_button_tag :address_option, true, true, id: 'use_frm' %> Use Address Form&nbsp;&nbsp;&nbsp;
+        <%= radio_button_tag :address_option, false, false, id: 'use_gmaps' %> Use Google maps
+        <br/>
+        <br/>
     <% end %>
 
-    <%= f.field_container :address1, class: ['form-group'] do %>
-        <%= f.label :address2, 'Street address 2' %>
-        <%= f.text_field :address2, :class => 'form-control' %>
-        <%#= f.error_message_on :name %>
+    <div id='gmaps_frm'>
+        <%= f.field_container :address1, class: ['form-group'] do %>
+
+        <%= f.label :address1, 'Address' %>
+        <input id="pac-input" class="controls" type="text" placeholder="Enter your address" name="seller_address[address1]">
+
     <% end %>
 
 
-    <% if f.object.persisted? %>
+      <div id="map" style='width: 100%; height: 400px;'></div>
 
-        <%# p f.object.inspect %>
+        <%= f.hidden_field :address1, value: f.object.address1, id: 'addr1' %>
+        <%= f.hidden_field :latitude, value: f.object.latitude %>
+        <%= f.hidden_field :longitude, value: f.object.longitude %>
 
-        <div class="form-group" data-hook="store_location_country">
-          <%= f.label :country_id, Spree.t(:country) %><span class="required">*</span><br />
-          <span id="country"><%= f.collection_select :country_id, available_countries, :id, :name, {selected: f.object.country_id}, { class: 'select2' } %></span>
-        </div>
+    </div>
 
-        <div class="form-group" data-hook="store_location_state">
-          <% if f.object.country %>
-              <%= f.label :state_id, Spree.t(:state) %><span class="required">*</span><br />
+    <!--<h4>OR</h4>-->
+
+    <div id='addr_frm'>
+      <%= f.field_container :address1, class: ['form-group'] do %>
+          <%= f.label :address1, 'Street address 1' %><span class="required">*</span><br />
+          <%= f.text_field :address1, :class => 'form-control', required: true %>
+          <%#= f.error_message_on :name %>
+      <% end %>
+
+      <%= f.field_container :address1, class: ['form-group'] do %>
+          <%= f.label :address2, 'Street address 2' %>
+          <%= f.text_field :address2, :class => 'form-control' %>
+          <%#= f.error_message_on :name %>
+      <% end %>
+
+
+      <% if f.object.persisted? %>
+
+          <%# p f.object.inspect %>
+
+          <div class="form-group" data-hook="store_location_country">
+            <%= f.label :country_id, Spree.t(:country) %><span class="required">*</span><br />
+            <span id="country"><%= f.collection_select :country_id, available_countries, :id, :name, {selected: f.object.country_id}, { class: 'select2' } %></span>
+          </div>
+
+          <div class="form-group" data-hook="store_location_state">
+            <% if f.object.country %>
+                <%= f.label :state_id, Spree.t(:state) %><span class="required">*</span><br />
               <span id="state" class="region">
                 <%= f.text_field :state_name, style: "#{f.object.country.states.empty? ? '' : 'display: none;'}", disabled: !f.object.country.states.empty?, class: 'state_name form-control' %>
-                <%= f.collection_select :state_id, f.object.country.states.sort, :id, :name, { include_blank: true }, {class: 'select2', style: "#{f.object.country.states.empty? ? 'display: none;' : '' };", disabled: f.object.country.states.empty?} %>
+                <%= f.collection_select :state_id, f.object.country.states.sort, :id, :name, { include_blank: false }, {class: 'select2', style: "#{f.object.country.states.empty? ? 'display: none;' : '' };", disabled: f.object.country.states.empty?} %>
               </span>
-          <% end %>
+            <% end %>
 
-        </div>
+          </div>
 
-    <% else %>
+      <% else %>
 
-        <%# p available_countries.first.states.sort %>
+          <%# p available_countries.first.states.sort %>
 
-        <div class="form-group" data-hook="store_location_country">
-          <%= f.label :country_id, Spree.t(:country) %><span class="required">*</span><br />
-          <span id="country"><%= f.collection_select :country_id, available_countries, :id, :name, {selected: available_countries.first.id}, { class: 'select2' } %></span>
-        </div>
+          <div class="form-group" data-hook="store_location_country">
+            <%= f.label :country_id, Spree.t(:country) %><span class="required">*</span><br />
+            <span id="country"><%= f.collection_select :country_id, available_countries, :id, :name, {selected: Spree::Country.find_by_name('Kenya').id}, { class: 'select2' } %></span>
+          </div>
 
-        <div class="form-group" data-hook="store_location_state">
+          <div class="form-group" data-hook="store_location_state">
 
-              <%= f.label :state_id, Spree.t(:state) %><span class="required">*</span><br />
+            <%= f.label :state_id, Spree.t(:state) %><span class="required">*</span><br />
               <span id="state" class="region">
-                <%= f.text_field :state_name, style: "#{available_countries.first.states.empty? ? '' : 'display: none;'}", disabled: available_countries.first.states.empty?, class: 'state_name form-control' %>
-                <%= f.collection_select :state_id, available_countries.first.states.sort, :id, :name, { include_blank: true }, {class: 'select2', style: "#{available_countries.first.states.empty? ? 'display: none;' : '' };", disabled: available_countries.first.states.empty?} %>
+                <%= f.text_field :state_name, style: "#{Spree::Country.find_by_name('Kenya').states.empty? ? '' : 'display: none;'}", disabled: Spree::Country.find_by_name('Kenya').states.empty?, class: 'state_name form-control' %>
+                <%= f.collection_select :state_id, Spree::Country.find_by_name('Kenya').states.sort, :id, :name, { include_blank: false }, {class: 'select2', style: "#{Spree::Country.find_by_name('Kenya').states.empty? ? 'display: none;' : '' };", disabled: Spree::Country.find_by_name('Kenya').states.empty?} %>
               </span>
 
-        </div>
+          </div>
 
-    <% end %>
+      <% end %>
 
-    <%= f.field_container :city, class: ['form-group'] do %>
+      <%= f.field_container :city, class: ['form-group'] do %>
 
-        <%= f.label :city, Spree.t(:city) %><span class="required">*</span><br />
-        <%= f.text_field :city, :class => 'form-control', required: true %>
-        <%#= f.error_message_on :name %>
+          <%= f.label :city, Spree.t(:city) %><span class="required">*</span><br />
+          <%= f.text_field :city, :class => 'form-control', required: true %>
+          <%#= f.error_message_on :name %>
 
-    <% end %>
+      <% end %>
 
-    <%= f.field_container :zipcode, class: ['form-group'] do %>
+      <%= f.field_container :zipcode, class: ['form-group'] do %>
 
-        <%= f.label :zipcode, Spree.t(:zipcode) %><span class="required">*</span><br />
-        <%= f.text_field :zipcode, :class => 'form-control', required: true %>
-        <%#= f.error_message_on :name %>
+          <%= f.label :zipcode, Spree.t(:zipcode) %><span class="required">*</span><br />
+          <%= f.text_field :zipcode, :class => 'form-control', required: true %>
+          <%#= f.error_message_on :name %>
 
-    <% end %>
+      <% end %>
+
+      <% constituencies = Spree::Country.find_by_name('Kenya').states.sort.first.constituencies %>
+
+      <%= f.field_container :constituency, class: ['form-group'] do %>
+
+          <%= f.label :constituency, Spree.t(:constituency) %><span class="required">*</span><br />
+          <%#= f.text_field :constituency, :class => 'form-control', required: true %>
+
+          <span id="constituency" class="region">
+            <%= f.collection_select :constituency, constituencies.sort, :id, :name, { include_blank: false }, {class: 'select2', style: "#{constituencies.empty? ? 'display: none;' : '' };", disabled: constituencies.empty?} %>
+        </span>
+
+          <%#= f.error_message_on :name %>
+
+      <% end %>
+
+      <%= f.field_container :location, class: ['form-group'] do %>
+
+          <%= f.label :location, Spree.t(:location) %><span class="required">*</span><br />
+          <%#= f.text_field :location, :class => 'form-control', required: true     %>
+          <span id="location" class="region">
+            <%= f.collection_select :location, constituencies.sort.first.locations, :id, :name, { include_blank: false }, {class: 'select2', style: "#{constituencies.sort.first.locations.empty? ? 'display: none;' : '' };", disabled: constituencies.sort.first.locations.empty?} %>
+        </span>
+          <%#= f.error_message_on :name %>
+
+      <% end %>
+
+    </div>
 
 
-    <%= f.field_container :constituency, class: ['form-group'] do %>
-
-        <%= f.label :constituency, Spree.t(:constituency) %><span class="required">*</span><br />
-        <%= f.text_field :constituency, :class => 'form-control', required: true %>
-        <%#= f.error_message_on :name %>
-
-    <% end %>
-
-    <%= f.field_container :location, class: ['form-group'] do %>
-
-        <%= f.label :location, Spree.t(:location) %><span class="required">*</span><br />
-        <%= f.text_field :location, :class => 'form-control', required: true     %>
-        <%#= f.error_message_on :name %>
-
-    <% end %>
 
 
-    <%#= f.field_container :constituency, class: ['form-group'] do %>
-
-        <%#= f.label :address1, 'Address' %>
-        <!--<input id="pac-input" class="controls" type="text" placeholder="Enter your address" name="seller_address[address1]">
-        <div id="map" style='width: 100%; height: 400px;'></div>-->
-
-    <%# end %>
-
-    <%#= f.hidden_field :address1, value: f.object.address1 %>
-    <%#= f.hidden_field :latitude, value: f.object.latitude %>
-    <%#= f.hidden_field :longitude, value: f.object.longitude %>
 
     <%= f.hidden_field :seller_id, value: seller_id %>
 
@@ -178,7 +208,55 @@
 <% content_for :head do %>
     <%= javascript_tag do %>
         $(document).ready(function(){
-        $('span#country .select2').on('change', function() { update_state(''); });
+
+        <% if f.object.from_google_maps? %>
+            $('#addr_frm').hide()
+            $('#gmaps_frm').show()
+            $.getScript('https://maps.googleapis.com/maps/api/js?key=AIzaSyDUpAyNtPcUNgPIXtUiJtUFXa2UZu4jI94&libraries=places&callback=initMap')
+            $("#pac-input").val("<%=f.object.address1%>")
+        <% else %>
+            $('#addr_frm').show()
+            $('#gmaps_frm').hide()
+        <% end %>
+
+
+            $("input[type=radio]").change(function(){
+               var radio_id = $(this).attr('id');
+                if(radio_id == 'use_frm'){
+                    $('#addr_frm').show()
+                    $('#gmaps_frm').hide()
+                }else{
+                    $('#addr_frm').hide()
+                    $('#gmaps_frm').show()
+
+                     $.getScript('https://maps.googleapis.com/maps/api/js?key=AIzaSyDUpAyNtPcUNgPIXtUiJtUFXa2UZu4jI94&libraries=places&callback=initMap')
+                     $("#pac-input").val("<%=f.object.address1%>")
+
+                }
+            })
+
+
+            <% if f.object.country_id != 115 %>
+                $('#seller_address_constituency_field').hide()
+                $('#seller_address_location_field').hide()
+            <% end %>
+
+            $('span#country .select2').on('change', function() {
+                var country = $('span#country .select2').select2('val');
+                if(country != 115){
+                    $('#seller_address_constituency_field').hide()
+                    $('#seller_address_location_field').hide()
+                }else{
+                    $('#seller_address_constituency_field').show()
+                    $('#seller_address_location_field').show()
+
+                }
+                update_state('');
+
+            });
+        $('span#state .select2').on('change', function() { update_constituency(''); });
+        $('span#constituency .select2').on('change', function() { update_location(''); });
+
         });
     <% end %>
 <% end %>
@@ -188,7 +266,7 @@
 
     window.initMap = function() {
 
-        <% if f.object.persisted? %>
+        <% if f.object.persisted? && f.object.latitude %>
 
             var lat_lng = {lat: <%= f.object.latitude %>, lng: <%= f.object.longitude %>};
 
@@ -201,7 +279,7 @@
         var map = new google.maps.Map(document.getElementById('map'), {
             mapTypeControl: false,
             center: lat_lng,
-            zoom: 3
+            zoom: <%= f.object.persisted? ? '13' : '3' %>
         });
 
         google.maps.event.trigger(map, 'resize');
@@ -227,7 +305,7 @@
                 document.getElementById('pac-input'));
 
         var types = document.getElementById('type-selector');
-        map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+        //map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
         map.controls[google.maps.ControlPosition.TOP_LEFT].push(types);
 
         var autocomplete = new google.maps.places.Autocomplete(input);
@@ -247,6 +325,8 @@
                 window.alert("Autocomplete's returned place contains no geometry");
                 return;
             }
+
+            $('#addr1').val(place.formatted_address);
 
             $('#seller_address_address1').val(place.formatted_address);
             $('#seller_address_latitude').val(place.geometry.location.lat())
@@ -285,20 +365,5 @@
 
 
     }
-</script>
-
-<script type="text/javascript">
-    /*$('#sbmt_info').click(function(){
-     var data1 = $('.edit_user :input, .new_personal_detail :input, .new_personal_detail select, .new_location_info :input').serialize()
-     $('#serialized_params').val(data1)
-     $('.edit_user').submit()
-     })*/
-
-    $(document).ready(function(e) {
-//        if (!(typeof google === 'object' && typeof google.maps === 'object')){
-            $.getScript('https://maps.googleapis.com/maps/api/js?key=AIzaSyDUpAyNtPcUNgPIXtUiJtUFXa2UZu4jI94&libraries=places&callback=initMap')
-            $("#pac-input").val("<%=f.object.address1%>")
-        //}
-    })
 </script>
 

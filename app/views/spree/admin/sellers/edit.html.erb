@@ -19,7 +19,7 @@
       </div>
   <% end %>
 
-  <%= form_for [:admin,  @address], url: '/admin/sellers/update', method: :post do |f| %>
+  <%= form_for [:admin,  @address], url: '/admin/sellers/update', method: :post, html: {novalidate: true} do |f| %>
       <%= render :partial => 'address', :locals => { :f => f, seller_id: @seller.id } %>
 
       <div data-hook="admin_user_edit_form_buttons">
