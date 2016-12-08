@@ -25,6 +25,8 @@
 
 //= require spree/frontend/html5shiv
 //= require spree/frontend/jquery.easing.1.3
+//= require spree/frontend/jquery-ui
+
 //= require spree/frontend/jquery.equalheights
 
 //= require spree/frontend/jquery.mobilemenu

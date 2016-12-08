@@ -744,8 +744,13 @@ nav.tm_navbar .sub-menu ul ul li a:hover {
 	margin: 0 0 2px;
 }
 .thumb-pad2 .thumbnail .caption a {
-	color: #191919;
-	font: 600 21px/31px 'Roboto';
+	color: #888888;
+	font: 600 16px/31px 'Roboto';
+	float: left;
+	border: 1px solid #ddd;
+	background-color: #fff;
+	padding: 0 3px 0;
+
 }
 .thumb-pad2 .thumbnail .caption a:hover {
 	text-decoration: underline;

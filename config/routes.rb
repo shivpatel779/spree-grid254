@@ -61,7 +61,6 @@ Rails.application.routes.draw do
   #     # (app/controllers/admin/products_controller.rb)
   #     resources :products
   #   end
-
   get 'verify_phone/new'=> 'spree/verify_phone#new'
   post 'verify_phone/send_otp' => 'spree/verify_phone#send_otp'
   post '/verify_phone/verify_phone/verify_otp' => 'spree/verify_phone#verify_otp'
@@ -72,11 +71,15 @@ Rails.application.routes.draw do
 
   get '/wallet' => 'spree/wallet#show'
   post '/wallet/credit_money' => 'spree/wallet#credit_money'
-
+  
+  Spree::Core::Engine.routes.draw do
     resources :products do
-      post 'favorite_a_product'
-      post 'unfavorite_a_product'
+      member do
+        get 'favorite_a_product'
+        get 'unfavorite_a_product'
+      end
     end
+  end  
 
     get "/sale" => "home#sale"
 

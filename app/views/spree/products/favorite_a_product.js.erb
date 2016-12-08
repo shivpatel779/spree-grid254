@@ -1,2 +1,3 @@
-$('#fav_lnk').replaceWith("<%= escape_javascript link_to('Unfavorite', product_unfavorite_a_product_path(@product), remote: true, method: :post, id: 'fav_lnk') %>")
+$('#cartshare_<%= @product.id %> #fav_lnk').replaceWith("<%= escape_javascript link_to('<i class="fa fa-heart-o unlike" aria-hidden="true" ></i>'.html_safe,unfavorite_a_product_product_path(@product.id), remote: true, method: :get, id: 'fav_lnk') %>")
 $('#total_fav_cnt').html("(<%= escape_javascript @total_favorites%>)")
+

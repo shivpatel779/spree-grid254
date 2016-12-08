@@ -29,16 +29,9 @@
             </li>
           </ul>
         </li>
-        <form class="navbar-form pull-left" role="search">
-          <div class="input-group">
-            <input type="text" class="form-control" placeholder="Search by your choise">
+        
+        <%= render 'spree/shared/search' %>
 
-            <div class="input-group-btn">
-              <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search"></span>
-              </button>
-            </div>
-          </div>
-        </form>
         <li class="dropdown">
           <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">OR</a>
         </li>
@@ -316,3 +309,4 @@
   </div>
 </div>
 </div>
+
