@@ -83,6 +83,8 @@ gem 'rotp'
 # gem 'spree_simple_sales', '3.1.0', :path => '/home/yuva/Desktop/shiv/spree_demo/sale_extension'
 
 # gem 'spree_simple_sales', '3.1.0', git: 'https://bitbucket.org/mnkrew/sale_extension.git'
+	
+gem 'spree_simple_sales', '3.1.0', git: 'https://dashboard.heroku.com/apps/cryptic-peak-43822/sale_extension'
 
 gem 'shareable'
 
