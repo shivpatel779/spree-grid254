@@ -51,6 +51,13 @@
         font-size: 13px;
         font-weight: 300;
     }
+
+    .add-field{
+      margin-bottom: 10px;
+      position: relative;
+      top: -16px;
+      right: -175px;
+    }
 </style>
 
 
@@ -115,12 +122,16 @@
                               <%= f.password_field :password_confirmation, :placeholder => Spree.t(:confirm_password) %>
                             </label>
                           </div>
-
-                          <div>
-                            <div class="tab-form-lable"> Phone Number</div>
-                            <label class="email">
-                              <%= f.text_field :phone, :placeholder => Spree.t(:phone) %>
-                            </label>
+                          <div class="multi-field-wrapper">
+                            <div class="multi-fields">
+                              <div class="multi-field">
+                                <div class="tab-form-lable"> Phone Number</div>
+                                <label class="email">
+                                  <input type="text" name="user[phone][]" placeholder="Phone" value="<%=@user.phone.last %>" >
+                                </label> 
+                              </div>
+                            </div>
+                            <span class="add-field"><i class="fa fa-plus-square-o" aria-hidden="true"></i></span>
                           </div>
 
                           <div>
@@ -154,10 +165,7 @@
                         <%= link_to 'Send OTP to verify phone', '../verify_phone/send_otp', class: "btn", method: :post %>
 
                     <% end %>
-
-
                   </div>
-
                   <div class="modal fade response-message">
                     <div class="modal-dialog">
                       <div class="modal-content">
@@ -173,7 +181,6 @@
                   </div>
                 </div>
               </div>
-
               <!-- PERSONAL INFO -->
               <div id="tab2" class="tab">
                 <div class="row">
@@ -455,3 +462,16 @@
 
 <!--<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDUpAyNtPcUNgPIXtUiJtUFXa2UZu4jI94&libraries=places&callback=initMap" async defer></script>-->
 <!--<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDUpAyNtPcUNgPIXtUiJtUFXa2UZu4jI94&libraries=places" async defer></script>-->
+
+<script type="text/javascript">
+$('.multi-field-wrapper').each(function() {
+    var $wrapper = $('.multi-fields', this);
+    $(".add-field", $(this)).click(function(e) {
+        $('.multi-field:first-child', $wrapper).clone(true).appendTo($wrapper).find('input').val('').focus();
+    });
+    $('.multi-field .remove-field', $wrapper).click(function() {
+        if ($('.multi-field', $wrapper).length > 1)
+            $(this).parent('.multi-field').remove();
+    });
+});
+</script>

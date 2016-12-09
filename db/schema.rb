@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161124090215) do
+ActiveRecord::Schema.define(version: 20161209134431) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -794,9 +794,9 @@ ActiveRecord::Schema.define(version: 20161124090215) do
   create_table "spree_sellers", force: :cascade do |t|
     t.string   "name"
     t.string   "email"
-    t.string   "phone"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+    t.text     "phone",      default: [],              array: true
   end
 
   create_table "spree_shipments", force: :cascade do |t|
@@ -1200,7 +1200,6 @@ ActiveRecord::Schema.define(version: 20161124090215) do
     t.string   "confirmation_token"
     t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"
-    t.string   "phone"
     t.string   "country"
     t.string   "state"
     t.string   "encrypted_otp_secret"
@@ -1213,6 +1212,8 @@ ActiveRecord::Schema.define(version: 20161124090215) do
     t.boolean  "phone_verified",                        default: false
     t.boolean  "is_invited",                            default: false
     t.string   "referral_code"
+    t.string   "mobile",                                default: [],                 array: true
+    t.text     "phone"
   end
 
   add_index "spree_users", ["bill_address_id"], name: "index_spree_users_on_bill_address_id", using: :btree
@@ -1283,6 +1284,13 @@ ActiveRecord::Schema.define(version: 20161124090215) do
 
   add_index "spree_zones", ["default_tax"], name: "index_spree_zones_on_default_tax", using: :btree
   add_index "spree_zones", ["kind"], name: "index_spree_zones_on_kind", using: :btree
+
+  create_table "user_phones", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "phone"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   add_foreign_key "spree_constituencies", "spree_states"
   add_foreign_key "spree_locations", "spree_constituencies"

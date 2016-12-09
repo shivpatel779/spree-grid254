@@ -25,7 +25,6 @@ class Spree::UsersController < Spree::StoreController
   end
 
   def update
-
     if params.key?(:personal_detail)
 
       pd_params = params[:personal_detail]
@@ -56,6 +55,7 @@ class Spree::UsersController < Spree::StoreController
 
     else
       if params[:user][:password].present?
+        @user.update_attributes(phone:params[:user][:phone])
         if @user.update_attributes(user_params)
           if params[:user][:password].present?
             # this logic needed b/c devise wants to log us out after password changes
@@ -70,6 +70,7 @@ class Spree::UsersController < Spree::StoreController
 
       else
         if @user.update_without_password(user_params)
+          @user.update_attributes(phone:params[:user][:phone])
           if params[:user][:password].present?
             # this logic needed b/c devise wants to log us out after password changes
             user = Spree::User.reset_password_by_token(params[:user])
@@ -87,7 +88,7 @@ class Spree::UsersController < Spree::StoreController
 
   private
   def user_params
-    params.require(:user).permit(Spree::PermittedAttributes.user_attributes)
+    params.require(:user).permit(:mobile)
   end
 
   def load_object

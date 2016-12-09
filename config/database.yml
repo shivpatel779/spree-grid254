@@ -1,16 +1,9 @@
-# SQLite version 3.x
-#   gem install sqlite3
-#
-#   Ensure the SQLite 3 gem is defined in your Gemfile
-#   gem 'sqlite3'
-development: &development
+
+development:
   adapter: postgresql
   encoding: unicode
-  database: spree_demo_db
-  pool: 5
+  database: spree_development
   username: postgres
-  password: postgres
+  password: 12345678
+  pool: 5
   host: localhost
-
-production:
-  url: <%= ENV['DATABASE_URL'] %>

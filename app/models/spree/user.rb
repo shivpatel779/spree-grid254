@@ -5,11 +5,13 @@ module Spree
     include UserAddress
     include UserPaymentSource
 
+
     devise :database_authenticatable, :registerable, :recoverable,
            :rememberable, :trackable, :validatable, :encryptable, :encryptor => 'authlogic_sha512'
     devise :confirmable if Spree::Auth::Config[:confirmable]
 
     OTP_SECRET = 'base32secret3232'
+    serialize :phone, Array
 
     acts_as_paranoid
     after_destroy :scramble_email_and_password
