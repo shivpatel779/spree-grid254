@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
 
-gem 'bundler', '1.11.2'
+# gem 'bundler', '1.11.2'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.6'
@@ -80,9 +80,9 @@ gem 'africastalking-ruby'
 # gem 'devise-two-factor'
 gem 'rotp'
 
-# gem 'spree_simple_sales', '3.1.0', :path => '/home/mkrorfolk/my_work/SkywideSys/projects/spree_simple_sales'
+gem 'spree_simple_sales', '3.1.0', :path => '/home/yuva/Desktop/shiv/spree_demo/sale_extension'
 
-gem 'spree_simple_sales', '3.1.0', git: 'https://skywidesys:ror12345@bitbucket.org/mnkrew/sale_extension.git'
+#gem 'spree_simple_sales', '3.1.0', git: 'https://bitbucket.org/mnkrew/sale_extension.git'
 
 gem 'shareable'
 
