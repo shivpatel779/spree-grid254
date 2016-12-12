@@ -79,7 +79,7 @@ gem 'africastalking-ruby'
 # gem 'devise-two-factor'
 gem 'rotp'
 
-gem 'spree_simple_sales', '3.1.0', git: 'https://skywidesys:ror12345@bitbucket.org/mnkrew/sale_extension.git'
+gem 'spree_simple_sales', '3.1.0', git: 'https://github.com/shivpatel779/sales_extension'
 
 gem 'shareable'
 
