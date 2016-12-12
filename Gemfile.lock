@@ -472,7 +472,6 @@ DEPENDENCIES
   africastalking-ruby
   awesome_print
   better_errors
-  bundler (= 1.11.2)
   byebug
   chosen-rails
   coffee-rails (~> 4.1.0)
