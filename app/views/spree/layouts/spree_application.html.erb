@@ -22,11 +22,10 @@ window._fcURL = 'https://urielmobileafrica.freshchat.io';</script>
 
 </body>
 </html>
-
 <script>
 window.fbAsyncInit = function() {
   FB.init({
-    appId      : '726741267455198',
+    appId      : '<%= Rails.application.secrets[:facebook_app_key] %>',
     xfbml      : true,
     version    : 'v2.5'
   });
