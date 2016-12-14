@@ -9,6 +9,25 @@
         <% end %>
       </div>
 
+
+      <div class="multi-field-wrapper">
+        <div class="multi-fields">
+          <div class="multi-field">
+            <div data-hook="store_location_phone" class="form-group">
+              <label for="store_location_city">Email</label><span class="required">*</span><br>
+               <input type="text" name="store_location[email][]" class="form-control">
+            </div>
+          </div>
+        </div>
+        <a href="javascript:void(0)" class="add-field"><i class="fa fa-plus-square-o" aria-hidden="true">Add Email</i></a>
+      </div>
+
+
+      <div class="form-group" data-hook="store_location_address1">
+        <%= f.label :contact_person, Spree.t(:contact_person) %><span class="required">*</span><br />
+        <%= f.text_field :contact_person, class: 'form-control', required: true %>
+      </div>
+
       <div class="form-group" data-hook="store_location_seller">
         <%= f.label :seller_id, Spree.t(:seller) %><span class="required">*</span><br />
         <span id="seller"><%= f.collection_select :seller_id, Spree::Seller.all, :id, :name, {}, { class: 'select2' } %></span>
@@ -59,6 +78,14 @@
     <%= f.text_field :city, class: 'form-control', required: true %>
   </div>
 
+
+  <div class="form-group" data-hook="store_location_city">
+    <%#= f.label :email, Spree.t(:email) %><span class="required">*</span><br />
+    <%#= f.text_field :email, class: 'form-control', required: true %>
+  </div>
+
+
+
   <div data-hook="store_location_admin_name">
     <%= f.field_container :constituency, class: ['form-group']  do %>
         <%= f.label :constituency, Spree.t(:constituency) %><span class="required">*</span><br />
@@ -78,10 +105,26 @@
     <%= f.text_field :zipcode, class: 'form-control', required: true %>
   </div>
 
-  <div class="form-group" data-hook="store_location_phone">
-    <%= f.label :phone, Spree.t(:phone) %><span class="required">*</span><br />
-    <%= f.phone_field :phone, class: 'form-control', required: true %>
+  
+
+  <div class="multi-field-wrapper">
+    <div class="multi-fields">
+      <div class="multi-field">
+        <div data-hook="store_location_phone" class="form-group">
+          <label for="store_location_city">Phone</label><span class="required">*</span><br>
+           <input type="text" name="store_location[phone][]" class="form-control">
+        </div>
+      </div>
+    </div>
+    <a href="javascript:void(0)" class="add-field"><i class="fa fa-plus-square-o" aria-hidden="true">Add Phone</i></a>
   </div>
+
+
+  
+    
+
+
+
 
   <% if !params[:action].eql?('new') %>
     <%= hidden_field_tag :id, f.object.id%>
@@ -96,3 +139,12 @@
     });
   <% end %>
 <% end %>
+
+<script type="text/javascript">
+$('.multi-field-wrapper').each(function() {
+    var $wrapper = $('.multi-fields', this);
+    $(".add-field", $(this)).click(function(e) {
+        $('.multi-field:first-child', $wrapper).clone(true).appendTo($wrapper).find('input').val('').focus();
+    });
+});
+</script>

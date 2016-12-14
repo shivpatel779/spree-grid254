@@ -12,6 +12,7 @@ class Spree::Admin::StoreLocationController < Spree::Admin::BaseController
   end
 
   def create
+    
     params[:store_location].permit!
     @store_location = Spree::StoreLocation.new(params[:store_location])
     if @store_location.save

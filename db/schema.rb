@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161209134431) do
+ActiveRecord::Schema.define(version: 20161214072536) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -793,10 +793,12 @@ ActiveRecord::Schema.define(version: 20161209134431) do
 
   create_table "spree_sellers", force: :cascade do |t|
     t.string   "name"
-    t.string   "email"
-    t.datetime "created_at",              null: false
-    t.datetime "updated_at",              null: false
-    t.text     "phone",      default: [],              array: true
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+    t.text     "mobile"
+    t.text     "email"
+    t.text     "phone"
+    t.text     "phone_number"
   end
 
   create_table "spree_shipments", force: :cascade do |t|
@@ -1039,7 +1041,7 @@ ActiveRecord::Schema.define(version: 20161209134431) do
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
     t.integer  "seller_id"
-    t.string   "phone"
+    t.text     "phone"
     t.string   "state_name"
     t.string   "city"
     t.string   "zipcode"
@@ -1047,6 +1049,9 @@ ActiveRecord::Schema.define(version: 20161209134431) do
     t.string   "name"
     t.integer  "constituency_id"
     t.integer  "location_id"
+    t.text     "mobile"
+    t.text     "email"
+    t.string   "contact_person"
   end
 
   add_index "spree_store_locations", ["country_id"], name: "index_spree_store_locations_on_country_id", using: :btree

@@ -27,6 +27,8 @@ class Spree::Admin::SellersController < Spree::Admin::BaseController
   end
 
   def create
+    update_params
+    update_params_phone
     params[:seller].permit!
     @seller = Spree::Seller.new(params[:seller])
     normalize_phone if @seller.valid?
@@ -98,7 +100,25 @@ class Spree::Admin::SellersController < Spree::Admin::BaseController
   def delete
   end
 
+
   private
+
+  def update_params
+    hash = {}
+    params[:seller][:email].map{|k,v| hash[v[:type]] = v[:phone] }
+    params[:seller][:email] = hash
+  end
+
+  def update_params_phone
+    hash = {}
+    # params[:seller][:phone_number].map{|k,v| hash[v[:type]] = v[:phone] }
+    params[:seller][:phone_number].map{|k,v| hash[v[:type_phone]] = v[:phone1] }  
+    params[:seller][:phone_number] = hash
+  end
+  
+  def seller_params
+    params.require(:seller).permit(:name)
+  end
 
   def normalize_phone
     if params[:seller][:phone_2] != ''
