@@ -1,0 +1,24 @@
+<%= render partial: 'spree/admin/shared/product_tabs', locals: {current: :stock} %>
+
+<% content_for :page_title do %>
+  <%= Spree.t(:Gift_values) %>
+<% end %>
+
+
+<%= form_for [:admin, @product], method: :patch do |f| %>
+  <div data-hook="value">
+
+    <%= f.label :giveaway_status %>
+    <%= f.check_box :giveaway_status %><br>
+    
+    <%= f.label :giveaway_name %>
+    <%=f.text_field :giveaway_name, class: "form-control" %>
+
+    <%= f.label :giveaway_description %>
+    <%=f.text_field :giveaway_description, class: "form-control" %>
+
+    <%= f.label :giveaway_value %>
+    <%=f.text_field :giveaway_value, class: "form-control" %>
+    <%= f.submit 'Gift' %>
+  </div>
+<% end %>

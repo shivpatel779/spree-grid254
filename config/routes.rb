@@ -100,4 +100,46 @@ Rails.application.routes.draw do
     get '/get_constituencies' => 'spree/admin/sellers#get_constituencies'
     get '/get_locations' => 'spree/admin/sellers#get_locations'
 
+  Spree::Core::Engine.routes.draw do  
+    namespace :admin, path: Spree.admin_path do
+      resources :promotions do
+        resources :promotion_rules
+        resources :promotion_actions
+      end
+
+      resources :promotion_categories, except: [:show]
+
+      resources :zones
+
+      resources :countries do
+        resources :states
+      end
+      resources :states
+      resources :tax_categories
+
+      resources :products do
+        resources :product_properties do
+          collection do
+            post :update_positions
+          end
+        end
+        resources :images do
+          collection do
+            post :update_positions
+          end
+        end
+        member do
+          post :clone
+          get :stock
+          get :gift_value
+        end
+        resources :variants do
+          collection do
+            post :update_positions
+          end
+        end
+        resources :variants_including_master, only: [:update]
+      end
+    end
+  end
 end
