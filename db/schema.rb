@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161214104137) do
+ActiveRecord::Schema.define(version: 20161216103216) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -30,6 +30,14 @@ ActiveRecord::Schema.define(version: 20161214104137) do
   add_index "friendly_id_slugs", ["slug", "sluggable_type"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type", using: :btree
   add_index "friendly_id_slugs", ["sluggable_id"], name: "index_friendly_id_slugs_on_sluggable_id", using: :btree
   add_index "friendly_id_slugs", ["sluggable_type"], name: "index_friendly_id_slugs_on_sluggable_type", using: :btree
+
+  create_table "locations", force: :cascade do |t|
+    t.string   "name"
+    t.integer  "constituency_id"
+    t.integer  "state_id"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+  end
 
   create_table "spree_addresses", force: :cascade do |t|
     t.string   "firstname"
@@ -797,12 +805,16 @@ ActiveRecord::Schema.define(version: 20161214104137) do
 
   create_table "spree_sellers", force: :cascade do |t|
     t.string   "name"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
+    t.datetime "created_at",                           null: false
+    t.datetime "updated_at",                           null: false
     t.text     "mobile"
     t.text     "email"
     t.text     "phone"
     t.text     "phone_number"
+    t.boolean  "promoter",             default: false
+    t.string   "contact_person"
+    t.string   "contact_email"
+    t.text     "contact_person_phone"
   end
 
   create_table "spree_shipments", force: :cascade do |t|
