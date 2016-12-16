@@ -8,7 +8,7 @@ class Spree::Admin::StoreLocationController < Spree::Admin::BaseController
 
   def new
     @store_location = Spree::StoreLocation.new
-    @store_location.country = Spree::Country.default
+    @store_location.country = default_country
   end
 
   def create
@@ -42,10 +42,14 @@ class Spree::Admin::StoreLocationController < Spree::Admin::BaseController
   private
 
   def set_country
-    @store_location.country = Spree::Country.default
+    @store_location.country = default_country
   rescue ActiveRecord::RecordNotFound
     flash[:error] = Spree.t(:stock_locations_need_a_default_country)
     redirect_to admin_stock_locations_path
+  end
+
+  def default_country
+    Spree::Country.find_by(name:"Kenya")
   end
 
 end

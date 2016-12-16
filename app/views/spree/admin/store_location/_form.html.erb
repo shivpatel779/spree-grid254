@@ -22,12 +22,6 @@
         <a href="javascript:void(0)" class="add-field"><i class="fa fa-plus-square-o" aria-hidden="true">Add Email</i></a>
       </div>
 
-
-      <div class="form-group" data-hook="store_location_address1">
-        <%= f.label :contact_person, Spree.t(:contact_person) %><span class="required">*</span><br />
-        <%= f.text_field :contact_person, class: 'form-control', required: true %>
-      </div>
-
       <div class="form-group" data-hook="store_location_seller">
         <%= f.label :seller_id, Spree.t(:seller) %><span class="required">*</span><br />
         <span id="seller"><%= f.collection_select :seller_id, Spree::Seller.all, :id, :name, {}, { class: 'select2' } %></span>
@@ -59,7 +53,8 @@
   </div>
 
   <div class="form-group" data-hook="store_location_country">
-    <%= f.label :country_id, Spree.t(:country) %><span class="required">*</span><br />
+    <%= f.label :country_id, Spree.t(:country)+'/State' %><span class="required">*</span><br />
+  
     <span id="country"><%= f.collection_select :country_id, available_countries, :id, :name, {}, { class: 'select2' } %></span>
   </div>
 
@@ -73,31 +68,24 @@
     <% end %>
   </div>
 
+  <div class="form-group" data-hook="store_location_state">
+    <%= f.label :constituency_id, Spree.t(:constituency) %><span class="required">*</span><br />
+    <span id="constituency_area" class="region">
+      <%= f.collection_select :constituency_id, f.object.country.states.sort, :id, :name, { include_blank: true }, {class: 'select2', style: "#{f.object.country.states.empty? ? 'display: none;' : '' };", disabled: f.object.country.states.empty?} %>
+    </span>
+  </div>
+
+
+  <div class="form-group" data-hook="store_location_state">
+    <%= f.label :location_id, Spree.t(:location) %><span class="required">*</span><br />
+    <span id="location" class="region">
+      <%= f.collection_select :location_id, f.object.country.states.sort, :id, :name, { include_blank: true }, {class: 'select2', style: "#{f.object.country.states.empty? ? 'display: none;' : '' };", disabled: f.object.country.states.empty?} %>
+    </span>
+  </div>
+
   <div class="form-group" data-hook="store_location_city">
     <%= f.label :city, Spree.t(:city) %><span class="required">*</span><br />
     <%= f.text_field :city, class: 'form-control', required: true %>
-  </div>
-
-
-  <div class="form-group" data-hook="store_location_city">
-    <%#= f.label :email, Spree.t(:email) %><span class="required">*</span><br />
-    <%#= f.text_field :email, class: 'form-control', required: true %>
-  </div>
-
-
-
-  <div data-hook="store_location_admin_name">
-    <%= f.field_container :constituency, class: ['form-group']  do %>
-        <%= f.label :constituency, Spree.t(:constituency) %><span class="required">*</span><br />
-        <%= f.text_field :constituency, class: 'form-control', label: false, required: true %>
-    <% end %>
-  </div>
-
-  <div data-hook="store_location_admin_name">
-    <%= f.field_container :location, class: ['form-group']  do %>
-        <%= f.label :location, Spree.t(:location) %><span class="required">*</span><br />
-        <%= f.text_field :location, class: 'form-control', label: false, required: true %>
-    <% end %>
   </div>
 
   <div class="form-group" data-hook="store_location_zipcode">
@@ -136,6 +124,8 @@
   <%= javascript_tag do %>
     $(document).ready(function(){
       $('span#country .select2').on('change', function() { update_state(''); });
+      $('span#state .select2').on('change', function() { update_constituency(''); });
+      $('span#constituency_area .select2').on('change', function() { update_location(''); });
     });
   <% end %>
 <% end %>

@@ -39,8 +39,9 @@ var update_state = function (region, done) {
 var update_constituency = function (region, done) {
     'use strict';
 
-    var constituency_select = $('span#' + region + 'constituency select.select2');
+    var constituency_select = $('span#constituency_area select.select2');
     var state = $('span#state .select2').select2('val');
+    var location_select = $('span#location select.select2');
 
     // Spree.routes.constituencies = '/api/v1/get_constituencies';
 
@@ -52,7 +53,6 @@ var update_constituency = function (region, done) {
         method: 'GET',
         success: function (data) {
             var constituencies = data.constituencies;
-
             console.log(constituencies)
             if (constituencies.length > 0) {
                 constituency_select.html('');
@@ -74,6 +74,7 @@ var update_constituency = function (region, done) {
             } else {
                 //state_input.prop('disabled', false).show();
                 constituency_select.select2('destroy').hide();
+                location_select.select2('destroy').hide();
             }
 
             if(done) done();
@@ -86,8 +87,8 @@ var update_constituency = function (region, done) {
 var update_location = function (region, done) {
     'use strict';
 
-    var location_select = $('span#' + region + 'location select.select2');
-    var constituency = $('span#constituency .select2').select2('val');
+    var location_select = $('span#location select.select2');
+    var constituency = $('span#constituency_area .select2').select2('val');
 
     $.ajax({
         url: '/get_locations',
