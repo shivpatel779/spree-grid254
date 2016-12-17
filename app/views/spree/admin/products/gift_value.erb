@@ -4,7 +4,6 @@
   <%= Spree.t(:Gift_values) %>
 <% end %>
 
-
 <%= form_for [:admin, @product], method: :patch do |f| %>
   <div data-hook="value">
 
@@ -18,7 +17,32 @@
     <%=f.text_field :giveaway_description, class: "form-control" %>
 
     <%= f.label :giveaway_value %>
-    <%=f.text_field :giveaway_value, class: "form-control" %>
+    <%=f.text_field :giveaway_value, class: "form-control", id:"giveaway_value" %>
+
+    <%= f.hidden_field :total_discount, :id=>"sum" %>
     <%= f.submit 'Gift' %>
   </div>
 <% end %>
+
+<script type="text/javascript">
+  $(document).ready(function() {
+  sum();
+  $("#giveaway_value").on("keydown keyup", function() {
+    
+    sum();
+  });
+});
+
+function sum() {
+  var master_price = '<%= @product.price.to_f %>';
+  var sale_price = '<%= Spree::Variant.where(product_id:@product.id).first.sale_price.to_f %>';
+  var gift_value = document.getElementById('giveaway_value').value;
+
+  var result = parseInt(master_price) - parseInt(sale_price) + parseInt(gift_value);
+    var total_discount = (result*100)/master_price
+    if (!isNaN(total_discount)) {
+      document.getElementById('sum').value = Math.round(total_discount);
+    }
+  }
+
+</script>

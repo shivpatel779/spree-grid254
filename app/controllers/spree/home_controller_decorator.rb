@@ -5,7 +5,8 @@ module Spree
     end
 
     def index
-      @products = Spree::Product.first(5)
+    	@treding_deal_product = Spree::Product.where.not(total_discount:nil).order( 'total_discount desc').first(8)
+    	@products = Spree::Product.first(5)
     end
   end
 end

@@ -2,6 +2,7 @@ Spree::ProductsController.class_eval do
 
   def index
     @products = Spree::Product.where("LOWER(name) LIKE ?", ("%"+params[:keywords].downcase+"%"))
+    @treding_deal_product = Spree::Product.where.not(total_discount:nil).order( 'total_discount desc').first(8)
   end
 
   def favorite_a_product
@@ -23,5 +24,9 @@ Spree::ProductsController.class_eval do
     respond_to do |format|
       format.js
     end
+  end
+
+  def product_offer_list
+    @treding_deal_product = Spree::Product.where.not(total_discount:nil).order( 'total_discount desc')
   end
 end
