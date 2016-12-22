@@ -262,11 +262,10 @@ function sum() {
   var current_gift = document.getElementById('giveaway_value').value;
   var master_price = document.getElementById('master_price').value;
   var sale_price = document.getElementById('sale_price').value;
-
-  var result = parseInt(master_price) - parseInt(sale_price) + parseInt(current_gift);
+  var result = parseFloat(master_price) - parseFloat(sale_price) + parseFloat(current_gift);
     var total_discount = (result*100)/master_price
     if (!isNaN(total_discount)) {
-      document.getElementById('sum').value = Math.round(total_discount);
+      document.getElementById('sum').value = total_discount.toFixed(2);
     }
   }
 </script>

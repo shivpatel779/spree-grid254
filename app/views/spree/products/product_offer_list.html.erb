@@ -180,20 +180,28 @@
                       </div>
                       <div class="col-md-3 col-sm-3 col-xs-12">
                         <div class="row">
-                          <div class="caption new-caption" >
+                          <div class="caption new-caption cartshare_<%=product.id %>">
                             <div class="sale-div">
                               <b>SAVE</b>
                               <br />$<%=save.round(2)%>
                             </div>
+                          
                             <div class="sale-div">
-                              <i class="fa fa-share-alt" aria-hidden="true"></i>
+                              <i class="fa fa-share-alt share1" aria-hidden="true"  data-name="<%= product.name%>" data-desc="<%= product.description %>"></i>
                             </div>
+                            
                             <div class="sale-div" style="background-color:#ed292d;border-color:#ed292d;">
                               <i class="fa fa-shopping-cart" aria-hidden="true" ></i>
                             </div>
-                            <div class="sale-div" style="background-color:#e85858;border-color:#e85858;">
-                              <i class="fa fa-heart" aria-hidden="true" ></i>
-                            </div>
+                            <% if product.favorites.present? %>
+                              <div class="sale-div fav_lnk" style="background-color:#e85858;border-color:#e85858;">
+                                <i class="fa fa-heart-o unlike" aria-hidden="true" id="<%=product.id%>" ></i>
+                              </div>
+                            <% else %>
+                               <div class="sale-div fav_lnk" style="background-color:#e85858;border-color:#e85858;">
+                                <i class="fa fa-heart fav like" aria-hidden="true" id="<%=product.id%>" ></i>
+                              </div>
+                            <% end %>
                           </div>
                         </div>
                       </div>
@@ -220,417 +228,40 @@
   </div>
 </div>
     
-
-
-
-
-<script src="js/bootstrap.min.js"></script>
-<script src="js/tm-scripts.js"></script>
-
-
-<style type="text/css">
-       /* body,html{
-            font-family: 'Roboto', sans-serif;
-        } */   
-
-        body,html{
-            font-family: 'Roboto', sans-serif;
-            /*font-family: 'Raleway', sans-serif;*/
-            /*font-family: 'Raleway', sans-serif;*/
-            /*font-family: 'Open Sans', sans-serif;*/
-        }
-
-        .product-container{
-            margin-bottom: 20px;
-        }
-
-        .product-container a{
-           position: relative;
-           display: inline-block;
-           text-align: center;
-           width: 100%;
-        }
-
-        .product-container a img{
-            width: 100%;
-        }
-        .product-container:hover .product-title{
-            visibility: visible;
-            opacity: 1;
-        }
-
-        .product-title{
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            padding: 10px;
-            background-color: rgba(0,0,0,0.7);
-            visibility: hidden;
-            opacity: 0;
-            transition: visibility 0s, opacity 0.3s linear;
-            overflow-wrap: break-word;
-            overflow: hidden;
-        }
-
-        .product-title-name{
-            color: #fff;
-            font-size: 16px;
-            text-align: left;
-            margin: 0px;
-            height: 45px;
-            /*text-overflow: ellipsis;
-            white-space: nowrap;*/
-        }
-
-
-
-        .product-container.product-container-2 .product-title{
-            visibility: visible;
-            opacity: 1;
-            background: -moz-linear-gradient(transparent 0%, rgba(0, 0, 0, 0.65) 100%) !important;
-            background: -webkit-linear-gradient(transparent 0%, rgba(0, 0, 0, 0.65) 100%) !important;
-            background: linear-gradient(transparent 0%, rgba(0, 0, 0, 0.65) 100%) !important;
-            width: 100% !important;
-            text-shadow: 0 2px 1em #000000 !important;
-            padding-top: 8px !important;
-        }
-
-        .product-container.product-container-3.product-container-2n:hover img{
-            -webkit-transform:scale(1.1);
-            transform:scale(1.1);
-            opacity: 1;
-        }
-
-        .product-container.product-container-3.product-container-2n img {
-            opacity: 0.7;
-            -webkit-transition: all 0.7s ease;
-            transition: all 0.7s ease;
-        }
-       
-
-        .product-container.product-container-3:hover img{
-            -webkit-transform: rotateY(360deg);
-            -webkit-transform-style: preserve-3d;
-            transform: rotateY(360deg);
-            transform-style: preserve-3d;
-        }
-
-        .product-container.product-container-3 .discount-price{
-            position:absolute;
-            right:0;
-            top:0;
-            padding:5px;
-            background-color:rgba(255,255,255,0.9);
-            color: #EA4545;
-            width:20%;
-            font-weight: bold;
-        }
-
-        .product-container.product-container-3:hover img {
-            -webkit-transition: all 0.7s ease;
-            transition: all 0.7s ease;
-        }
-
-        .product-container.product-container-3 .cartshare-btn {
-            position: relative;
-            margin-top: 5px;
-            display: block;
-        }
-
-        .product-container.product-container-3 .cartshare-btn.half-div{
-            width: 50%;
-            float: left;
-        }
-
-        .product-container.product-container-3 .half-price{
-            width: 50%;
-            float: left;
-            margin-top: 10px;
-        }
-
-        .product-container.product-container-3 .product-title{
-            visibility: visible;
-            opacity: 1;
-            position: relative;
-            padding: 10px 10px 10px 0px;
-            background-color: transparent;
-           
-        }
-
-        .product-container.product-container-3 .product-title .product-title-name{
-            color: #010101;
-        }
-
-        .deal-list{
-            background-color: #fff;
-        }
-
-        .deal-list h3{
-            font-size: 20px;
-        }
-
-        .deal-type,.discount{
-            background-color: transparent;
-            border:none;
-            padding: 0px;
-            margin-bottom: 0px;
-        }
-
-        .deal-type .dealtype-full{
-            border: 5px solid #f7f7f7;
-        }
-
-        .deal-list .deal-list-li{
-            /*border-bottom: 4px solid #f7f7f7;*/
-            border-bottom: 4px solid transparent;
-        }
-
-        .deal-list .deal-list-li:nth-child(3){
-            border-bottom: none;
-        }
-
-        .deal-list .deal-list-title{
-            color: #010101;
-            font-size: 16px;
-            /*font-family: 'Raleway';*/
-            border-bottom: 1px solid #ddd;
-            padding-bottom: 2px;
-        }
-
-        .deal-list .deal-list-title{
-            color: #010101;
-            font-size: 16px;
-            /*font-family: 'Raleway';*/
-            margin: 10px 0px;
-        }
-
-        .deal-list .location-item{
-            width: 50%;
-            min-width: 225px;
-        }
-
-        .deal-list .item a{
-            color: #888888;
-            font-size: 14px;
-            /*font-family: 'Raleway';*/
-        }
-
-        .deal-list .item .item-available{
-            color: #010101;
-            font-size: 12px;
-            /*font-family: 'Raleway';*/
-        }
-
-        .deal-list .item a.btn{
-            padding-top:0px;
-            padding-left: 0px;
-            font-weight: 700; 
-        }
-
-        .deal-list .item:hover a{
-            color: #010101;
-        }
-
-
-        .thumbnail {
-            position: relative;
-            overflow: hidden;
-        }
-
-        .sale-div {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            border: 1px solid #8e8d8d;
-            border-radius: 50%;
-            text-align: center;
-            padding: 10px;
-            transform: 0.3 ease;
-        }
-
-        .cartshare-btn {
-            background-color: rgba(255, 255, 255, 0.8);
-            position: absolute;
-            top: 70%;
-            right: 0px;
-            left: 0;
-            text-align: center;
-            padding: 5px;
-            margin: 0 auto;
-            transform: 0.3 ease;
-        }
-        
-        .cartshare-btn button {
-            border: 1px solid #ccc;
-            color: #888;
-            background-color: #fff;
-        }
-
-        .cart-div  .descr-div{
-            padding:5px 0px 2px;
-        }
-        .cart-div  .descr-txt{
-            color:#999;font-size:14px;line-height:16px;font-weight:400;text-overflow: ellipsis;max-height:40px;margin-bottom: 0px;
-        }
-
-        .thumb-pad2 {
-            box-shadow: 1px solid transparent;
-            border-radius: 3px;
-            text-decoration: none;
-            box-shadow: 0 7px 17px 0 rgba(255, 255, 255, 1);
-            border: solid 1px transparent;
-        }
-
-        .cart-div:hover .thumb-pad2 {
-            box-shadow: 1px solid #eee;
-            z-index: 50;
-            border-radius: 3px;
-            text-decoration: none;
-            box-shadow: 0 7px 17px 0 rgba(23, 84, 116, 0.18);
-            border: solid 0.9px #f3f3f3;
-        }
-
-        .thumb-pad2 .thumbnail .caption{
-            padding: 0px 10px;
-        }
-
-        .cart-div {
-            padding: 0px;
-            margin: 15px 0px;
-        }
-
-        .cart-div .product-price {
-            text-align:center;font-weight:700;margin: 0px;
-        }
-
-        .cart-div .product-price .money{
-            color:#EA4545;font: 500 14px/1.75;
-        }
-
-        .cart-div .product-price s,
-        .cart-div .product-price s .money{
-            color: #848484;
-        }
-
-        .new-rec {
-            padding: 0px;
-            margin: 15px 0px;
-        }
-        .new-rec .thumb-pad2 {
-            padding: 15px 15px;
-        }
-        .new-rec:hover .thumb-pad2 {
-            box-shadow: 1px solid #eee;
-            z-index: 50;
-            border-radius: 3px;
-            text-decoration: none;
-            box-shadow: 0 7px 17px 0 rgba(23, 84, 116, 0.18);
-            border: solid 0.9px #f3f3f3;
-        }
-
-        .new-rec:hover .cartshare-btn,
-        .new-rec .thumbnail:hover .cartshare-btn {
-            display: block;
-        }
-
-        .new-rec .thumbnail figure{
-            height:175px;
-            position: relative;
-            width: 100%;
-        }
-
-        .new-rec .thumbnail figure img{
-            position: absolute;
-            top:50%;
-            left:50%;
-            transform:translateY(-50%) translateX(-50%);
-        }
-
-        .ttd-div figure,
-        .ttd-div figure img{
-            height: 175px;
-        }
-
-        .ttd-div figure img{
-            position: relative;
-            width: 200px;
-            margin:0 auto;
-        }
-
-        .ttd-div .new-caption{
-            position: relative;
-            top: 0px;
-            right: 5px;
-            bottom:0px;
-            z-index:99;
-            padding:0px !important;
-        } 
-
-
-        .ttd-div .sale-div:first-child{
-            position:relative;
-            background-color:#fff;
-            border: 1px solid #8e8d8d;
-            height:50px;
-            width:56px;
-            font-size:12px;
-            margin:0 auto;
-            top:0px;
-        }
-
-
-        .ttd-div .sale-div{
-            position:relative;
-            background-color:#c03e33;
-            border-color:#c03e33;
-            border-radius:50%;
-            margin:0 auto;
-            margin-top:5px;
-            margin-bottom:5px;
-            width:30px;
-            height:30px;
-            padding: 2px 0px;
-            left: 0px;
-            right: 0px;
-            top: 0px;
-        } 
-
-        .ttd-div .sale-div i{
-            color:#fff;
-            font-size:14px;
-            position:absolute;
-            top:50%;
-            left:50%;
-            transform: translate(-50%, -50%);    
-        }
-        
-        .ttd-div .product-price{
-            text-align:center;
-            font-weight:700;
-            margin: 0px;
-        }
-
-        .ttd-div .product-description{
-            padding:5px 0px 2px;
-        }
-
-        .ttd-div .product-description p{
-            color:#999;
-            font-size:14px;
-            line-height:16px;
-            font-weight:400;
-            text-overflow: ellipsis;
-            max-height:40px;
-            margin-bottom: 0px;
-        }
-
-
-        .item .checkbox label{
-            padding-left: 5px;
-        }
-
-        .item .checkbox{
-            margin-top: 0px;
-        }
-    </style>
+<script type="text/javascript">
+  
+$(document).on("click",".like",function() {
+    var fav_id = this.id
+    $.ajax({
+      url  : "/products/"+fav_id+"/favorite_a_product",
+      Type : "get",
+      data: {"product_id" :fav_id}
+    })
+});
+
+$(document).on("click",".unlike",function() {
+    var fav_id = this.id
+    $.ajax({
+      url  : "/products/"+fav_id+"/unfavorite_a_product",
+      Type : "get",
+      data: {"product_id" :fav_id}
+    })
+});
+
+
+</script>
+<script type="text/javascript">
+  $(document).on("click",".share1",function(e) {    
+    name = $(this).data('name')
+    desc = $(this).data('desc')
+    e.preventDefault();
+    FB.ui(
+    {
+      method: 'feed',
+      name: name,
+      link: "spree.com",
+      description: desc,
+      message: ""
+    });  
+  });
+</script>

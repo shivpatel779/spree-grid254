@@ -1,588 +1,379 @@
- 
-<!-- Banner Slider -->
-<section class="section-white" style="margin-top:70px;">
-  <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
-    <!-- Indicators -->
-    <!-- <ol class="carousel-indicators">
-      <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
-      <li data-target="#carousel-example-generic" data-slide-to="1"></li>
-      <li data-target="#carousel-example-generic" data-slide-to="2"></li>
-    </ol> -->
-
-    <!-- Wrapper for slides -->
-    <div class="carousel-inner banner-slider">
-
-      <div class="item active">
-        <img src="assets/banner2.jpg" alt="...">
-        <!-- <div class="carousel-caption">
-          <h2>Heading</h2>
-        </div> -->
+<section class="section-white" style="margin-top:70px;background-color:#fff;">
+  <div class="container">
+    <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+      <!-- Indicators -->
+      <!-- <ol class="carousel-indicators">
+        <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+        <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+        <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+        </ol> -->
+      <!-- Wrapper for slides -->
+      <div class="carousel-inner banner-slider">
+        <div class="item active">
+          <img src="assets/banner2.jpg" alt="...">
+          <!-- <div class="carousel-caption">
+            <h2>Heading</h2>
+            </div> -->
+        </div>
+        <div class="item">
+          <img src="assets/banner1.jpg" alt="...">
+          <!-- <div class="carousel-caption">
+            <h2>Heading</h2>
+            </div> -->
+        </div>
+        <div class="item">
+          <img src="assets/banner2.jpg" alt="...">
+          <!-- <div class="carousel-caption">
+            <h2>Heading</h2>
+            </div> -->
+        </div>
       </div>
-      <div class="item">
-        <img src="assets/banner1.jpg" alt="...">
-        <!-- <div class="carousel-caption">
-          <h2>Heading</h2>
-        </div> -->
-      </div>
-      <div class="item">
-        <img src="assets/banner2.jpg" alt="...">
-        <!-- <div class="carousel-caption">
-          <h2>Heading</h2>
-        </div> -->
-      </div>
-
-    </div>
-
-    <!-- Controls -->
-    <a class="left carousel-control" href="#carousel-example-generic" data-slide="prev">
+      <!-- Controls -->
+      <a class="left carousel-control" href="#carousel-example-generic" data-slide="prev">
       <span class="glyphicon glyphicon-chevron-left"></span>
-    </a>
-    <a class="right carousel-control" href="#carousel-example-generic" data-slide="next">
+      </a>
+      <a class="right carousel-control" href="#carousel-example-generic" data-slide="next">
       <span class="glyphicon glyphicon-chevron-right"></span>
-    </a>
+      </a>
+    </div>
   </div>
 </section>
-
 <!--content-->
 <div class="content">
-  <div class="thumb-box3">
+<div class="thumb-box3" style="padding-top:15px;">
+  <div class="container">
+    <h2>Todays trending deals</h2>
+    <div class="row">
+      <% @treding_deal_products.first(4).each do |product| %>
+        <% calculation_price product %>  
+        <div class="col-lg-3 col-md-6 col-sm-6 new-rec ttd-div">
+          <div class="thumb-pad2">
+            <div class="thumbnail">
+              <div class="row">
+                <div class="col-md-9 col-sm-9 col-xs-12">
+                  <figure>
+                    <% image = product.images.first %>
+                    <%= link_to image_tag(image.attachment.url(:product)), product_path(product) %>
+                  </figure>
+                </div>
+                <div class="col-md-3 col-sm-3 col-xs-12">
+                  <div class="row">
+                    <div class="caption new-caption cartshare_<%=product.id %>">
+                      <div class="sale-div">
+                        <b>SAVE</b>
+                        <br />$<%=@save.round(2)%>
+                        </p>
+                      </div>
+                      <div class="sale-div">
+                        <i class="fa fa-share-alt share" aria-hidden="true"  data-name="<%= product.name%>" data-desc="<%= product.description %>"></i>
+                      </div>
+                      <div class="sale-div" style="background-color:#ed292d;border-color:#ed292d;">
+                        <i class="fa fa-shopping-cart" aria-hidden="true" ></i>
+                      </div>
+                     
+                      <% if product.favorites.present? %>
+                      <div class="sale-div fav_lnk" style="background-color:#e85858;border-color:#e85858;">
+                        <i class="fa fa-heart-o unlike" aria-hidden="true" id="<%=product.id%>" ></i>
+                      </div>
+                      <% else %>
+                      <div class="sale-div fav_lnk" style="background-color:#e85858;border-color:#e85858;">
+                        <i class="fa fa-heart fav like" aria-hidden="true" id="<%=product.id%>" ></i>
+                      </div>
+                      <% end %> 
+                    
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="caption" style="padding:0px;">
+                <div class="clearfix"></div>
+                <p class="product-price">
+                  <span class="money" data-currency-usd="$150.00" style="color:#EA4545;font: 500 14px/1.75">Now $<%=@sale_price%></span>
+                  <span>|</span>
+                  <s style="color: #848484;"><span class="money" data-currency-usd="$160.00">Before <%= product.price %></span></s>
+                </p>
+                <div class="clearfix"></div>
+                <div class="product-description">
+                  <p><%= product.name %> + <%=product.total_discount.to_i%>% off </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      <% end %>
+      <%= link_to "View All",product_offer_list_products_path, :class=>"view_all_btn btn-primary btn"  %>  
+      <h2>Deals ending soon </h2>
+      <%= render 'spree/shared/deal_ending_soon' %>
+    <h2>Recommended for you</h2>
+    <div class="row">
+      <div class="col-lg-3 col-md-6 col-sm-6 maxheight2 new-rec">
+        <div class="thumb-pad2">
+          <div class="thumbnail">
+            <figure><img src="img/page1_pic5.jpg" alt="">
+            </figure>
+            <div class="caption">
+              <div class="sale-div">
+                <p class="price">Save
+                  <br />$10</b>
+                </p>
+              </div>
+              <div class="cartshare-btn">
+                <button class="align-left"><i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                </button>
+                <button class="align-left"><i class="fa fa-heart" aria-hidden="true"></i>
+                </button>
+                <button class="align-right"><i class="fa fa-share-alt" aria-hidden="true"></i>
+                </button>
+              </div>
+              <div class="clearfix"></div>
+              <p class="product-price" style="text-align:center;font-weight:700;margin: 0px;">
+                <span class="money" data-currency-usd="$150.00" style="color:#EA4545;font: 500 14px/1.75">Now $150.00 </span>
+                <span>|</span>
+                <s style="color: #848484;"><span class="money" data-currency-usd="$160.00">Before $160.00</span></s>
+              </p>
+              <div class="clearfix"></div>
+              <div style="padding:5px 0px 2px;">
+                <p style="color:#999;font-size:14px;line-height:16px;font-weight:400;text-overflow: ellipsis;max-height:40px;margin-bottom: 0px;">Dell laptop with 5gb graphics + 25% off</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-6 col-sm-6 maxheight2 new-rec">
+        <div class="thumb-pad2">
+          <div class="thumbnail">
+            <figure><img src="img/page1_pic5.jpg" alt="">
+            </figure>
+            <div class="caption">
+              <div class="sale-div">
+                <p class="price">Save
+                  <br />$10</b>
+                </p>
+              </div>
+              <div class="cartshare-btn">
+                <button class="align-left"><i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                </button>
+                <button class="align-left"><i class="fa fa-heart" aria-hidden="true"></i>
+                </button>
+                <button class="align-right"><i class="fa fa-share-alt" aria-hidden="true"></i>
+                </button>
+              </div>
+              <div class="clearfix"></div>
+              <p class="product-price" style="text-align:center;font-weight:700;margin: 0px;">
+                <span class="money" data-currency-usd="$150.00" style="color:#EA4545;font: 500 14px/1.75">Now $150.00 </span>
+                <span>|</span>
+                <s style="color: #848484;"><span class="money" data-currency-usd="$160.00">Before $160.00</span></s>
+              </p>
+              <div class="clearfix"></div>
+              <div style="padding:5px 0px 2px;">
+                <p style="color:#999;font-size:14px;line-height:16px;font-weight:400;text-overflow: ellipsis;max-height:40px;margin-bottom: 0px;">Dell laptop with 5gb graphics + 25% off</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-6 col-sm-6 maxheight2 new-rec">
+        <div class="thumb-pad2">
+          <div class="thumbnail">
+            <figure><img src="img/page1_pic5.jpg" alt="">
+            </figure>
+            <div class="caption">
+              <div class="sale-div">
+                <p class="price">Save
+                  <br />$10</b>
+                </p>
+              </div>
+              <div class="cartshare-btn">
+                <button class="align-left"><i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                </button>
+                <button class="align-left"><i class="fa fa-heart" aria-hidden="true"></i>
+                </button>
+                <button class="align-right"><i class="fa fa-share-alt" aria-hidden="true"></i>
+                </button>
+              </div>
+              <div class="clearfix"></div>
+              <p class="product-price" style="text-align:center;font-weight:700;margin: 0px;">
+                <span class="money" data-currency-usd="$150.00" style="color:#EA4545;font: 500 14px/1.75">Now $150.00 </span>
+                <span>|</span>
+                <s style="color: #848484;"><span class="money" data-currency-usd="$160.00">Before $160.00</span></s>
+              </p>
+              <div class="clearfix"></div>
+              <div style="padding:5px 0px 2px;">
+                <p style="color:#999;font-size:14px;line-height:16px;font-weight:400;text-overflow: ellipsis;max-height:40px;margin-bottom: 0px;">Dell laptop with 5gb graphics + 25% off</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-6 col-sm-6 maxheight2 new-rec">
+        <div class="thumb-pad2">
+          <div class="thumbnail">
+            <figure><img src="img/page1_pic5.jpg" alt="">
+            </figure>
+            <div class="caption">
+              <div class="sale-div">
+                <p class="price">Save
+                  <br />$10</b>
+                </p>
+              </div>
+              <div class="cartshare-btn">
+                <button class="align-left"><i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                </button>
+                <button class="align-left"><i class="fa fa-heart" aria-hidden="true"></i>
+                </button>
+                <button class="align-right"><i class="fa fa-share-alt" aria-hidden="true"></i>
+                </button>
+              </div>
+              <div class="clearfix"></div>
+              <p class="product-price" style="text-align:center;font-weight:700;margin: 0px;">
+                <span class="money" data-currency-usd="$150.00" style="color:#EA4545;font: 500 14px/1.75">Now $150.00 </span>
+                <span>|</span>
+                <s style="color: #848484;"><span class="money" data-currency-usd="$160.00">Before $160.00</span></s>
+              </p>
+              <div class="clearfix"></div>
+              <div style="padding:5px 0px 2px;">
+                <p style="color:#999;font-size:14px;line-height:16px;font-weight:400;text-overflow: ellipsis;max-height:40px;margin-bottom: 0px;">Dell laptop with 5gb graphics + 25% off</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="thumb-box4">
     <div class="container">
-      <h2>Todays trending deals</h2>
-        <% @treding_deal_product.each do |product| %>
-            <div class="col-lg-3 col-md-6 col-sm-6 maxheight2 new-rec">
-              <div class="thumb-pad2">
-                <div class="thumbnail">
-                  <figure>
-                    <% image = product.images.first %>
-                    <%= link_to image_tag(image.attachment.url(:product)), product_path(product) %>
-
-                  </figure>
-                  <% master_price =  product.price.to_f  %>
-                  <% sell_price = Spree::Variant.where(product_id:product.id).first.sale_price.to_f %>
-                  <% give_values = product.giveaway_value.to_f %>
-                  <% save = master_price - sell_price + give_values %>
-
-                  <div class="caption">
-                    <div class="sale-div">
-                      <p class="price">Save
-                        <br />$<%=save.round(2)%></b>
-                      </p>
-                    </div>
-                    <div class="cartshare-btn" id="cartshare_<%=product.id %>">
-                      <button class="align-left"><i class="fa fa-shopping-cart" aria-hidden="true"></i>
-                      </button>
-                      <div id="fav_lnk">
-                      <% if product.favorites.present? %>
-                        <button class="align-left"><i class="fa fa-heart-o unlike" aria-hidden="true" id="<%=product.id%>" ></i> 
-                        </button> 
-                      <% else %>
-                         <button class="align-left"><i class="fa fa-heart like" aria-hidden="true" id="<%=product.id%>" ></i> 
-                        </button>
-                      <% end %>  
-                      </div>
-                      <button class="align-right"><i class="fa fa-share-alt share" aria-hidden="true" data-name="<%= product.name%>" data-desc="<%= product.description %>"></i>
-                      </button>
-                    </div>
-                    <div class="clearfix"></div>
-                    <p class="product-price" style="text-align:center;font-weight:700;margin: 0px;">
-                      <span class="money" data-currency-usd="$150.00" style="color:#EA4545;font: 500 14px/1.75">Now $<%=sell_price%> </span>
-                      <span>|</span>
-                      <s style="color: #848484;"><span class="money" data-currency-usd="$160.00"><%= product.price %></span></s>
-                    </p>
-                    <div class="clearfix"></div>
-                    <div style="padding:5px 0px 2px;">
-                      <p style="color:#999;font-size:14px;line-height:16px;font-weight:400;text-overflow: ellipsis;max-height:40px;margin-bottom: 0px;"><%= product.name %></p>
-                    </div>
-
-                  </div>
-                </div>
-              </div>
-            </div>
-        <% end %>
-        <%= link_to "View All",product_offer_list_products_path, :class=>"view_all_btn"  %>
-
-      <h2>Recommended for you</h2>
+      <h2><strong>How it works</strong></h2>
       <div class="row">
-        <% @products.each do |product| %>
-            <div class="col-lg-3 col-md-6 col-sm-6 maxheight2 new-rec">
-              <div class="thumb-pad2">
-                <div class="thumbnail">
-                  <figure>
-                    <% image = product.images.first %>
-                    <%= link_to image_tag(image.attachment.url(:product)), product_path(product) %>
-                  </figure>
-                  <% master_price =  product.price.to_f  %>
-                  <% sell_price = Spree::Variant.where(product_id:product.id).first.sale_price.to_f %>
-                  <% give_values = product.giveaway_value.to_f %>
-                  <% save = master_price - sell_price + give_values %>
-
-                  <div class="caption">
-                    <div class="sale-div">
-                      <p class="price">Save
-                        <br />$<%=save.round(2)%></b>
-                      </p>
-                    </div>
-                    <div class="cartshare-btn" id="cartshare_<%=product.id %>">
-                      <button class="align-left"><i class="fa fa-shopping-cart" aria-hidden="true"></i>
-                      </button>
-                      <div id="fav_lnk">
-                      <% if product.favorites.present? %>
-                        <button class="align-left"><i class="fa fa-heart-o unlike" aria-hidden="true" id="<%=product.id%>" ></i> 
-                        </button> 
-                      <% else %>
-                         <button class="align-left"><i class="fa fa-heart like" aria-hidden="true" id="<%=product.id%>" ></i> 
-                        </button>
-                      <% end %>  
-                      </div>
-                      <button class="align-right"><i class="fa fa-share-alt share" aria-hidden="true" data-name="<%= product.name%>" data-desc="<%= product.description %>"></i>
-                      </button>
-                    </div>
-                    <div class="clearfix"></div>
-                    <p class="product-price" style="text-align:center;font-weight:700;margin: 0px;">
-                      <span class="money" data-currency-usd="$150.00" style="color:#EA4545;font: 500 14px/1.75">Now $<%=sell_price%> </span>
-                      <span>|</span>
-                      <s style="color: #848484;"><span class="money" data-currency-usd="$160.00">Before<%= product.price %></span></s>
-                    </p>
-                    <div class="clearfix"></div>
-                    <div style="padding:5px 0px 2px;">
-                      <p style="color:#999;font-size:14px;line-height:16px;font-weight:400;text-overflow: ellipsis;max-height:40px;margin-bottom: 0px;"><%= product.name %></p>
-                    </div>
-
-                  </div>
-                </div>
-              </div>
-            </div>
-        <% end %>
-
-
-        <div class="col-lg-3 col-md-6 col-sm-6 maxheight2 new-rec">
-          <div class="thumb-pad2">
-            <div class="thumbnail">
-              <figure><img src="assets/page1_pic5.jpg" alt="">
-              </figure>
-              <div class="caption">
-                <div class="sale-div">
-                  <p class="price">Save
-                    <br />$10</b>
-                  </p>
-                </div>
-                <div class="cartshare-btn">
-                  <button class="align-left"><i class="fa fa-shopping-cart" aria-hidden="true"></i>
-                  </button>
-                  <button class="align-left"><i class="fa fa-heart" aria-hidden="true"></i>
-                  </button>
-                  <button class="align-right"><i class="fa fa-share-alt" aria-hidden="true"></i>
-                  </button>
-                </div>
-                <div class="clearfix"></div>
-                <p class="product-price" style="text-align:center;font-weight:700;margin: 0px;">
-                  <span class="money" data-currency-usd="$150.00" style="color:#EA4545;font: 500 14px/1.75">Now $150.00 </span>
-                  <span>|</span>
-                  <s style="color: #848484;"><span class="money" data-currency-usd="$160.00">Before $160.00</span></s>
-                </p>
-                <div class="clearfix"></div>
-                <div style="padding:5px 0px 2px;">
-                  <p style="color:#999;font-size:14px;line-height:16px;font-weight:400;text-overflow: ellipsis;max-height:40px;margin-bottom: 0px;">Dell laptop with 5gb graphics + 25% off</p>
-                </div>
-
-              </div>
-            </div>
+        <div class="col-lg-3 col-md-6 col-sm-6 maxheight3">
+          <div class="box">
+            <div class="badge fa fa-user"></div>
+            <strong>Register</strong>
+            <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim</p>
           </div>
         </div>
-
-        <div class="col-lg-3 col-md-6 col-sm-6 maxheight2 new-rec">
-          <div class="thumb-pad2">
-            <div class="thumbnail">
-              <figure><img src="assets/page1_pic5.jpg" alt="">
-              </figure>
-              <div class="caption">
-                <div class="sale-div">
-                  <p class="price">Save
-                    <br />$10</b>
-                  </p>
-                </div>
-                <div class="cartshare-btn">
-                  <button class="align-left"><i class="fa fa-shopping-cart" aria-hidden="true"></i>
-                  </button>
-                  <button class="align-left"><i class="fa fa-heart" aria-hidden="true"></i>
-                  </button>
-                  <button class="align-right"><i class="fa fa-share-alt" aria-hidden="true"></i>
-                  </button>
-                </div>
-                <div class="clearfix"></div>
-                <p class="product-price" style="text-align:center;font-weight:700;margin: 0px;">
-                  <span class="money" data-currency-usd="$150.00" style="color:#EA4545;font: 500 14px/1.75">Now $150.00 </span>
-                  <span>|</span>
-                  <s style="color: #848484;"><span class="money" data-currency-usd="$160.00">Before $160.00</span></s>
-                </p>
-                <div class="clearfix"></div>
-                <div style="padding:5px 0px 2px;">
-                  <p style="color:#999;font-size:14px;line-height:16px;font-weight:400;text-overflow: ellipsis;max-height:40px;margin-bottom: 0px;">Dell laptop with 5gb graphics + 25% off</p>
-                </div>
-
-              </div>
-            </div>
+        <div class="col-lg-3 col-md-6 col-sm-6 maxheight3">
+          <div class="box">
+            <div class="badge fa fa-money"></div>
+            <strong>Buy or Bid</strong>
+            <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim</p>
           </div>
         </div>
-
-        <div class="col-lg-3 col-md-6 col-sm-6 maxheight2 new-rec">
-          <div class="thumb-pad2">
-            <div class="thumbnail">
-              <figure><img src="assets/page1_pic5.jpg" alt="">
-              </figure>
-              <div class="caption">
-                <div class="sale-div">
-                  <p class="price">Save
-                    <br />$10</b>
-                  </p>
-                </div>
-                <div class="cartshare-btn">
-                  <button class="align-left"><i class="fa fa-shopping-cart" aria-hidden="true"></i>
-                  </button>
-                  <button class="align-left"><i class="fa fa-heart" aria-hidden="true"></i>
-                  </button>
-                  <button class="align-right"><i class="fa fa-share-alt" aria-hidden="true"></i>
-                  </button>
-                </div>
-                <div class="clearfix"></div>
-                <p class="product-price" style="text-align:center;font-weight:700;margin: 0px;">
-                  <span class="money" data-currency-usd="$150.00" style="color:#EA4545;font: 500 14px/1.75">Now $150.00 </span>
-                  <span>|</span>
-                  <s style="color: #848484;"><span class="money" data-currency-usd="$160.00">Before $160.00</span></s>
-                </p>
-                <div class="clearfix"></div>
-                <div style="padding:5px 0px 2px;">
-                  <p style="color:#999;font-size:14px;line-height:16px;font-weight:400;text-overflow: ellipsis;max-height:40px;margin-bottom: 0px;">Dell laptop with 5gb graphics + 25% off</p>
-                </div>
-
-              </div>
-            </div>
+        <div class="col-lg-3 col-md-6 col-sm-6 maxheight3">
+          <div class="box">
+            <div class="badge fa fa-gavel"></div>
+            <strong>Submit a Bid</strong>
+            <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim</p>
           </div>
         </div>
-      </div>
-
-
-      <h2>Top deals</h2>
-      <div class="row">
-        <div class="col-lg-3 col-md-6 col-sm-6 maxheight2 new-rec">
-          <div class="thumb-pad2">
-            <div class="thumbnail">
-              <figure><img src="assets/page1_pic5.jpg" alt="">
-              </figure>
-              <div class="caption">
-                <div class="sale-div">
-                  <p class="price">Save
-                    <br />$10</b>
-                  </p>
-                </div>
-                <div class="cartshare-btn">
-                  <button class="align-left"><i class="fa fa-shopping-cart" aria-hidden="true"></i>
-                  </button>
-                  <button class="align-left"><i class="fa fa-heart" aria-hidden="true"></i>
-                  </button>
-                  <button class="align-right"><i class="fa fa-share-alt" aria-hidden="true"></i>
-                  </button>
-                </div>
-                <div class="clearfix"></div>
-                <p class="product-price" style="text-align:center;font-weight:700;margin: 0px;">
-                  <span class="money" data-currency-usd="$150.00" style="color:#EA4545;font: 500 14px/1.75">Now $150.00 </span>
-                  <span>|</span>
-                  <s style="color: #848484;"><span class="money" data-currency-usd="$160.00">Before $160.00</span></s>
-                </p>
-                <div class="clearfix"></div>
-                <div style="padding:5px 0px 2px;">
-                  <p style="color:#999;font-size:14px;line-height:16px;font-weight:400;text-overflow: ellipsis;max-height:40px;margin-bottom: 0px;">Dell laptop with 5gb graphics + 25% off</p>
-                </div>
-
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-lg-3 col-md-6 col-sm-6 maxheight2 new-rec">
-          <div class="thumb-pad2">
-            <div class="thumbnail">
-              <figure><img src="assets/page1_pic5.jpg" alt="">
-              </figure>
-              <div class="caption">
-                <div class="sale-div">
-                  <p class="price">Save
-                    <br />$10</b>
-                  </p>
-                </div>
-                <div class="cartshare-btn">
-                  <button class="align-left"><i class="fa fa-shopping-cart" aria-hidden="true"></i>
-                  </button>
-                  <button class="align-left"><i class="fa fa-heart" aria-hidden="true"></i>
-                  </button>
-                  <button class="align-right"><i class="fa fa-share-alt" aria-hidden="true"></i>
-                  </button>
-                </div>
-                <div class="clearfix"></div>
-                <p class="product-price" style="text-align:center;font-weight:700;margin: 0px;">
-                  <span class="money" data-currency-usd="$150.00" style="color:#EA4545;font: 500 14px/1.75">Now $150.00 </span>
-                  <span>|</span>
-                  <s style="color: #848484;"><span class="money" data-currency-usd="$160.00">Before $160.00</span></s>
-                </p>
-                <div class="clearfix"></div>
-                <div style="padding:5px 0px 2px;">
-                  <p style="color:#999;font-size:14px;line-height:16px;font-weight:400;text-overflow: ellipsis;max-height:40px;margin-bottom: 0px;">Dell laptop with 5gb graphics + 25% off</p>
-                </div>
-
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-lg-3 col-md-6 col-sm-6 maxheight2 new-rec">
-          <div class="thumb-pad2">
-            <div class="thumbnail">
-              <figure><img src="assets/page1_pic5.jpg" alt="">
-              </figure>
-              <div class="caption">
-                <div class="sale-div">
-                  <p class="price">Save
-                    <br />$10</b>
-                  </p>
-                </div>
-                <div class="cartshare-btn">
-                  <button class="align-left"><i class="fa fa-shopping-cart" aria-hidden="true"></i>
-                  </button>
-                  <button class="align-left"><i class="fa fa-heart" aria-hidden="true"></i>
-                  </button>
-                  <button class="align-right"><i class="fa fa-share-alt" aria-hidden="true"></i>
-                  </button>
-                </div>
-                <div class="clearfix"></div>
-                <p class="product-price" style="text-align:center;font-weight:700;margin: 0px;">
-                  <span class="money" data-currency-usd="$150.00" style="color:#EA4545;font: 500 14px/1.75">Now $150.00 </span>
-                  <span>|</span>
-                  <s style="color: #848484;"><span class="money" data-currency-usd="$160.00">Before $160.00</span></s>
-                </p>
-                <div class="clearfix"></div>
-                <div style="padding:5px 0px 2px;">
-                  <p style="color:#999;font-size:14px;line-height:16px;font-weight:400;text-overflow: ellipsis;max-height:40px;margin-bottom: 0px;">Dell laptop with 5gb graphics + 25% off</p>
-                </div>
-
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-lg-3 col-md-6 col-sm-6 maxheight2 new-rec">
-          <div class="thumb-pad2">
-            <div class="thumbnail">
-              <figure><img src="assets/page1_pic5.jpg" alt="">
-              </figure>
-              <div class="caption">
-                <div class="sale-div">
-                  <p class="price">Save
-                    <br />$10</b>
-                  </p>
-                </div>
-                <div class="cartshare-btn">
-                  <button class="align-left"><i class="fa fa-shopping-cart" aria-hidden="true"></i>
-                  </button>
-                  <button class="align-left"><i class="fa fa-heart" aria-hidden="true"></i>
-                  </button>
-                  <button class="align-right"><i class="fa fa-share-alt" aria-hidden="true"></i>
-                  </button>
-                </div>
-                <div class="clearfix"></div>
-                <p class="product-price" style="text-align:center;font-weight:700;margin: 0px;">
-                  <span class="money" data-currency-usd="$150.00" style="color:#EA4545;font: 500 14px/1.75">Now $150.00 </span>
-                  <span>|</span>
-                  <s style="color: #848484;"><span class="money" data-currency-usd="$160.00">Before $160.00</span></s>
-                </p>
-                <div class="clearfix"></div>
-                <div style="padding:5px 0px 2px;">
-                  <p style="color:#999;font-size:14px;line-height:16px;font-weight:400;text-overflow: ellipsis;max-height:40px;margin-bottom: 0px;">Dell laptop with 5gb graphics + 25% off</p>
-                </div>
-
-              </div>
-            </div>
+        <div class="col-lg-3 col-md-6 col-sm-6 maxheight3">
+          <div class="box">
+            <div class="badge fa fa-trophy"></div>
+            <strong>Win</strong>
+            <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim</p>
           </div>
         </div>
       </div>
     </div>
-
-
-    <div class="thumb-box3" style="background:none">
+  </div>
+  <div class="stellar-section">
+    <div class="thumb-box5" data-stellar-background-ratio="0.1">
       <div class="container">
-        <div class="col-lg-12 col-md-12 col-sm-12">
-          <a href="#">
-            <img class="img-responsive" src="assets/advertise.png">
-          </a>
-        </div>
-      </div>
-    </div>
-
-    <div class="thumb-box4">
-      <div class="container">
-        <h2><strong>How it works</strong></h2>
-        <div class="row">
-          <div class="col-lg-3 col-md-6 col-sm-6 maxheight3">
-            <div class="box">
-              <div class="badge fa fa-user"></div>
-              <strong>Register</strong>
-              <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim</p>
-            </div>
-          </div>
-          <div class="col-lg-3 col-md-6 col-sm-6 maxheight3">
-            <div class="box">
-              <div class="badge fa fa-money"></div>
-              <strong>Buy or Bid</strong>
-              <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim</p>
-            </div>
-          </div>
-          <div class="col-lg-3 col-md-6 col-sm-6 maxheight3">
-            <div class="box">
-              <div class="badge fa fa-gavel"></div>
-              <strong>Submit a Bid</strong>
-              <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim</p>
-            </div>
-          </div>
-          <div class="col-lg-3 col-md-6 col-sm-6 maxheight3">
-            <div class="box">
-              <div class="badge fa fa-trophy"></div>
-              <strong>Win</strong>
-              <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="stellar-section">
-      <div class="thumb-box5" data-stellar-background-ratio="0.1">
-        <div class="container">
-          <div class='row'>
-            <div class='col-md-offset-2 col-md-8'>
-              <h2><strong>Testimonials</strong></h2>
-              <div class="carousel carousel-fade" data-ride="carousel" id="quote-carousel">
-
-                <!-- Bottom Carousel Indicators -->
-                <!-- <ol class="carousel-indicators">
-                        <li data-target="#quote-carousel" data-slide-to="0" class="active"></li>
-                        <li data-target="#quote-carousel" data-slide-to="1"></li>
-                        <li data-target="#quote-carousel" data-slide-to="2"></li>
-                      </ol> -->
-
-                <!-- Carousel Slides / Quotes -->
-                <div class="carousel-inner">
-
-                  <!-- Quote 1 -->
-                  <div class="item active">
-                    <blockquote>
-                      <div class="row">
-                        <div class="col-sm-3 text-center">
-                          <img class="img-circle" src="http://www.reactiongifs.com/r/overbite.gif" style="width: 100px;height:100px;">
-                          <!--<img class="img-circle" src="https://s3.amazonaws.com/uifaces/faces/twitter/kolage/128.jpg" style="width: 100px;height:100px;">-->
-                        </div>
-                        <div class="col-sm-9">
-                          <p>Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit!</p>
-                          <small>Someone famous</small>
-                        </div>
+        <div class='row'>
+          <div class='col-md-offset-2 col-md-8'>
+            <h2><strong>Testimonials</strong></h2>
+            <div class="carousel carousel-fade" data-ride="carousel" id="quote-carousel">
+              <!-- Bottom Carousel Indicators -->
+              <!-- <ol class="carousel-indicators">
+                <li data-target="#quote-carousel" data-slide-to="0" class="active"></li>
+                <li data-target="#quote-carousel" data-slide-to="1"></li>
+                <li data-target="#quote-carousel" data-slide-to="2"></li>
+                </ol> -->
+              <!-- Carousel Slides / Quotes -->
+              <div class="carousel-inner">
+                <!-- Quote 1 -->
+                <div class="item active">
+                  <blockquote>
+                    <div class="row">
+                      <div class="col-sm-3 text-center">
+                        <img class="img-circle" src="http://www.reactiongifs.com/r/overbite.gif" style="width: 100px;height:100px;">
+                        <!--<img class="img-circle" src="https://s3.amazonaws.com/uifaces/faces/twitter/kolage/128.jpg" style="width: 100px;height:100px;">-->
                       </div>
-                    </blockquote>
-                  </div>
-                  <!-- Quote 2 -->
-                  <div class="item">
-                    <blockquote>
-                      <div class="row">
-                        <div class="col-sm-3 text-center">
-                          <img class="img-circle" src="https://s3.amazonaws.com/uifaces/faces/twitter/mijustin/128.jpg" style="width: 100px;height:100px;">
-                        </div>
-                        <div class="col-sm-9">
-                          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam auctor nec lacus ut tempor. Mauris.</p>
-                          <small>Someone famous</small>
-                        </div>
+                      <div class="col-sm-9">
+                        <p>Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit!</p>
+                        <small>Someone famous</small>
                       </div>
-                    </blockquote>
-                  </div>
-                  <!-- Quote 3 -->
-                  <div class="item">
-                    <blockquote>
-                      <div class="row">
-                        <div class="col-sm-3 text-center">
-                          <img class="img-circle" src="https://s3.amazonaws.com/uifaces/faces/twitter/keizgoesboom/128.jpg" style="width: 100px;height:100px;">
-                        </div>
-                        <div class="col-sm-9">
-                          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam auctor nec lacus ut tempor. Mauris.</p>
-                          <small>Someone famous</small>
-                        </div>
-                      </div>
-                    </blockquote>
-                  </div>
+                    </div>
+                  </blockquote>
                 </div>
-
-                <!-- Carousel Buttons Next/Prev -->
-                <!-- <a data-slide="prev" href="#quote-carousel" class="left carousel-control"><i class="fa fa-chevron-left"></i></a>
-  <a data-slide="next" href="#quote-carousel" class="right carousel-control"><i class="fa fa-chevron-right"></i></a> -->
+                <!-- Quote 2 -->
+                <div class="item">
+                  <blockquote>
+                    <div class="row">
+                      <div class="col-sm-3 text-center">
+                        <img class="img-circle" src="https://s3.amazonaws.com/uifaces/faces/twitter/mijustin/128.jpg" style="width: 100px;height:100px;">
+                      </div>
+                      <div class="col-sm-9">
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam auctor nec lacus ut tempor. Mauris.</p>
+                        <small>Someone famous</small>
+                      </div>
+                    </div>
+                  </blockquote>
+                </div>
+                <!-- Quote 3 -->
+                <div class="item">
+                  <blockquote>
+                    <div class="row">
+                      <div class="col-sm-3 text-center">
+                        <img class="img-circle" src="https://s3.amazonaws.com/uifaces/faces/twitter/keizgoesboom/128.jpg" style="width: 100px;height:100px;">
+                      </div>
+                      <div class="col-sm-9">
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam auctor nec lacus ut tempor. Mauris.</p>
+                        <small>Someone famous</small>
+                      </div>
+                    </div>
+                  </blockquote>
+                </div>
               </div>
+              <!-- Carousel Buttons Next/Prev -->
+              <!-- <a data-slide="prev" href="#quote-carousel" class="left carousel-control"><i class="fa fa-chevron-left"></i></a>
+                <a data-slide="next" href="#quote-carousel" class="right carousel-control"><i class="fa fa-chevron-right"></i></a> -->
             </div>
           </div>
         </div>
       </div>
     </div>
-
-    <div class="social-icon-list">
-      <div class="container">
-        <div class="col-lg-12 col-md-6 col-sm-12">
-          <div class="social-div">
-            <ul class="social_icons fade_in animated fadeIn">
-              <li>
-                <a href="#">
-                  <i class="fa fa-facebook"></i>
-                </a>
-              </li>
-              <li>
-                <a href="#">
-                  <i class="fa fa-twitter"></i>
-                </a>
-              </li>
-              <li>
-                <a href="#">
-                  <i class="fa fa-instagram"></i>
-                </a>
-              </li>
-              <li>
-                <a href="#">
-                  <i class="fa fa-linkedin"></i>
-                </a>
-              </li>
-            </ul>
-          </div>
+  </div>
+  <div class="social-icon-list">
+    <div class="container">
+      <div class="col-lg-12 col-md-6 col-sm-12">
+        <div class="social-div">
+          <ul class="social_icons fade_in animated fadeIn">
+            <li>
+              <a href="#">
+              <i class="fa fa-facebook"></i>
+              </a>
+            </li>
+            <li>
+              <a href="#">
+              <i class="fa fa-twitter"></i>
+              </a>
+            </li>
+            <li>
+              <a href="#">
+              <i class="fa fa-instagram"></i>
+              </a>
+            </li>
+            <li>
+              <a href="#">
+              <i class="fa fa-linkedin"></i>
+              </a>
+            </li>
+          </ul>
         </div>
       </div>
     </div>
-
   </div>
 </div>
-
-
-<style type="text/css">
-  .view_all_btn {
-    background: #2874f0;
-    color: #fff;
-    box-shadow: 0 2px 4px 0 rgba(0,0,0,.2);
-    border: none;
-    display: inline-block;
-    border-radius: 2px;
-    padding: 10px 20px;
-    font-size: 15px;
-    font-weight: 500;
-    transition: box-shadow .2s ease;
-    vertical-align: super;
-    cursor: pointer;
-    outline: none;
-    text-transform: uppercase;
-  }
-  .view_all_btn:hover {
-    color: #fff;
-  }
-
-</style>
-
 <script type="text/javascript">
   
 $(document).on("click",".like",function() {
@@ -605,8 +396,6 @@ $(document).on("click",".unlike",function() {
 
 
 </script>
-
-
 <script type="text/javascript">
   $(document).ready(function(){
     $('.share').click(function(e){
@@ -624,4 +413,3 @@ $(document).on("click",".unlike",function() {
     });
   });
 </script>
-
