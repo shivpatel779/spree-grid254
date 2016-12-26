@@ -77,9 +77,10 @@ Rails.application.routes.draw do
       member do
         get 'favorite_a_product'
         get 'unfavorite_a_product'
+        get 'product_offer_list'
       end
       collection do
-        get 'product_offer_list'
+        
       end
     end
     # get '/spree/product_detail' => 'spree/products#index', as: :treding

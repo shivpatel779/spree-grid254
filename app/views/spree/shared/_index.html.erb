@@ -101,7 +101,7 @@
           </div>
         </div>
       <% end %>
-      <%= link_to "View All",product_offer_list_products_path, :class=>"view_all_btn btn-primary btn"  %>  
+      <%= link_to "View All",product_offer_list_product_path(:id=>"Todays trending deals"), :class=>"view_all_btn btn-primary btn"  %>  
       <h2>Deals ending soon </h2>
       <%= render 'spree/shared/deal_ending_soon' %>
     <h2>Recommended for you</h2>

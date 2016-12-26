@@ -151,7 +151,7 @@
               <div class="form-group">
                 <label for="email">Sort By</label>
                 <select class="form-control selectpicker">
-                  <option>Newest</option>
+                  <option><a href="<%= root_url%>">Newest</a></option>
                   <option>Oldest</option>
                   <option>AtoZ</option>
                   <option>Price</option>
@@ -161,9 +161,9 @@
             </form>
           </div>
         </div>
-        <h3>Trending Deals</h3>
+        <h3><%= params[:id] %></h3>
         <div class="row">
-          <% @treding_deal_product.each do |product| %>
+          <% @product_offer_list.each do |product| %>
             <% master_price =  product.price.to_f  %>
             <% sell_price = Spree::Variant.where(product_id:product.id).first.sale_price.to_f %>
             <% give_values = product.giveaway_value.to_f %>
