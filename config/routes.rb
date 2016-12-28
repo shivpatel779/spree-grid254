@@ -80,7 +80,7 @@ Rails.application.routes.draw do
         get 'product_offer_list'
       end
       collection do
-        
+        get 'get_filter_query'        
       end
     end
     # get '/spree/product_detail' => 'spree/products#index', as: :treding

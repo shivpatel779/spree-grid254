@@ -1,3 +1,5 @@
+<link rel="stylesheet" href="/assets/asRange.css">
+<script src="/assets/jquery-asRange.js"></script>
 <div class="content" style="margin-top:70px;">
 <div class="thumb-box3">
   <div class="container">
@@ -17,38 +19,33 @@
                     <li class="item"><a href="#">Giveaways <span class="item-available"> (1203)</span></a>
                     </li> 
                     </div> -->
+
                   <div class="deal-list-li">
                     <li class="deal-list-title">Deal Type</li>
-                    <li class="item">
-                      <div class="checkbox checkbox-inline checkbox-primary">
-                        <input id="inlineCheckbox1" value="option1" type="checkbox">
-                        <label for="inlineCheckbox1"> Discounts <span class="item-available"> (1203)</span> </label>
-                      </div>
-                    </li>
-                    <li class="item">
-                      <div class="checkbox checkbox-inline checkbox-primary">
-                        <input id="inlineCheckbox1" value="option1" type="checkbox">
-                        <label for="inlineCheckbox1"> Giveaways <span class="item-available"> (1203)</span> </label>
-                      </div>
-                    </li>
+                    <% %w(discounts giveaways).each_with_index do |deal_type, index| %>
+                      <li class="item">
+                        <div class="checkbox checkbox-inline checkbox-primary">
+                          <a href="<%= update_url('deal_type', deal_type) %>">
+                            <label class="checkbox select_filter" for='deal_type_<%= index %>' >
+                              <% if this_filter_is_checked?('deal_type', deal_type) %>
+                                <input type="checkbox" id="deal_type_<%= index %>" checked>
+                              <% else %>
+                                <input type="checkbox" id="deal_type_<%= index %>">
+                              <% end %>
+                              <%= deal_type.capitalize %>
+                              <span class="item-available"> (<%= total_offer deal_type %>)</span>
+                            </label>
+                          </a>
+                        </div>
+                      </li>
+                    <% end %>
                   </div>
                   <div class="deal-list-li">
                     <li class="deal-list-title">Select Category</li>
-                    <li class="item"><a href="#">Sports & Fitness <span class="item-available"> (1203)</span></a>
-                    </li>
-                    <li class="item"><a href="#">Food & groceries <span class="item-available"> (1203)</span></a>
-                    </li>
-                    <li class="item"><a href="#">Eating & hanging out <span class="item-available"> (1203)</span></a>
-                    </li>
-                    <li class="item"><a href="#">Clothing, shoes & jewelry <span class="item-available"> (1203)</span></a>
-                    </li>
-                    <li class="item"><a href="#">Electronics <span class="item-available"> (1203)</span></a>
-                    <li class="item"><a href="#">Toys, kids & baby <span class="item-available"> (1203)</span></a>
-                    </li>
-                    <li class="item"><a href="#">Automotive & industrial <span class="item-available"> (1203)</span></a>
-                    </li>
-                    <li class="item"><a href="#">Home improvement <span class="item-available"> (1203)</span></a>
-                    </li>
+                    <% Spree::Taxon.all.each do |category| %>
+                      <li class="item"><a href="<%= update_url_single_parameter('category_type',category.name)%>" id="cate" data-index="<%=category.name%>"><%= category.name %> <span class="item-available"> (<%=category.products.count %>)</span></a>
+                      </li>
+                    <% end %>
                   </div>
                   <div class="deal-list-li">
                     <li class="deal-list-title">Price Range</li>
@@ -70,66 +67,29 @@
                   </div>
                   <div class="deal-list-li">
                     <li class="deal-list-title">Discount Range</li>
-                    <li class="item">
-                      <div class="checkbox checkbox-inline checkbox-primary">
-                        <input id="inlineCheckbox1" value="option1" type="checkbox">
-                        <label for="inlineCheckbox1"> 0-10% </label>
-                      </div>
-                    </li>
-                    <li class="item">
-                      <div class="checkbox checkbox-inline">
-                        <input id="inlineCheckbox2" value="option2" type="checkbox">
-                        <label for="inlineCheckbox2"> 10-20% </label>
-                      </div>
-                    </li>
-                    <li class="item">
-                      <div class="checkbox checkbox-inline">
-                        <input id="inlineCheckbox3" value="option3" type="checkbox">
-                        <label for="inlineCheckbox3"> 20-30% </label>
-                      </div>
-                    </li>
-                    <li class="item">
-                      <div class="checkbox checkbox-inline">
-                        <input id="inlineCheckbox4" value="option4" type="checkbox">
-                        <label for="inlineCheckbox4"> 30-40% </label>
-                      </div>
-                    </li>
-                    <li class="item">
-                      <div class="checkbox checkbox-inline">
-                        <input id="inlineCheckbox5" value="option5" type="checkbox">
-                        <label for="inlineCheckbox5"> 40-50% </label>
-                      </div>
-                    </li>
-                    <li class="item">
-                      <div class="checkbox checkbox-inline">
-                        <input id="inlineCheckbox6" value="option6" type="checkbox">
-                        <label for="inlineCheckbox6"> 50% or more </label>
-                      </div>
-                    </li>
+                    <% ['0..10', '10..20', '20..30', '30..40', '40..50', '50..100'].each_with_index do |discount,index| %>
+                      <li class="item">
+                        <div class="checkbox checkbox-inline checkbox-primary">
+                          <a href="<%= update_url('discount', discount) %>">
+                            <label class="checkbox select_filter" for='discount_<%= index %>' >
+                              <% if this_filter_is_checked?('discount', discount) %>
+                                <input type="checkbox" id="discount_<%= index %>" checked>
+                              <% else %>
+                                <input type="checkbox" id="discount_<%= index %>">
+                              <% end %>
+                              <%= (discount == '50..100' ? '50 or more' : discount) %>%
+                            </label>
+                          </a>
+                        </div>
+                      </li>
+                    <% end %>
                   </div>
+
                   <div class="deal-list-li">
                     <li class="deal-list-title">Seller</li>
                     <li class="item location-item">
                       <input type="text" class="form-control" placeholder="Search by seller">
                     </li>
-                    <!-- <li>
-                      <div class="checkbox checkbox-inline">
-                          <input id="location1" value="option7" type="checkbox">
-                          <label for="location1"> USA  </label>
-                      </div>                                            
-                      </li>
-                      <li>
-                      <div class="checkbox checkbox-inline">
-                          <input id="location2" value="location8" type="checkbox">
-                          <label for="location2"> London  </label>
-                      </div>                                            
-                      </li>
-                      <li>
-                      <div class="checkbox checkbox-inline">
-                          <input id="location2" value="location8" type="checkbox">
-                          <label for="location2"> South Africa  </label>
-                      </div>                                            
-                      </li> -->
                   </div>
                 </ul>
               </div>
@@ -150,19 +110,14 @@
             <form class="form-inline" style="float:right;margin-bottom:5px;">
               <div class="form-group">
                 <label for="email">Sort By</label>
-                <select class="form-control selectpicker">
-                  <option><a href="<%= root_url%>">Newest</a></option>
-                  <option>Oldest</option>
-                  <option>AtoZ</option>
-                  <option>Price</option>
-                  <option>Nearest Location</option>
-                </select>
+                <%= select_tag(:option, options_for_select([['All','all'],['Newest','newest'],['Oldest','oldest'],['AtoZ','atoz'], ['Price','price'],['Nearest Location','nearest/location']],   :selected => params[:sort_by])) %>
               </div>
             </form>
           </div>
         </div>
         <h3><%= params[:id] %></h3>
         <div class="row">
+        <% if  @product_offer_list.present? %>
           <% @product_offer_list.each do |product| %>
             <% master_price =  product.price.to_f  %>
             <% sell_price = Spree::Variant.where(product_id:product.id).first.sale_price.to_f %>
@@ -221,13 +176,15 @@
                   </div>
                 </div>
               </div>  
-          <% end %> 
+          <% end %>
+        <% else %>
+          <h3>There is no product</h3>
+        <% end %>   
         </div> 
       </div>
     </div>
   </div>
 </div>
-    
 <script type="text/javascript">
   
 $(document).on("click",".like",function() {
@@ -248,9 +205,27 @@ $(document).on("click",".unlike",function() {
     })
 });
 
-
 </script>
+<!-- all filter js -->
 <script type="text/javascript">
+  
+  $(document).on('change', '#option', function(){
+    // url = "<%#= product_offer_list_product_path(sort_by: '') %>"
+    // url = url + $(this).val();
+    $.ajax({
+      type: 'get',
+      data: { url: "<%= raw request.url %>", data: { sort_by: $(this).val() } },
+      url: "<%= get_filter_query_products_path %>",
+      success: function(response){
+        window.location = response.data
+      }
+    })
+  });
+
+  $(document).on('click','.select_filter',function(){
+    window.location = $(this).parent().attr('href');
+  });
+
   $(document).on("click",".share1",function(e) {    
     name = $(this).data('name')
     desc = $(this).data('desc')
@@ -265,3 +240,5 @@ $(document).on("click",".unlike",function() {
     });  
   });
 </script>
+
+

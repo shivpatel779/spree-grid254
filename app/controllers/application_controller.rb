@@ -16,9 +16,6 @@ class ApplicationController < ActionController::Base
       unless Spree::LipishaPaymentAccount.exists?(user_id: spree_current_user.id)
         spree_current_user.create_payment_account
       end
-
     end
   end
-
-
 end
