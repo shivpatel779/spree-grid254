@@ -6,8 +6,9 @@
  *= require spree/frontend/animate
  *= require spree/frontend/contact-form
  *= require spree/frontend/font-awesome
- *= require spree/frontend/asRange
  *= require spree/frontend/fontello
+ *= require spree/frontend/asRange
+
  *= require chosen-compass
  *= require chosen
  *= require social-share-button
