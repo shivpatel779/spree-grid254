@@ -83,6 +83,11 @@ Rails.application.routes.draw do
         get 'get_filter_query'        
       end
     end
+    resources :users do
+      collection do
+        get 'favorite_product'
+      end
+    end
     # get '/spree/product_detail' => 'spree/products#index', as: :treding
   end  
 

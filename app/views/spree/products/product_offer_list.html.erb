@@ -50,16 +50,8 @@
                     <li class="item location-item">
                       <div class="example" style="margin-top:50px;">
                         <form method="post">
-                          <input class="range-example-input-2" type="text" min="0" max="150000" value="2,60000" name="points" step="1" />
+                          <input class="range-example-input-2" type="text" min="0" max="100" value="2,60000" name="points" step="1" />
                         </form>
-                        <script>
-                          $(document).ready(function() {
-                            $(".range-example-input-2").asRange({
-                              range: true,
-                              limit: false
-                            });
-                          });
-                        </script>
                       </div>
                     </li>
                   </div>
@@ -201,6 +193,13 @@ $(document).on("click",".unlike",function() {
       Type : "get",
       data: {"product_id" :fav_id}
     })
+});
+
+$(document).ready(function() {
+  $(".range-example-input-2").asRange({
+    range: true,
+    limit: false
+  });
 });
 
 </script>
