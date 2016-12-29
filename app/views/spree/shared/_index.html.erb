@@ -61,7 +61,7 @@
                     <div class="caption new-caption cartshare_<%=product.id %>">
                       <div class="sale-div">
                         <b>SAVE</b>
-                        <br />$<%=@save.round(2)%>
+                        <br /><%=@save.round(2)%>/=
                         </p>
                       </div>
                       <div class="sale-div">
@@ -72,11 +72,11 @@
                       </div>
                       <% if product.favorites.present? %>
                       <div class="sale-div fav_lnk" style="background-color:#e85858;border-color:#e85858;">
-                        <i class="fa fa-heart-o unlike" aria-hidden="true" id="<%=product.id%>" ></i>
+                        <i class="fa fa-heart fav like" aria-hidden="true" id="<%=product.id%>" ></i>
                       </div>
                       <% else %>
                       <div class="sale-div fav_lnk" style="background-color:#e85858;border-color:#e85858;">
-                        <i class="fa fa-heart fav like" aria-hidden="true" id="<%=product.id%>" ></i>
+                        <i class="fa fa-heart-o unlike" aria-hidden="true" id="<%=product.id%>" ></i>
                       </div>
                       <% end %> 
                     
@@ -375,23 +375,7 @@
 </div>
 <script type="text/javascript">
   
-$(document).on("click",".like",function() {
-    var fav_id = this.id
-    $.ajax({
-      url  : "/products/"+fav_id+"/favorite_a_product",
-      Type : "get",
-      data: {"product_id" :fav_id}
-    })
-});
 
-$(document).on("click",".unlike",function() {
-    var fav_id = this.id
-    $.ajax({
-      url  : "/products/"+fav_id+"/unfavorite_a_product",
-      Type : "get",
-      data: {"product_id" :fav_id}
-    })
-});
 
 
 </script>

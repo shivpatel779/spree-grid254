@@ -15,7 +15,7 @@
               <div class="caption new-caption cartshare_<%=product.id %>">
                 <div class="sale-div">
                   <b>SAVE</b>
-                  <br />$<%=@save.round(2)%>
+                  <br /><%=@save.round(2)%>/=
                   </p>
                 </div>
                 <div class="sale-div">
@@ -27,11 +27,11 @@
                
                 <% if product.favorites.present? %>
                 <div class="sale-div fav_lnk" style="background-color:#e85858;border-color:#e85858;">
-                  <i class="fa fa-heart-o unlike" aria-hidden="true" id="<%=product.id%>" ></i>
+                  <i class="fa fa-heart fav like" aria-hidden="true" id="<%=product.id%>" ></i>
                 </div>
                 <% else %>
                 <div class="sale-div fav_lnk" style="background-color:#e85858;border-color:#e85858;">
-                  <i class="fa fa-heart fav like" aria-hidden="true" id="<%=product.id%>" ></i>
+                  <i class="fa fa-heart-o unlike" aria-hidden="true" id="<%=product.id%>" ></i>
                 </div>
                 <% end %> 
               

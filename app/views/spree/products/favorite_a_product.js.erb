@@ -1,3 +1,2 @@
-$('.cartshare_<%= @product.id %> .fav_lnk').find('.fa').attr('class','fa fa-heart-o unlike');
+$('.cartshare_<%= @product.id %> .fav_lnk').find('.fa').attr('class','fa fa-heart like');
 $('#total_fav_cnt').html("(<%= escape_javascript @total_favorites%>)")
-
