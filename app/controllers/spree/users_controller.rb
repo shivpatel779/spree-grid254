@@ -87,7 +87,7 @@ class Spree::UsersController < Spree::StoreController
   end
 
   def favorite_product
-    spree_current_user.product_favorites
+    
   end
 
   private

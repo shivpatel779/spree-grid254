@@ -33,6 +33,16 @@
           <%= f.error_message_on :description %>
         <% end %>
       </div>
+
+      <div data-hook="admin_product_form_description">
+        <%= f.field_container :terms_conditions, class: ['form-group'] do %>
+          <%= f.label :terms_conditions, Spree.t(:terms_conditions) %>
+          <%= f.text_area :terms_conditions, { rows: "#{unless @product.has_variants? then '8' else '12' end}", class: 'form-control' } %>
+          <%= f.error_message_on :terms_conditions %>
+        <% end %>
+      </div>
+
+
     </div>
 
     <div class="col-md-4" data-hook="admin_product_form_right">

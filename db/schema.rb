@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161217055528) do
+ActiveRecord::Schema.define(version: 20161229084947) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -521,6 +521,7 @@ ActiveRecord::Schema.define(version: 20161217055528) do
     t.text     "giveaway_description"
     t.integer  "giveaway_value"
     t.float    "total_discount"
+    t.text     "terms_conditions"
   end
 
   add_index "spree_products", ["available_on"], name: "index_spree_products_on_available_on", using: :btree
@@ -1236,6 +1237,7 @@ ActiveRecord::Schema.define(version: 20161217055528) do
     t.string   "referral_code"
     t.string   "mobile",                                default: [],                 array: true
     t.text     "phone"
+    t.integer  "seller_id"
   end
 
   add_index "spree_users", ["bill_address_id"], name: "index_spree_users_on_bill_address_id", using: :btree

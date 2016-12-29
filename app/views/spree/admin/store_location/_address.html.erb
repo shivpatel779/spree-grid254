@@ -1,0 +1,302 @@
+<style>
+    html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+    }
+    #map {
+        height: 100%;
+    }
+    .controls {
+        margin-top: 10px;
+        border: 1px solid transparent;
+        border-radius: 2px 0 0 2px;
+        box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        height: 32px;
+        outline: none;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+    }
+
+    #pac-input_new {
+        background-color: #fff;
+        font-family: Roboto;
+        font-size: 15px;
+        font-weight: 300;
+        margin-left: 5px;
+        padding: 2px;
+        text-overflow: ellipsis;
+        width: 98%;
+    }
+
+    #pac-input_new:focus {
+        border-color: #4d90fe;
+    }
+
+    .pac-container {
+        font-family: Roboto;
+        z-index: 10000 !important;
+    }
+
+    #type-selector {
+        color: #fff;
+        background-color: #4d90fe;
+        padding: 5px 11px 0px 11px;
+    }
+
+    #type-selector label {
+        font-family: Roboto;
+        font-size: 13px;
+        font-weight: 300;
+    }
+
+        .select2{
+            width: 100%;
+        }
+</style>
+
+ <h4> Address </h4>
+
+ <%if !f.object.persisted? %>
+  <%= radio_button_tag :address_option, true, true, id: 'use_form' %> Use Address Form&nbsp;&nbsp;&nbsp;
+  <%= radio_button_tag :address_option, false, false, id: 'use_gmaps' %> Use Google maps
+  <br/>
+  <br/>
+<% end %>
+
+<div id='gmap_form'>
+  <%= f.field_container :address1, class: ['form-group'] do %>
+
+  <%= f.label :address1, 'Address' %>
+  <input id="pac-input_new" class="controls" type="text" placeholder="Enter your address" name="store_location[address1]">
+
+<% end %>
+
+
+<div id="map" style='width: 100%; height: 400px;'></div>
+
+  <%= f.hidden_field :address1, value: f.object.address1, id: 'address' %>
+  <%= f.hidden_field :latitude, value: f.object.latitude %>
+  <%= f.hidden_field :longitude, value: f.object.longitude %>
+
+</div>
+
+
+  
+
+<div id="address_form">
+  <div class="form-group" data-hook="store_location_address1">
+    <%= f.label :address1, Spree.t(:street_address) %><span class="required">*</span><br />
+    <%= f.text_field :address1, class: 'form-control', required: true %>
+  </div>
+
+  <div class="form-group" data-hook="store_location_address2">
+    <%= f.label :address2, Spree.t(:street_address_2) %>
+    <%= f.text_field :address2, class: 'form-control' %>
+  </div>
+
+  <div class="form-group" data-hook="store_location_country">
+    <%= f.label :country_id, Spree.t(:country)+'/State' %><span class="required">*</span><br />
+  
+    <span id="country"><%= f.collection_select :country_id, available_countries, :id, :name, {}, { class: 'select2' } %></span>
+  </div>
+
+  <div class="form-group" data-hook="store_location_state">
+    <% if f.object.country %>
+      <%= f.label :state_id, Spree.t(:state) %><span class="required">*</span><br />
+      <span id="state" class="region">
+        <%= f.text_field :state_name, style: "#{f.object.country.states.empty? ? '' : 'display: none;'}", disabled: !f.object.country.states.empty?, class: 'state_name form-control' %>
+        <%= f.collection_select :state_id, f.object.country.states.sort, :id, :name, { include_blank: true }, {class: 'select2', style: "#{f.object.country.states.empty? ? 'display: none;' : '' };", disabled: f.object.country.states.empty?} %>
+      </span>
+    <% end %>
+  </div>
+
+  <div class="form-group" data-hook="store_location_state">
+    <%= f.label :constituency_id, Spree.t(:constituency) %><span class="required">*</span><br />
+    <span id="constituency_area" class="region">
+      <%= f.collection_select :constituency_id, f.object.country.states.sort, :id, :name, { include_blank: true }, {class: 'select2', style: "#{f.object.country.states.empty? ? 'display: none;' : '' };", disabled: f.object.country.states.empty?} %>
+    </span>
+  </div>
+
+
+  <div class="form-group" data-hook="store_location_state">
+    <%= f.label :location_id, Spree.t(:location) %><span class="required">*</span><br />
+    <span id="location" class="region">
+      <%= f.collection_select :location_id, f.object.country.states.sort, :id, :name, { include_blank: true }, {class: 'select2', style: "#{f.object.country.states.empty? ? 'display: none;' : '' };", disabled: f.object.country.states.empty?} %>
+    </span>
+  </div>
+
+  <div class="form-group" data-hook="store_location_city">
+    <%= f.label :city, Spree.t(:city) %><span class="required">*</span><br />
+    <%= f.text_field :city, class: 'form-control', required: true %>
+  </div>
+
+  <div class="form-group" data-hook="store_location_zipcode">
+    <%= f.label :zipcode, Spree.t(:zip) %><span class="required">*</span><br />
+    <%= f.text_field :zipcode, class: 'form-control', required: true %>
+  </div>
+</div>
+
+
+
+
+<% content_for :head do %>
+  <%= javascript_tag do %>
+    $(document).ready(function(){
+    <% if f.object.from_google_maps? %>
+      $('#address_form').hide()
+      $('#gmap_form').show()
+      $.getScript('https://maps.googleapis.com/maps/api/js?key=AIzaSyDUpAyNtPcUNgPIXtUiJtUFXa2UZu4jI94&libraries=places&callback=initMap')
+      $("#pac-input_new").val("<%=f.object.address1%>")
+    <% else %>
+      $('#address_form').show()
+      $('#gmap_form').hide()
+    <% end %>
+
+    $("input[type=radio]").change(function(){
+
+      var radio_id = $(this).attr('id');
+      if(radio_id == 'use_form'){
+          $('#address_form').show()
+          $('#gmap_form').hide()
+      }else{
+          $('#address_form').hide()
+          $('#gmap_form').show()
+
+           $.getScript('https://maps.googleapis.com/maps/api/js?key=AIzaSyDUpAyNtPcUNgPIXtUiJtUFXa2UZu4jI94&libraries=places&callback=initMap')
+           $("#pac-input_new").val("<%=f.object.address1%>")
+
+      }
+    })
+
+
+        <% if f.object.country_id != 115 %>
+            $('#seller_address_constituency_field').hide()
+            $('#seller_address_location_field').hide()
+        <% end %>
+
+        $('span#country .select2').on('change', function() {
+            var country = $('span#country .select2').select2('val');
+            if(country != 115){
+                $('#seller_address_constituency_field').hide()
+                $('#seller_address_location_field').hide()
+            }else{
+                $('#seller_address_constituency_field').show()
+                $('#seller_address_location_field').show()
+
+            }
+            update_state('');
+
+        });
+    $('span#state .select2').on('change', function() { update_constituency(''); });
+    $('span#constituency .select2').on('change', function() { update_location(''); });
+
+    });
+  <% end %>
+<% end %>
+
+
+<script type="text/javascript">
+
+    window.initMap = function() {
+
+        <% if f.object.persisted? && f.object.latitude %>
+
+            var lat_lng = {lat: <%= f.object.latitude %>, lng: <%= f.object.longitude %>};
+
+        <% else %>
+
+            var lat_lng = {lat: 44.59046718, lng: -12.12890625 }
+
+        <% end %>
+
+        var map = new google.maps.Map(document.getElementById('map'), {
+            mapTypeControl: false,
+            center: lat_lng,
+            zoom: <%= f.object.persisted? ? '13' : '3' %>
+        });
+
+        google.maps.event.trigger(map, 'resize');
+
+        // Place a draggable marker on the map
+        var marker = new google.maps.Marker({
+            position: lat_lng,
+            map: map,
+            draggable: true,
+            title: "Drag me!"
+        });
+
+        google.maps.event.addListener(marker, "click", function (event) {
+
+            var latitude = event.latLng.lat();
+            var longitude = event.latLng.lng();
+            console.log(latitude + ', ' + longitude);
+        });
+
+        // google places Autocomplete code
+
+        var input = /** @type {!HTMLInputElement} */(
+                document.getElementById('pac-input_new'));
+
+        var types = document.getElementById('type-selector');
+        //map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+        map.controls[google.maps.ControlPosition.TOP_LEFT].push(types);
+
+        var autocomplete = new google.maps.places.Autocomplete(input);
+        autocomplete.bindTo('bounds', map);
+
+        var infowindow = new google.maps.InfoWindow();
+        var marker = new google.maps.Marker({
+            map: map,
+            anchorPoint: new google.maps.Point(0, -29)
+        });
+
+        autocomplete.addListener('place_changed', function () {
+            infowindow.close();
+            marker.setVisible(false);
+            var place = autocomplete.getPlace();
+            if (!place.geometry) {
+                window.alert("Autocomplete's returned place contains no geometry");
+                return;
+            }
+
+            $('#address').val(place.formatted_address);
+
+            $('#seller_address_address1').val(place.formatted_address);
+            $('#seller_address_latitude').val(place.geometry.location.lat())
+            $('#seller_address_longitude').val(place.geometry.location.lng())
+
+
+            // If the place has a geometry, then present it on a map.
+            if (place.geometry.viewport) {
+                map.fitBounds(place.geometry.viewport);
+            } else {
+                map.setCenter(place.geometry.location);
+                map.setZoom(17);  // Why 17? Because it looks good.
+            }
+            marker.setIcon(/** @type {google.maps.Icon} */({
+                url: place.icon,
+                size: new google.maps.Size(71, 71),
+                origin: new google.maps.Point(0, 0),
+                anchor: new google.maps.Point(17, 34),
+                scaledSize: new google.maps.Size(35, 35)
+            }));
+            marker.setPosition(place.geometry.location);
+            marker.setVisible(true);
+
+            var address = '';
+            if (place.address_components) {
+                address = [
+                    (place.address_components[0] && place.address_components[0].short_name || ''),
+                    (place.address_components[1] && place.address_components[1].short_name || ''),
+                    (place.address_components[2] && place.address_components[2].short_name || '')
+                ].join(' ');
+            }
+
+            infowindow.setContent('<div><strong>' + place.name + '</strong><br>' + address);
+            infowindow.open(map, marker);
+        });
+
+
+    }
+</script>

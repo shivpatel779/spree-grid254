@@ -70,7 +70,7 @@
               <div class="dropdown">
                 <a href="#" onclick="myFunction()" class="dropbtn manu">MY Account</a>
                   <div id="myDropdown" class="dropdown-content">
-                    <a href="#">Profile</a>  
+                    <a href="javascript:void(0);">Profile</a>  
                     <a href="<%= spree.edit_account_path %>">Account</a>
                     <a href="<%= favorite_product_users_path %>">Favorite</a>
                     <a href="<%= spree.logout_path %>">LogOut</a>
@@ -339,7 +339,6 @@ window.onclick = function(event) {
 </script>
 
 <style type="text/css">
-  <style>
 .dropbtn {
     background-color: #4CAF50;
     color: white;
@@ -387,5 +386,4 @@ window.onclick = function(event) {
   color: #333333;
   background-color: transparent;
 }
-</style>
 </style>
