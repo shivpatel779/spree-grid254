@@ -38,20 +38,3 @@
 
 //= require gmaps/google
 
-$(document).on("click",".unlike",function() {
-    var fav_id = this.id
-    $.ajax({
-      url  : "/products/"+fav_id+"/favorite_a_product",
-      Type : "get",
-      data: {"product_id" :fav_id}
-    })
-});
-
-$(document).on("click",".like",function() {
-    var fav_id = this.id
-    $.ajax({
-      url  : "/products/"+fav_id+"/unfavorite_a_product",
-      Type : "get",
-      data: {"product_id" :fav_id}
-    })
-});
