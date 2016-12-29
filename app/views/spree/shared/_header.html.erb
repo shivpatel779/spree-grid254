@@ -49,13 +49,11 @@
       <ul class="nav navbar-nav navbar-right">
         <li><a href="/cart">Cart <span class="glyphicon glyphicon-shopping-cart"></span></a>
         </li>
-        <li><a style="padding-left: 0;padding-right: 0px;">|</a>
-        </li>
         <li>
           <% if spree_current_user %>
-              <%= link_to spree.logout_path do %>
-                  <span class="glyphicon glyphicon-user"></span> Logout
-              <% end %>
+              <%#= link_to spree.logout_path do %>
+                  <!-- <span class="glyphicon glyphicon-user"></span> Logout -->
+              <% #end %>
 
           <% else %>
 
@@ -70,10 +68,12 @@
           <li>
             <% if spree_current_user %>
               <div class="dropdown">
-                <a onclick="myFunction()" class="dropbtn manu">MY Account</a>
+                <a href="#" onclick="myFunction()" class="dropbtn manu">MY Account</a>
                   <div id="myDropdown" class="dropdown-content">
+                    <a href="#">Profile</a>  
                     <a href="<%= spree.edit_account_path %>">Account</a>
                     <a href="<%= favorite_product_users_path %>">Favorite</a>
+                    <a href="<%= spree.logout_path %>">LogOut</a>
                   </div>
               </div>
             <% else %>
@@ -382,5 +382,10 @@ window.onclick = function(event) {
 .dropdown a:hover {background-color: #f1f1f1}
 
 .show {display:block;}
+
+.manu:hover , .dropbtn:hover, .dropbtn:focus{
+  color: #333333;
+  background-color: transparent;
+}
 </style>
 </style>
