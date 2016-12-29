@@ -186,7 +186,7 @@ $(document).on("click",".unlike",function() {
     })
 });
 
-$(document).on("click",". like",function() {
+$(document).on("click",".like",function() {
     var fav_id = this.id
     $.ajax({
       url  : "/products/"+fav_id+"/unfavorite_a_product",
