@@ -34,13 +34,13 @@
                           <div class="sale-div" style="background-color:#ed292d;border-color:#ed292d;">
                             <i class="fa fa-shopping-cart" aria-hidden="true" ></i>
                           </div>
-                          <% if product.favorites.present? %>
+                          <% if spree_current_user.present? and  (spree_current_user.id == product.favorites.first.try(:user_id)) %>
                             <div class="sale-div fav_lnk" style="background-color:#e85858;border-color:#e85858;">
-                              <i class="fa fa-heart fav like" aria-hidden="true" id="<%=product.id%>" ></i>
+                              <a href="javascript:void(0);"><i class="fa fa-heart fav like" aria-hidden="true" id="<%=product.id%>" ></i></a>
                             </div>
                           <% else %>
                              <div class="sale-div fav_lnk" style="background-color:#e85858;border-color:#e85858;">
-                              <i class="fa fa-heart-o unlike" aria-hidden="true" id="<%=product.id%>" ></i>
+                              <a href="javascript:void(0);"><i class="fa fa-heart-o unlike" aria-hidden="true" id="<%=product.id%>" ></i></a>
                             </div>
                           <% end %>
                         </div>
@@ -50,7 +50,7 @@
                   <div class="caption" style="padding:0px;">
                     <div class="clearfix"></div>
                     <p class="product-price">
-                      <span class="money" data-currency-usd="$150.00" style="color:#EA4545;font: 500 14px/1.75">Now $<%=@sale_price%></span>
+                      <span class="money" data-currency-usd="$150.00" style="color:#EA4545;font: 500 14px/1.75">Now <%=@sale_price%>/= ( Plus free <%=product.giveaway_name %> worth <%=product.giveaway_value %>/=)</span>
                       <span>|</span>
                       <s style="color: #848484;"><span class="money" data-currency-usd="$160.00">Before <%= product.price %></span></s>
                     </p>
