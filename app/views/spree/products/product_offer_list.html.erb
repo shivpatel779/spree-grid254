@@ -49,9 +49,10 @@
                     <li class="deal-list-title">Price Range</li>
                     <li class="item location-item">
                       <div class="example" style="margin-top:50px;">
-                        <form method="post">
-                          <input class="range-example-input-2" type="text" min="0" max="100" value="2,60000" name="points" step="1" />
-                        </form>
+                        <%= form_tag(update_range) do %>
+                          <%= text_field_tag 'range' %>
+                          <%= submit_tag "Go"%>
+                        <% end %>
                       </div>
                     </li>
                   </div>
@@ -136,7 +137,7 @@
                             </div>
                             
                             <div class="sale-div" style="background-color:#ed292d;border-color:#ed292d;">
-                              <i class="fa fa-shopping-cart" aria-hidden="true" ></i>
+                              <!-- <i class="fa fa-shopping-cart" aria-hidden="true" ></i> -->
                             </div>
                             <% if spree_current_user.present? and  (spree_current_user.id == product.favorites.first.try(:user_id)) %>
                               <div class="sale-div fav_lnk" style="background-color:#e85858;border-color:#e85858;">
@@ -154,7 +155,7 @@
                     <div class="caption" style="padding:0px;">
                       <div class="clearfix"></div>
                       <p class="product-price">
-                        <span class="money" data-currency-usd="$150.00" style="color:#EA4545;font: 500 14px/1.75">>Now <%=@sale_price%>/= ( Plus free <%=product.giveaway_name %> worth <%=product.giveaway_value %>/=)</span>
+                        <span class="money" data-currency-usd="$150.00" style="color:#EA4545;font: 500 14px/1.75">Now <%=sell_price%>/= ( Plus free <%=product.giveaway_name %> worth <%=product.giveaway_value %>/=)</span>
                         <span>|</span>
                         <s style="color: #848484;"><span class="money" data-currency-usd="$160.00">Before <%= product.price %></span></s>
                       </p>
@@ -201,20 +202,12 @@ $(document).on("click",".like",function() {
     })
 });
 
-$(document).ready(function() {
-  $(".range-example-input-2").asRange({
-    range: true,
-    limit: false
-  });
-});
 
 </script>
 <!-- all filter js -->
 <script type="text/javascript">
   
   $(document).on('change', '#option', function(){
-    // url = "<%#= product_offer_list_product_path(sort_by: '') %>"
-    // url = url + $(this).val();
     $.ajax({
       type: 'get',
       data: { url: "<%= raw request.url %>", data: { sort_by: $(this).val() } },

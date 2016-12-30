@@ -20,9 +20,9 @@
     
     <%= content_tag :li, class: ('active' if current == :stock) do %>
       <%= link_to_with_icon 'home', Spree.t(:stock), stock_admin_product_path(@product) %>
-    <% end if can?(:admin, Spree::Stock) && !@product.deleted? %>
-
-    <%= content_tag :li, class: ('active' if current == :gift_value) do %>
+    <% end if can?(:admin, Spree::Stock) && !@product.deleted?   %>
+    
+    <%= content_tag :li, class: ('active' if current == :gift) do %>
       <%= link_to_with_icon 'home', Spree.t(:gift_value),gift_value_admin_product_path(@product) %>
     <% end if can?(:admin, Spree::Stock) && !@product.deleted? %>
   </ul>

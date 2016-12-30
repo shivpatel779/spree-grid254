@@ -1,8 +1,9 @@
-<% @top_ending_deals_products.first(4).each do |product| %>
+<ul id="Dealsoon">
+  <% @top_ending_deals_products.each do |product| %>
   <% calculation_price product %>  
   <div class="col-lg-3 col-md-6 col-sm-6 new-rec ttd-div">
     <div class="thumb-pad2">
-      <div class="thumbnail">
+      <li><div class="thumbnail">
         <div class="row">
           <div class="col-md-9 col-sm-9 col-xs-12">
             <figure>
@@ -22,7 +23,7 @@
                   <i class="fa fa-share-alt share" aria-hidden="true"  data-name="<%= product.name%>" data-desc="<%= product.description %>"></i>
                 </div>
                 <div class="sale-div" style="background-color:#ed292d;border-color:#ed292d;">
-                  <i class="fa fa-shopping-cart" aria-hidden="true" ></i>
+                  <!-- <i class="fa fa-shopping-cart" aria-hidden="true" ></i> -->
                 </div>
                
                 <% if spree_current_user.present? and  (spree_current_user.id == product.favorites.first.try(:user_id))%>
@@ -51,8 +52,47 @@
             <p><%= product.name %> + <%=product.total_discount.to_i%>% off </p>
           </div>
         </div>
-      </div>
+      </div></li>
     </div>
   </div>
-<% end %>
+  <% end %>
+</ul>
+<div class="clearfix"></div>
+<div id="loadMore-deal-ending-soon">See More</div>
 <%= link_to "View All",product_offer_list_product_path(:id => "Deals ending soon"), :class=>"view_all_btn btn-primary btn"  %>  
+
+<script type="text/javascript">
+  $(document).ready(function () {
+    size_li = $("#Dealsoon li").size();
+    x=8;
+    $('#Dealsoon li:lt('+x+')').show();
+    $('#loadMore-deal-ending-soon').click(function () {
+      x=  size_li;
+      $('#Dealsoon li:lt('+x+')').show();
+      $('#showLess').show();
+      if(x == size_li){
+        $('#loadMore-deal-ending-soon').hide();
+      }
+    });
+  });
+</script>
+
+<style type="text/css">
+  #Dealsoon li{ display:none;
+}
+#loadMore-deal-ending-soon {
+    color:green;
+    cursor:pointer;
+}
+#loadMore-deal-ending-soon:hover {
+    color:black;
+}
+#loadMore-deal-ending-soon {
+    color:red;
+    cursor:pointer;
+    display:block;
+}
+#loadMore-deal-ending-soon:hover {
+    color:black;
+}
+</style>
