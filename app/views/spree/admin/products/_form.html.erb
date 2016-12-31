@@ -79,7 +79,16 @@
           <%= f.error_message_on :giveaway_value %>
         <% end %>
       </div>
-       <div data-hook="admin_product_form_cost_currency" class="omega two columns">
+      
+      <div data-hook="admin_product_form_cost_currency" class="omega two columns">
+        <%= f.field_container :discount_value, class: ['form-group'] do %>
+          <%= f.label :discount_value, Spree.t(:discount_value) %>
+          <%= f.text_field :discount_value, value: (@product.total_discount),class: 'form-control' ,:id=>"discount_value" , :readonly => true %>
+          <%= f.error_message_on :discount_value %>
+        <% end %>
+      </div>
+
+      <div data-hook="admin_product_form_cost_currency" class="omega two columns">
         <%= f.field_container :total_discount, class: ['form-group'] do %>
           <%= f.label :total_discount, Spree.t(:total_discount)+' %' %>
           <%= f.text_field :total_discount, value: (@product.total_discount),class: 'form-control' ,:id=>"sum" , :readonly => true %>
@@ -276,6 +285,10 @@ function sum() {
     var total_discount = (result*100)/master_price
     if (!isNaN(total_discount)) {
       document.getElementById('sum').value = total_discount.toFixed(2);
+    }
+
+    if (!isNaN(result)) {
+      document.getElementById('discount_value').value = result.toFixed(2);    
     }
   }
 </script>

@@ -2,7 +2,7 @@
   <%= Spree.t(:gift) %>
 <% end %>
 
-<%= render partial: 'spree/admin/shared/product_tabs', locals: {current: :stock} %>
+<%= render partial: 'spree/admin/shared/product_tabs', locals: {current: :gift} %>
 
 
 <%= form_for [:admin, @product], method: :patch do |f| %>
