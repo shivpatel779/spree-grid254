@@ -43,7 +43,6 @@ Spree::ProductsController.class_eval do
   end
 
   def get_filter_query
-    debugger
     uri = URI.parse(params[:url])
     new_query_arr = Hash[*URI.decode_www_form(uri.query || '').flatten].merge(params[:data]).to_a
     uri.query = URI.encode_www_form(new_query_arr)

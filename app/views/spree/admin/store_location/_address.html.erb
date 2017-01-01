@@ -55,9 +55,9 @@
         }
 </style>
 
- <h4> Address </h4>
 
- <%if !f.object.persisted? %>
+ <h4> Address </h4>
+ <%if (f.object.persisted? && f.object.latitude.nil? && f.object.country_id.nil? ) %>
   <%= radio_button_tag :address_option, true, true, id: 'use_form' %> Use Address Form&nbsp;&nbsp;&nbsp;
   <%= radio_button_tag :address_option, false, false, id: 'use_gmaps' %> Use Google maps
   <br/>
@@ -75,9 +75,10 @@
 
 <div id="map" style='width: 100%; height: 400px;'></div>
 
+  <%= hidden_field_tag :id,  f.object.id   %>
   <%= f.hidden_field :address1, value: f.object.address1, id: 'address' %>
-  <%= f.hidden_field :latitude, value: f.object.latitude %>
-  <%= f.hidden_field :longitude, value: f.object.longitude %>
+  <%= f.hidden_field :latitude, value: f.object.latitude, id:'store_location_lat' %>
+  <%= f.hidden_field :longitude, value: f.object.longitude, id: 'store_location_lag' %>
 
 </div>
 
@@ -103,6 +104,7 @@
 
   <div class="form-group" data-hook="store_location_state">
     <% if f.object.country %>
+    
       <%= f.label :state_id, Spree.t(:state) %><span class="required">*</span><br />
       <span id="state" class="region">
         <%= f.text_field :state_name, style: "#{f.object.country.states.empty? ? '' : 'display: none;'}", disabled: !f.object.country.states.empty?, class: 'state_name form-control' %>
@@ -110,7 +112,7 @@
       </span>
     <% end %>
   </div>
-
+  
   <div class="form-group" data-hook="store_location_state">
     <%= f.label :constituency_id, Spree.t(:constituency) %><span class="required">*</span><br />
     <span id="constituency_area" class="region">
@@ -127,12 +129,12 @@
   </div>
 
   <div class="form-group" data-hook="store_location_city">
-    <%= f.label :city, Spree.t(:city) %><span class="required">*</span><br />
+    <%= f.label :city, Spree.t(:city) %><span class="required"></span><br />
     <%= f.text_field :city, class: 'form-control', required: true %>
   </div>
 
   <div class="form-group" data-hook="store_location_zipcode">
-    <%= f.label :zipcode, Spree.t(:zip) %><span class="required">*</span><br />
+    <%= f.label :zipcode, Spree.t(:zip) %><span class="required"></span><br />
     <%= f.text_field :zipcode, class: 'form-control', required: true %>
   </div>
 </div>
@@ -143,7 +145,7 @@
 <% content_for :head do %>
   <%= javascript_tag do %>
     $(document).ready(function(){
-    <% if f.object.from_google_maps? %>
+    <% unless f.object.latitude.nil? %>
       $('#address_form').hide()
       $('#gmap_form').show()
       $.getScript('https://maps.googleapis.com/maps/api/js?key=AIzaSyDUpAyNtPcUNgPIXtUiJtUFXa2UZu4jI94&libraries=places&callback=initMap')
@@ -262,9 +264,9 @@
 
             $('#address').val(place.formatted_address);
 
-            $('#seller_address_address1').val(place.formatted_address);
-            $('#seller_address_latitude').val(place.geometry.location.lat())
-            $('#seller_address_longitude').val(place.geometry.location.lng())
+            $('#store_location_address1').val(place.formatted_address);
+            $('#store_location_lat').val(place.geometry.location.lat())
+            $('#store_location_lag').val(place.geometry.location.lng())
 
 
             // If the place has a geometry, then present it on a map.

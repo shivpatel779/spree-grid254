@@ -33,9 +33,10 @@
         <%= f.label :seller_id, Spree.t(:seller) %><span class="required">*</span><br />
         <span id="seller"><%= f.collection_select :seller_id, Spree::Seller.all, :id, :name, {}, { class: 'select2' } %></span>
       </div>
-
-
     </div>
+
+    <%= f.hidden_field :country_id, value: f.object.country_id %>
+
 
     <div class="col-md-3" data-hook="store_location_status">
       <strong><%= Spree.t(:status) %></strong>
@@ -48,14 +49,14 @@
 
     </div>
   </div>
-  <%= render :partial => 'address', :locals => { :f => f } %>
+  <%#= render :partial => 'address', :locals => { :f => f } %>
   
   <div class="multi-field-wrapper">
     <div class="multi-fields">
       <div class="multi-field">
         <div data-hook="store_location_phone" class="form-group">
           <label for="store_location_city">Phone</label><span class="required">*</span><br>
-           <input type="text" name="store_location[phone][]" class="form-control">
+           <input type="text" name="store_location[phone][]" class="form-control" style="width:50%" >
         </div>
       </div>
     </div>

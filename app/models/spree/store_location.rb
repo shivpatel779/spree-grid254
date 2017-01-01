@@ -9,8 +9,4 @@ class Spree::StoreLocation < ActiveRecord::Base
   serialize :phone, Array
   serialize :email, Array
 
-
-  def from_google_maps?
-    persisted? && ((city == '' && zipcode == '') || (city.nil? && zipcode.nil?))
-  end
 end

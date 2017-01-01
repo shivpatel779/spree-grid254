@@ -15,3 +15,18 @@
     </div>
   </fieldset>
 <% end %>
+
+<%= form_for [:admin,  @store_location], url: '/admin/store_locations/update', method: :post, html: {novalidate: true} do |f| %>
+
+  <%= render :partial => 'address', :locals => { :f => f,store_location_id: @store_location.id } %>
+
+  <div class="form-actions" data-hook="buttons">
+    <%= button Spree.t('actions.update'), 'ok', 'submit', {class: 'btn-success'} %>
+    <span class="or"><%= Spree.t(:or) %></span>
+    <%= button_link_to Spree.t('actions.cancel'), '/admin/store_locations', :icon => 'remove' %>
+  </div>
+
+  <div data-hook="admin_user_edit_form_buttons">
+    <%#= render :partial => 'spree/admin/shared/new_resource_links' %>
+  </div>
+<% end %>
