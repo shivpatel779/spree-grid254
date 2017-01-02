@@ -4,29 +4,27 @@
 <% end %>
 
 <%= render :partial => 'spree/admin/shared/error_messages', :locals => { :target => @store_location } %>
+<div class="col-md-6" data-hook="store_location_names">
+  <%= form_for [:admin, @store_location], url: '/admin/store_locations/update', method: :post do |f| %>
+    <fieldset>
+      <%= render :partial => 'form', :locals => { :f => f } %>
+      <div class="form-actions" data-hook="buttons">
+        <%= button Spree.t('actions.update'), 'ok', 'submit', {class: 'btn-success'} %>
+        <span class="or"><%= Spree.t(:or) %></span>
+        <%= button_link_to Spree.t('actions.cancel'), '/admin/store_locations', :icon => 'remove' %>
+      </div>
+    </fieldset>
 
-<%= form_for [:admin, @store_location], url: '/admin/store_locations/update', method: :post do |f| %>
-  <fieldset>
-    <%= render :partial => 'form', :locals => { :f => f } %>
+  <% end %>
+</div>
+
+<div class="col-md-6" data-hook="store_location_names">
+  <%= form_for [:admin,  @store_location], url: '/admin/store_locations/update', method: :post, html: {novalidate: true} do |f| %>
+    <%= render :partial => 'address', :locals => { :f => f,store_location_id: @store_location.id } %> 
     <div class="form-actions" data-hook="buttons">
       <%= button Spree.t('actions.update'), 'ok', 'submit', {class: 'btn-success'} %>
       <span class="or"><%= Spree.t(:or) %></span>
       <%= button_link_to Spree.t('actions.cancel'), '/admin/store_locations', :icon => 'remove' %>
     </div>
-  </fieldset>
-<% end %>
-
-<%= form_for [:admin,  @store_location], url: '/admin/store_locations/update', method: :post, html: {novalidate: true} do |f| %>
-
-  <%= render :partial => 'address', :locals => { :f => f,store_location_id: @store_location.id } %>
-
-  <div class="form-actions" data-hook="buttons">
-    <%= button Spree.t('actions.update'), 'ok', 'submit', {class: 'btn-success'} %>
-    <span class="or"><%= Spree.t(:or) %></span>
-    <%= button_link_to Spree.t('actions.cancel'), '/admin/store_locations', :icon => 'remove' %>
-  </div>
-
-  <div data-hook="admin_user_edit_form_buttons">
-    <%#= render :partial => 'spree/admin/shared/new_resource_links' %>
-  </div>
-<% end %>
+  <% end %>
+</div>

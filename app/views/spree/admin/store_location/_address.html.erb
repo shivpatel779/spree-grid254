@@ -115,16 +115,17 @@
   
   <div class="form-group" data-hook="store_location_state">
     <%= f.label :constituency_id, Spree.t(:constituency) %><span class="required">*</span><br />
+    <%  %>
     <span id="constituency_area" class="region">
-      <%= f.collection_select :constituency_id, f.object.country.states.sort, :id, :name, { include_blank: true }, {class: 'select2', style: "#{f.object.country.states.empty? ? 'display: none;' : '' };", disabled: f.object.country.states.empty?} %>
+      <%= f.collection_select :constituency_id, f.object.state.try(:constituencies).try(:sort) || [], :id, :name, { include_blank: true }, {class: 'select2', style: "#{f.object.country.states.empty? ? 'display: none;' : '' };", disabled: f.object.country.states.empty?} %>
     </span>
   </div>
 
-
+  <%  %>
   <div class="form-group" data-hook="store_location_state">
     <%= f.label :location_id, Spree.t(:location) %><span class="required">*</span><br />
     <span id="location" class="region">
-      <%= f.collection_select :location_id, f.object.country.states.sort, :id, :name, { include_blank: true }, {class: 'select2', style: "#{f.object.country.states.empty? ? 'display: none;' : '' };", disabled: f.object.country.states.empty?} %>
+      <%= f.collection_select :location_id, f.object.try(:constituency).try(:locations).try(:sort) || [], :id, :name, { include_blank: true }, {class: 'select2', style: "#{f.object.country.states.empty? ? 'display: none;' : '' };", disabled: f.object.country.states.empty?} %>
     </span>
   </div>
 

@@ -4,16 +4,17 @@
 <% end %>
 
 <%= render :partial => 'spree/admin/shared/error_messages', :locals => { :target => @store_location } %>
+<div class="col-md-6" data-hook="store_location_names">
+  <%= form_for [:admin, @store_location], url: '/admin/store_locations/create', method: :post do |f| %>
+    <fieldset>
+      <%= render :partial => 'form', :locals => { :f => f } %>
 
-<%= form_for [:admin, @store_location], url: '/admin/store_locations/create', method: :post do |f| %>
-  <fieldset>
-    <%= render :partial => 'form', :locals => { :f => f } %>
+      <div class="form-actions" data-hook="buttons">
+        <%= button Spree.t('actions.create'), 'ok', 'submit', {class: 'btn-success'} %>
+        <span class="or"><%= Spree.t(:or) %></span>
+        <%= button_link_to Spree.t('actions.cancel'), '/admin/store_locations', :icon => 'remove' %>
+      </div>
 
-    <div class="form-actions" data-hook="buttons">
-      <%= button Spree.t('actions.create'), 'ok', 'submit', {class: 'btn-success'} %>
-      <span class="or"><%= Spree.t(:or) %></span>
-      <%= button_link_to Spree.t('actions.cancel'), '/admin/store_locations', :icon => 'remove' %>
-    </div>
-
-  </fieldset>
-<% end %>
+    </fieldset>
+  <% end %>
+</div>

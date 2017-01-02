@@ -1,42 +1,51 @@
-<div data-hook="admin_store_locations_form_fields col-md-6">
+<div data-hook="admin_store_locations_form_fields">
   <div class="row">
-    <div class="col-md-6" data-hook="store_location_names">
-      <div data-hook="store_location_name">
-        <%= f.field_container :name, class: ['form-group']  do %>
-          <%= f.label :name, Spree.t(:name) %> <span class="required">*</span><br />
-          <%= f.text_field :name, class: 'form-control', required: true %>
-          <%= f.error_message_on :name %>
-        <% end %>
-      </div>
-
-      <div data-hook="store_location_name">
-        <%= f.field_container :contact_person, class: ['form-group']  do %>
-          <%= f.label :contact_person, Spree.t(:contact_person) %> <span class="required">*</span><br />
-          <%= f.text_field :contact_person, class: 'form-control', required: true %>
-          <%= f.error_message_on :contact_person %>
-        <% end %>
-      </div>
-      <div class="multi-field-wrapper">
-        <div class="multi-fields">
-          <div class="multi-field">
-            <div data-hook="store_location_phone" class="form-group">
-              <label for="store_location_city">Email</label><span class="required">*</span><br>
-               <input type="text" name="store_location[email][]" class="form-control" value='<%= f.object.email.last %>' >
-            </div>
-          </div>
-        </div>
-        <a href="javascript:void(0)" class="add-field"><i class="fa fa-plus-square-o" aria-hidden="true">Add Email</i></a>
-      </div>
-
-      <div class="form-group" data-hook="store_location_seller">
-        <%= f.label :seller_id, Spree.t(:seller) %><span class="required">*</span><br />
-        <span id="seller"><%= f.collection_select :seller_id, Spree::Seller.all, :id, :name, {}, { class: 'select2' } %></span>
-      </div>
+    <div data-hook="store_location_name">
+      <%= f.field_container :name, class: ['form-group']  do %>
+        <%= f.label :name, Spree.t(:name) %> <span class="required">*</span><br />
+        <%= f.text_field :name, class: 'form-control', required: true %>
+        <%= f.error_message_on :name %>
+      <% end %>
     </div>
 
-    <%= f.hidden_field :country_id, value: f.object.country_id %>
+    <div data-hook="store_location_name">
+      <%= f.field_container :contact_person, class: ['form-group']  do %>
+        <%= f.label :contact_person, Spree.t(:contact_person) %> <span class="required">*</span><br />
+        <%= f.text_field :contact_person, class: 'form-control', required: true %>
+        <%= f.error_message_on :contact_person %>
+      <% end %>
+    </div>
+    <div class="multi-field-wrapper">
+      <div class="multi-fields">
+        <div class="multi-field">
+          <div data-hook="store_location_phone" class="form-group">
+            <label for="store_location_city">Email</label><span class="required">*</span><br>
+             <input type="text" name="store_location[email][]" class="form-control" value='<%= f.object.email.last %>' >
+          </div>
+        </div>
+      </div>
+      <a href="javascript:void(0)" class="add-field"><i class="fa fa-plus-square-o" aria-hidden="true">Add Email</i></a>
+    </div>
+
+    <div class="form-group" data-hook="store_location_seller">
+      <%= f.label :seller_id, Spree.t(:seller) %><span class="required">*</span><br />
+      <span id="seller"><%= f.collection_select :seller_id, Spree::Seller.all, :id, :name, {}, { class: 'select2' } %></span>
+    </div>
+     <%= f.hidden_field :country_id, value: f.object.country_id %>
 
 
+    <div class="multi-field-wrapper">
+      <div class="multi-fields">
+        <div class="multi-field">
+          <div data-hook="store_location_phone" class="form-group">
+            <label for="store_location_city">Phone</label><span class="required">*</span><br>
+             <input type="text" name="store_location[phone][]" class="form-control" value='<%= f.object.phone.last %>'>
+          </div>
+        </div>
+      </div>
+      <a href="javascript:void(0)" class="add-field"><i class="fa fa-plus-square-o" aria-hidden="true">Add Phone</i></a>
+    </div>
+   
     <div class="col-md-3" data-hook="store_location_status">
       <strong><%= Spree.t(:status) %></strong>
       <div class="checkbox" data-hook="store_location_active">
@@ -45,27 +54,13 @@
           <%= Spree.t(:active) %>
         <% end %>
       </div>
+    </div>
 
-    </div>
-  </div>
-  <%#= render :partial => 'address', :locals => { :f => f } %>
-  
-  <div class="multi-field-wrapper">
-    <div class="multi-fields">
-      <div class="multi-field">
-        <div data-hook="store_location_phone" class="form-group">
-          <label for="store_location_city">Phone</label><span class="required">*</span><br>
-           <input type="text" name="store_location[phone][]" class="form-control" style="width:50%" value='<%= f.object.phone.last %>'>
-        </div>
-      </div>
-    </div>
-    <a href="javascript:void(0)" class="add-field"><i class="fa fa-plus-square-o" aria-hidden="true">Add Phone</i></a>
   </div>
 
   <% if !params[:action].eql?('new') %>
     <%= hidden_field_tag :id, f.object.id%>
   <% end %>
-
 </div>
 
 <% content_for :head do %>
