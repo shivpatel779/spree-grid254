@@ -7,17 +7,6 @@ module ApplicationHelper
 		@save = @master_price - @sale_price + @give_values
 	end
 
-	def update_range
-		# debugger
-		# uri = URI.parse(request.url)
-		# new_query_arr = Hash[*URI.decode_www_form(uri.query || '').flatten].merge(Hash[*[type,data]]).to_a
-		# uri.query = URI.encode_www_form(new_query_arr)
-		# (uri.path + '?' + uri.query)
-	end
-
-
-
-
 	def update_url_single_parameter type, data
 		uri = URI.parse(request.url)
 		new_query_arr = Hash[*URI.decode_www_form(uri.query || '').flatten].merge(Hash[*[type,data]]).to_a

@@ -57,7 +57,7 @@
 
 
  <h4> Address </h4>
- <%if (f.object.persisted? && f.object.latitude.nil? && f.object.country_id.nil? ) %>
+ <%if (f.object.persisted? && f.object.latitude.nil? && f.object.state_id.nil? ) %>
   <%= radio_button_tag :address_option, true, true, id: 'use_form' %> Use Address Form&nbsp;&nbsp;&nbsp;
   <%= radio_button_tag :address_option, false, false, id: 'use_gmaps' %> Use Google maps
   <br/>
@@ -97,7 +97,7 @@
   </div>
 
   <div class="form-group" data-hook="store_location_country">
-    <%= f.label :country_id, Spree.t(:country)+'/State' %><span class="required">*</span><br />
+    <%= f.label :country_id, Spree.t(:county)+'/State' %><span class="required">*</span><br />
   
     <span id="country"><%= f.collection_select :country_id, available_countries, :id, :name, {}, { class: 'select2' } %></span>
   </div>

@@ -16,13 +16,12 @@
           <%= f.error_message_on :contact_person %>
         <% end %>
       </div>
-
       <div class="multi-field-wrapper">
         <div class="multi-fields">
           <div class="multi-field">
             <div data-hook="store_location_phone" class="form-group">
               <label for="store_location_city">Email</label><span class="required">*</span><br>
-               <input type="text" name="store_location[email][]" class="form-control">
+               <input type="text" name="store_location[email][]" class="form-control" value='<%= f.object.email.last %>' >
             </div>
           </div>
         </div>
@@ -56,7 +55,7 @@
       <div class="multi-field">
         <div data-hook="store_location_phone" class="form-group">
           <label for="store_location_city">Phone</label><span class="required">*</span><br>
-           <input type="text" name="store_location[phone][]" class="form-control" style="width:50%" >
+           <input type="text" name="store_location[phone][]" class="form-control" style="width:50%" value='<%= f.object.phone.last %>'>
         </div>
       </div>
     </div>

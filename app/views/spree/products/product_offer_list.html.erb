@@ -48,14 +48,14 @@
                   <div class="deal-list-li">
                     <li class="deal-list-title">Price Range</li>
                     <li class="item location-item">
-                      <div class="example" style="margin-top:50px;">
-                        <%= form_tag(update_range) do %>
-                          <%= text_field_tag 'range' %>
-                          <%= submit_tag "Go"%>
-                        <% end %>
-                      </div>
+                        <div class="example" style="margin-top:50px;">              
+                          <%= form_tag '#', method: :get do %>
+                            <%= text_field_tag 'range'  %>
+                            <%= submit_tag 'Go', :id => 'go' %>
+                          <% end %>
+                        </div>
                     </li>
-                  </div>
+                </div>
                   <div class="deal-list-li">
                     <li class="deal-list-title">Discount Range</li>
                     <% ['0..10', '10..20', '20..30', '30..40', '40..50', '50..100'].each_with_index do |discount,index| %>
@@ -129,7 +129,7 @@
                           <div class="caption new-caption cartshare_<%=product.id %>">
                             <div class="sale-div">
                               <b>SAVE</b>
-                              <br /><%=save.round(2)%>/=
+                              <br /><%=save.to_i%>/=
                             </div>
                           
                             <div class="sale-div">
@@ -217,6 +217,21 @@ $(document).on("click",".like",function() {
       }
     })
   });
+
+  
+  $(document).on('click', '#go', function(){
+    var range = $(':input[:id=>"range"]').val();
+    $.ajax({
+      type: 'get',
+      data: { url: "<%= raw request.url %>", data: { range: range } },
+      url: "<%= get_filter_query_products_path %>",
+      success: function(response){
+        window.location = response.data
+      }
+    })
+  });
+
+
 
   $(document).on('click','.select_filter',function(){
     window.location = $(this).parent().attr('href');

@@ -26,6 +26,7 @@ Spree::ProductsController.class_eval do
   end
 
   def product_offer_list
+    
     if params[:id].eql?("Todays trending deals")
      @product_offer_list = Spree::Product.where.not(total_discount:nil).order( 'total_discount desc')
     else
@@ -34,12 +35,13 @@ Spree::ProductsController.class_eval do
     end
     filter_category
     update_array
+    
     @product_offer_list = @product_offer_list.where(total_discount:@arr) unless params[:discount].nil?
     filter_date
     @product_offer_list = @product_offer_list.where.not(total_discount:nil) if params[:deal_type].present?
 
     @product_offer_list = @product_offer_list.where.not(total_discount:nil) if params[:deal_type].present?
-    
+    filter_range
   end
 
   def get_filter_query
@@ -73,5 +75,9 @@ Spree::ProductsController.class_eval do
   def filter_category
     @products = Spree::Taxon.find_by_name(params[:category_type]).products if params[:category_type].present?
     @product_offer_list = @products.where.not(total_discount:nil).order( 'total_discount desc') if params[:category_type].present?
+  end
+
+  def filter_range
+    @product_offer_list =@product_offer_list.select{|p| p if (p.price.to_f > 0 && p.price.to_f < params[:range].to_i) } unless params[:range].nil?
   end
 end

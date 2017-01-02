@@ -19,7 +19,11 @@
   <% @sellers.each do |seller|%>
       <tr id="<%= spree_dom_id seller %>" data-hook="admin_sellers_index_rows">
         <td class='user_email'><%= seller.name %></td>
-        <td class='user_email'><%=link_to seller.email, "/admin/sellers/#{seller.id}/edit" %></td>
+        <% if seller.email.present? %>
+          <td class='user_email'><%=link_to seller.email.first.last, "/admin/sellers/#{seller.id}/edit" %></td>
+        <% else %>
+          <td class='user_email'><%=link_to "", "/admin/sellers/#{seller.id}/edit" %></td>
+        <% end %>
         <td class='user_email'><%= seller.created_at.strftime('%Y-%m-%d %H:%M %p') %></td>
         <td data-hook="admin_sellers_index_row_actions" class="actions actions-2 text-right">
 

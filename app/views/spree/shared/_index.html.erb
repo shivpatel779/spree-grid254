@@ -40,339 +40,76 @@
 </section>
 <!--content-->
 <div class="content">
-<div class="thumb-box3" style="padding-top:15px;">
-  <div class="container">
-    <h2>Todays trending deals</h2>
-    <div class="row">
-      <ul id="myList">
-        <% @treding_deal_products.each do |product| %>
-          <% calculation_price product %>  
-          <div class="col-lg-3 col-md-6 col-sm-6 new-rec ttd-div">
-            <div class="thumb-pad2">
-              <li><div class="thumbnail">
-                <div class="row">
-                  <div class="col-md-9 col-sm-9 col-xs-12">
-                    <figure>
-                      <% image = product.images.first %>
-                      <%= link_to image_tag(image.attachment.url(:product)), product_path(product) %>
-                    </figure>
-                  </div>
-                  <div class="col-md-3 col-sm-3 col-xs-12">
-                    <div class="row">
-                      <div class="caption new-caption cartshare_<%=product.id %>">
-                        <div class="sale-div">
-                          <b>SAVE</b>
-                          <br /><%=@save.round(2)%>/=
-                          </p>
-                        </div>
-                        <div class="sale-div">
-                          <i class="fa fa-share-alt share" aria-hidden="true"  data-name="<%= product.name%>" data-desc="<%= product.description %>"></i>
-                        </div>
-                        <div class="sale-div" style="background-color:#ed292d;border-color:#ed292d;">
-                          <!-- <i class="fa fa-shopping-cart" aria-hidden="true" ></i> -->
-                        </div>
-                        <% if spree_current_user.present? and  (spree_current_user.id == product.favorites.first.try(:user_id)) %>
-                        <div class="sale-div fav_lnk" style="background-color:#e85858;border-color:#e85858;">
-                          <a href="javascript:void(0);"><i class="fa fa-heart fav like" aria-hidden="true" id="<%=product.id%>" ></i></a>
-                        </div>
-                        <% else %>
-                        <div class="sale-div fav_lnk" style="background-color:#e85858;border-color:#e85858;">
-                          <a href="javascript:void(0);"><i class="fa fa-heart-o unlike" aria-hidden="true" id="<%=product.id%>" ></i></a>
-                        </div>
-                        <% end %> 
-                      
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="caption" style="padding:0px;">
-                  <div class="clearfix"></div>
-                  <p class="product-price">
-                    <span class="money" data-currency-usd="$150.00" style="color:#EA4545;font: 500 14px/1.75">Now <%=@sale_price%>/= ( Plus free <%=product.giveaway_name %> worth <%=product.giveaway_value %>/=)</span>
-                    <span>|</span>
-                    <s style="color: #848484;"><span class="money" data-currency-usd="$160.00">Before <%= product.price %></span></s>
-                  </p>
-                  <div class="clearfix"></div>
-                  <div class="product-description">
-                    <p><%= product.name %> + <%=product.total_discount.to_i%>% off </p>
-                  </div>
-                </div>
-              </div></li>
-            </div>
-          </div>
-        <% end %>
-      </ul>  
-      <div id="loadMore">See More</div>
-      <div class="clearfix"></div>
-      <%= link_to "View All",product_offer_list_product_path(:id=>"Todays trending deals"), :class=>"view_all_btn btn-primary btn"  %>  
-      <h2>Deals ending soon </h2>
-      <%= render 'spree/shared/deal_ending_soon' %>
-    <h2>Recommended for you</h2>
-    <div class="row">
-      <div class="col-lg-3 col-md-6 col-sm-6 maxheight2 new-rec">
-        <div class="thumb-pad2">
-          <div class="thumbnail">
-            <figure><img src="img/page1_pic5.jpg" alt="">
-            </figure>
-            <div class="caption">
-              <div class="sale-div">
-                <p class="price">Save
-                  <br />$10</b>
-                </p>
-              </div>
-              <div class="cartshare-btn">
-                <button class="align-left"><i class="fa fa-shopping-cart" aria-hidden="true"></i>
-                </button>
-                <button class="align-left"><i class="fa fa-heart" aria-hidden="true"></i>
-                </button>
-                <button class="align-right"><i class="fa fa-share-alt" aria-hidden="true"></i>
-                </button>
-              </div>
-              <div class="clearfix"></div>
-              <p class="product-price" style="text-align:center;font-weight:700;margin: 0px;">
-                <span class="money" data-currency-usd="$150.00" style="color:#EA4545;font: 500 14px/1.75">Now $150.00 </span>
-                <span>|</span>
-                <s style="color: #848484;"><span class="money" data-currency-usd="$160.00">Before $160.00</span></s>
-              </p>
-              <div class="clearfix"></div>
-              <div style="padding:5px 0px 2px;">
-                <p style="color:#999;font-size:14px;line-height:16px;font-weight:400;text-overflow: ellipsis;max-height:40px;margin-bottom: 0px;">Dell laptop with 5gb graphics + 25% off</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-lg-3 col-md-6 col-sm-6 maxheight2 new-rec">
-        <div class="thumb-pad2">
-          <div class="thumbnail">
-            <figure><img src="img/page1_pic5.jpg" alt="">
-            </figure>
-            <div class="caption">
-              <div class="sale-div">
-                <p class="price">Save
-                  <br />$10</b>
-                </p>
-              </div>
-              <div class="cartshare-btn">
-                <button class="align-left"><i class="fa fa-shopping-cart" aria-hidden="true"></i>
-                </button>
-                <button class="align-left"><i class="fa fa-heart" aria-hidden="true"></i>
-                </button>
-                <button class="align-right"><i class="fa fa-share-alt" aria-hidden="true"></i>
-                </button>
-              </div>
-              <div class="clearfix"></div>
-              <p class="product-price" style="text-align:center;font-weight:700;margin: 0px;">
-                <span class="money" data-currency-usd="$150.00" style="color:#EA4545;font: 500 14px/1.75">Now $150.00 </span>
-                <span>|</span>
-                <s style="color: #848484;"><span class="money" data-currency-usd="$160.00">Before $160.00</span></s>
-              </p>
-              <div class="clearfix"></div>
-              <div style="padding:5px 0px 2px;">
-                <p style="color:#999;font-size:14px;line-height:16px;font-weight:400;text-overflow: ellipsis;max-height:40px;margin-bottom: 0px;">Dell laptop with 5gb graphics + 25% off</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-lg-3 col-md-6 col-sm-6 maxheight2 new-rec">
-        <div class="thumb-pad2">
-          <div class="thumbnail">
-            <figure><img src="img/page1_pic5.jpg" alt="">
-            </figure>
-            <div class="caption">
-              <div class="sale-div">
-                <p class="price">Save
-                  <br />$10</b>
-                </p>
-              </div>
-              <div class="cartshare-btn">
-                <button class="align-left"><i class="fa fa-shopping-cart" aria-hidden="true"></i>
-                </button>
-                <button class="align-left"><i class="fa fa-heart" aria-hidden="true"></i>
-                </button>
-                <button class="align-right"><i class="fa fa-share-alt" aria-hidden="true"></i>
-                </button>
-              </div>
-              <div class="clearfix"></div>
-              <p class="product-price" style="text-align:center;font-weight:700;margin: 0px;">
-                <span class="money" data-currency-usd="$150.00" style="color:#EA4545;font: 500 14px/1.75">Now $150.00 </span>
-                <span>|</span>
-                <s style="color: #848484;"><span class="money" data-currency-usd="$160.00">Before $160.00</span></s>
-              </p>
-              <div class="clearfix"></div>
-              <div style="padding:5px 0px 2px;">
-                <p style="color:#999;font-size:14px;line-height:16px;font-weight:400;text-overflow: ellipsis;max-height:40px;margin-bottom: 0px;">Dell laptop with 5gb graphics + 25% off</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-lg-3 col-md-6 col-sm-6 maxheight2 new-rec">
-        <div class="thumb-pad2">
-          <div class="thumbnail">
-            <figure><img src="img/page1_pic5.jpg" alt="">
-            </figure>
-            <div class="caption">
-              <div class="sale-div">
-                <p class="price">Save
-                  <br />$10</b>
-                </p>
-              </div>
-              <div class="cartshare-btn">
-                <button class="align-left"><i class="fa fa-shopping-cart" aria-hidden="true"></i>
-                </button>
-                <button class="align-left"><i class="fa fa-heart" aria-hidden="true"></i>
-                </button>
-                <button class="align-right"><i class="fa fa-share-alt" aria-hidden="true"></i>
-                </button>
-              </div>
-              <div class="clearfix"></div>
-              <p class="product-price" style="text-align:center;font-weight:700;margin: 0px;">
-                <span class="money" data-currency-usd="$150.00" style="color:#EA4545;font: 500 14px/1.75">Now $150.00 </span>
-                <span>|</span>
-                <s style="color: #848484;"><span class="money" data-currency-usd="$160.00">Before $160.00</span></s>
-              </p>
-              <div class="clearfix"></div>
-              <div style="padding:5px 0px 2px;">
-                <p style="color:#999;font-size:14px;line-height:16px;font-weight:400;text-overflow: ellipsis;max-height:40px;margin-bottom: 0px;">Dell laptop with 5gb graphics + 25% off</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="thumb-box4">
+  <div class="thumb-box3" style="padding-top:15px;">
     <div class="container">
-      <h2><strong>How it works</strong></h2>
+    <%= link_to "View All",product_offer_list_product_path(:id=>"Todays trending deals"), :class=>"view_all_btn btn-primary btn view-button" %>   
+      <h2>Todays trending deals</h2>
       <div class="row">
-        <div class="col-lg-3 col-md-6 col-sm-6 maxheight3">
-          <div class="box">
-            <div class="badge fa fa-user"></div>
-            <strong>Register</strong>
-            <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim</p>
-          </div>
-        </div>
-        <div class="col-lg-3 col-md-6 col-sm-6 maxheight3">
-          <div class="box">
-            <div class="badge fa fa-money"></div>
-            <strong>Buy or Bid</strong>
-            <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim</p>
-          </div>
-        </div>
-        <div class="col-lg-3 col-md-6 col-sm-6 maxheight3">
-          <div class="box">
-            <div class="badge fa fa-gavel"></div>
-            <strong>Submit a Bid</strong>
-            <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim</p>
-          </div>
-        </div>
-        <div class="col-lg-3 col-md-6 col-sm-6 maxheight3">
-          <div class="box">
-            <div class="badge fa fa-trophy"></div>
-            <strong>Win</strong>
-            <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="stellar-section">
-    <div class="thumb-box5" data-stellar-background-ratio="0.1">
-      <div class="container">
-        <div class='row'>
-          <div class='col-md-offset-2 col-md-8'>
-            <h2><strong>Testimonials</strong></h2>
-            <div class="carousel carousel-fade" data-ride="carousel" id="quote-carousel">
-              <!-- Bottom Carousel Indicators -->
-              <!-- <ol class="carousel-indicators">
-                <li data-target="#quote-carousel" data-slide-to="0" class="active"></li>
-                <li data-target="#quote-carousel" data-slide-to="1"></li>
-                <li data-target="#quote-carousel" data-slide-to="2"></li>
-                </ol> -->
-              <!-- Carousel Slides / Quotes -->
-              <div class="carousel-inner">
-                <!-- Quote 1 -->
-                <div class="item active">
-                  <blockquote>
+        <ul id="myList">
+          <% @treding_deal_products.each do |product| %>
+            <% calculation_price product %>
+            <li> 
+              <div class="col-lg-3 col-md-6 col-sm-6 new-rec ttd-div">
+                <div class="thumb-pad2">
+                  <div class="thumbnail">
                     <div class="row">
-                      <div class="col-sm-3 text-center">
-                        <img class="img-circle" src="http://www.reactiongifs.com/r/overbite.gif" style="width: 100px;height:100px;">
-                        <!--<img class="img-circle" src="https://s3.amazonaws.com/uifaces/faces/twitter/kolage/128.jpg" style="width: 100px;height:100px;">-->
+                      <div class="col-md-9 col-sm-9 col-xs-12">
+                        <figure>
+                          <% image = product.images.first %>
+                          <%= link_to image_tag(image.attachment.url(:product)), product_path(product) %>
+                        </figure>
                       </div>
-                      <div class="col-sm-9">
-                        <p>Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit!</p>
-                        <small>Someone famous</small>
+                      <div class="col-md-3 col-sm-3 col-xs-12">
+                        <div class="row">
+                          <div class="caption new-caption cartshare_<%=product.id %>">
+                            <div class="sale-div">
+                              <b>SAVE</b>
+                              <br />
+                              <%=@save.to_i%>/=
+                            </div>
+                            <div class="sale-div">
+                              <i class="fa fa-share-alt share" aria-hidden="true"  data-name="<%= product.name%>" data-desc="<%= product.description %>"></i>
+                            </div>
+                            <div class="sale-div" style="background-color:#ed292d;border-color:#ed292d;">
+                              <!-- <i class="fa fa-shopping-cart" aria-hidden="true" ></i> -->
+                            </div>
+                            <% if spree_current_user.present? and  (spree_current_user.id == product.favorites.first.try(:user_id)) %>
+                            <div class="sale-div fav_lnk" style="background-color:#e85858;border-color:#e85858;">
+                              <a href="javascript:void(0);"><i class="fa fa-heart fav like" aria-hidden="true" id="<%=product.id%>" ></i></a>
+                            </div>
+                            <% else %>
+                            <div class="sale-div fav_lnk" style="background-color:#e85858;border-color:#e85858;">
+                              <a href="javascript:void(0);"><i class="fa fa-heart-o unlike" aria-hidden="true" id="<%=product.id%>" ></i></a>
+                            </div>
+                            <% end %> 
+                          
+                          </div>
+                        </div>
                       </div>
                     </div>
-                  </blockquote>
-                </div>
-                <!-- Quote 2 -->
-                <div class="item">
-                  <blockquote>
-                    <div class="row">
-                      <div class="col-sm-3 text-center">
-                        <img class="img-circle" src="https://s3.amazonaws.com/uifaces/faces/twitter/mijustin/128.jpg" style="width: 100px;height:100px;">
-                      </div>
-                      <div class="col-sm-9">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam auctor nec lacus ut tempor. Mauris.</p>
-                        <small>Someone famous</small>
+                    <div class="caption" style="padding:0px;">
+                      <div class="clearfix"></div>
+                      <p class="product-price">
+                        <span class="money" data-currency-usd="$150.00" style="color:#EA4545;font: 500 14px/1.75">Now <%=@sale_price%>/= ( Plus free <%=product.giveaway_name %> worth <%=product.giveaway_value %>/=)</span>
+                        <span>|</span>
+                        <s style="color: #848484;"><span class="money" data-currency-usd="$160.00">Before <%= product.price %></span></s>
+                      </p>
+                      <div class="clearfix"></div>
+                      <div class="product-description">
+                        <p><%= product.name %> + <%=product.total_discount.to_i%>% off </p>
                       </div>
                     </div>
-                  </blockquote>
-                </div>
-                <!-- Quote 3 -->
-                <div class="item">
-                  <blockquote>
-                    <div class="row">
-                      <div class="col-sm-3 text-center">
-                        <img class="img-circle" src="https://s3.amazonaws.com/uifaces/faces/twitter/keizgoesboom/128.jpg" style="width: 100px;height:100px;">
-                      </div>
-                      <div class="col-sm-9">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam auctor nec lacus ut tempor. Mauris.</p>
-                        <small>Someone famous</small>
-                      </div>
-                    </div>
-                  </blockquote>
+                  </div>
                 </div>
               </div>
-              <!-- Carousel Buttons Next/Prev -->
-              <!-- <a data-slide="prev" href="#quote-carousel" class="left carousel-control"><i class="fa fa-chevron-left"></i></a>
-                <a data-slide="next" href="#quote-carousel" class="right carousel-control"><i class="fa fa-chevron-right"></i></a> -->
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="social-icon-list">
-    <div class="container">
-      <div class="col-lg-12 col-md-6 col-sm-12">
-        <div class="social-div">
-          <ul class="social_icons fade_in animated fadeIn">
-            <li>
-              <a href="#">
-              <i class="fa fa-facebook"></i>
-              </a>
             </li>
-            <li>
-              <a href="#">
-              <i class="fa fa-twitter"></i>
-              </a>
-            </li>
-            <li>
-              <a href="#">
-              <i class="fa fa-instagram"></i>
-              </a>
-            </li>
-            <li>
-              <a href="#">
-              <i class="fa fa-linkedin"></i>
-              </a>
-            </li>
-          </ul>
-        </div>
+          <% end %>
+        </ul>        
+        <div class="clearfix"></div>
+        <div id="loadMore">See More</div> 
+         <%= link_to "View All",product_offer_list_product_path(:id=>"Todays trending deals"), :class=>"view_all_btn btn-primary btn view-button" %> 
+        <h2>Deals ending soon </h2>
+        <%= render 'spree/shared/deal_ending_soon' %>
       </div>
     </div>
   </div>
@@ -381,10 +118,12 @@
 
 <style type="text/css">
 #myList li{ display:none;
+    list-style: none;
 }
 #loadMore {
-    color:green;
+    color:red;
     cursor:pointer;
+    padding-left: 90%;
 }
 #loadMore:hover {
     color:black;
