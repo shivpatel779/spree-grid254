@@ -106,7 +106,7 @@
           <%# p f.object.inspect %>
 
         <div class="form-group" data-hook="store_location_country">
-          <%= f.label :country_id, Spree.t(:country) %><span class="required">*</span><br />
+          <%= f.label :country_id,  Spree.t(:county)+'/State' %><span class="required">*</span><br />
           <span id="country"><%= f.collection_select :country_id, available_countries, :id, :name, {selected: f.object.country_id}, { class: 'select2' } %></span>
         </div>
 
@@ -119,7 +119,6 @@
             </span>
           <% end %>
         </div>
-        <%  %>
         <% #constituencies = Spree::Country.find_by_name('Kenya').states.sort.first.constituencies %>
         <div class="form-group" data-hook="store_location_state">
           <%= f.label :constituency, Spree.t(:constituency) %><span class="required">*</span><br />
@@ -143,7 +142,7 @@
 
       <% else %>
         <div class="form-group" data-hook="store_location_country">
-          <%= f.label :country_id, Spree.t(:country) %><span class="required">*</span><br />
+          <%= f.label :country_id,  Spree.t(:county)+'/State' %><span class="required">*</span><br />
           <span id="country"><%= f.collection_select :country_id, available_countries, :id, :name, {selected: Spree::Country.find_by_name('Kenya').id}, { class: 'select2' } %></span>
         </div>
         <div class="form-group" data-hook="store_location_state">
