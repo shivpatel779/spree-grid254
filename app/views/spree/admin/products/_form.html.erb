@@ -83,7 +83,7 @@
       <div data-hook="admin_product_form_cost_currency" class="omega two columns">
         <%= f.field_container :discount_value, class: ['form-group'] do %>
           <%= f.label :discount_value, Spree.t(:discount_value) %>
-          <%= f.text_field :discount_value, value: (@product.total_discount),class: 'form-control' ,:id=>"discount_value" , :readonly => true %>
+          <%= f.text_field :discount_value, value: (@product.discount_value.to_i),class: 'form-control' ,:id=>"discount_value" , :readonly => true %>
           <%= f.error_message_on :discount_value %>
         <% end %>
       </div>
@@ -288,7 +288,7 @@ function sum() {
     }
 
     if (!isNaN(result)) {
-      document.getElementById('discount_value').value = result.toFixed(2);    
+      document.getElementById('discount_value').value = result.toFixed(0);    
     }
   }
 </script>
