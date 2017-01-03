@@ -63,28 +63,6 @@
   <br/>
   <br/>
 <% end %>
-
-<div id='gmap_form'>
-  <%= f.field_container :address1, class: ['form-group'] do %>
-
-  <%= f.label :address1, 'Address' %>
-  <input id="pac-input_new" class="controls" type="text" placeholder="Enter your address" name="store_location[address1]">
-
-<% end %>
-
-
-<div id="map" style='width: 100%; height: 400px;'></div>
-
-  <%= hidden_field_tag :id,  f.object.id   %>
-  <%= f.hidden_field :address1, value: f.object.address1, id: 'address' %>
-  <%= f.hidden_field :latitude, value: f.object.latitude, id:'store_location_lat' %>
-  <%= f.hidden_field :longitude, value: f.object.longitude, id: 'store_location_lag' %>
-
-</div>
-
-
-  
-
 <div id="address_form">
   <div class="form-group" data-hook="store_location_address1">
     <%= f.label :address1, Spree.t(:street_address) %><span class="required">*</span><br />
@@ -138,6 +116,23 @@
     <%= f.text_field :zipcode, class: 'form-control', required: true %>
   </div>
 </div>
+
+<div id='gmap_form'>
+  <%= f.field_container :address1, class: ['form-group'] do %>
+
+  <%= f.label :address1, 'Address' %>
+  <input id="pac-input_new" class="controls" type="text" placeholder="Enter your address" name="store_location[address1]">
+<% end %>
+
+<div id="map" style='width: 100%; height: 400px;'></div>
+
+  <%= hidden_field_tag :id,  f.object.id   %>
+  <%#= f.hidden_field :address1, value: f.object.address1, id: 'address' %>
+  <%= f.hidden_field :latitude, value: f.object.latitude, id:'store_location_lat' %>
+  <%= f.hidden_field :longitude, value: f.object.longitude, id: 'store_location_lag' %>
+</div>
+  
+
 
 
 
@@ -263,7 +258,6 @@
             }
 
             $('#address').val(place.formatted_address);
-
             $('#store_location_address1').val(place.formatted_address);
             $('#store_location_lat').val(place.geometry.location.lat())
             $('#store_location_lag').val(place.geometry.location.lng())
@@ -287,6 +281,7 @@
             marker.setVisible(true);
 
             var address = '';
+
             if (place.address_components) {
                 address = [
                     (place.address_components[0] && place.address_components[0].short_name || ''),
