@@ -14,12 +14,15 @@ class Spree::Admin::SellersController < Spree::Admin::BaseController
 
   end
 
-  def get_locations
-    constituency = Spree::Constituency.find(params[:constituency_id])
+  def get_locations    
+    constituency = locations params[:constituency_id]
     respond_to do |format|
       format.json {render json: {locations: constituency.locations.select('id, name')}}
     end
+  end
 
+  def locations id
+    Spree::Constituency.find(id)
   end
 
   def new

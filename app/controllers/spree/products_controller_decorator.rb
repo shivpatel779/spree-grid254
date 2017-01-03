@@ -78,6 +78,6 @@ Spree::ProductsController.class_eval do
   end
 
   def filter_range
-    @product_offer_list =@product_offer_list.select{|p| p if (p.price.to_f > 0 && p.price.to_f < params[:range].to_i) } unless params[:range].nil?
+    @product_offer_list =@product_offer_list.select{|p| p if (p.price.to_i > params[:min].to_i && p.price.to_i < params[:max].to_i) } unless params[:max].nil?
   end
 end

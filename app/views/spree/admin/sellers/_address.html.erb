@@ -99,51 +99,84 @@
           <%#= f.error_message_on :name %>
       <% end %>
 
-
+      <%  %>
+      
       <% if f.object.persisted? %>
 
           <%# p f.object.inspect %>
 
-          <div class="form-group" data-hook="store_location_country">
-            <%= f.label :country_id, Spree.t(:country) %><span class="required">*</span><br />
-            <span id="country"><%= f.collection_select :country_id, available_countries, :id, :name, {selected: f.object.country_id}, { class: 'select2' } %></span>
-          </div>
+        <div class="form-group" data-hook="store_location_country">
+          <%= f.label :country_id, Spree.t(:country) %><span class="required">*</span><br />
+          <span id="country"><%= f.collection_select :country_id, available_countries, :id, :name, {selected: f.object.country_id}, { class: 'select2' } %></span>
+        </div>
 
+        <div class="form-group" data-hook="store_location_state">
+          <% if f.object.country %>
+              <%= f.label :state_id, Spree.t(:state) %><span class="required">*</span><br />
+            <span id="state" class="region">
+              <%= f.text_field :state_name, style: "#{f.object.country.states.empty? ? '' : 'display: none;'}", disabled: !f.object.country.states.empty?, class: 'state_name form-control' %>
+              <%= f.collection_select :state_id, f.object.country.states.sort, :id, :name, { include_blank: false }, {class: 'select2', style: "#{f.object.country.states.empty? ? 'display: none;' : '' };", disabled: f.object.country.states.empty?} %>
+            </span>
+          <% end %>
+        </div>
+        <%  %>
+        <% #constituencies = Spree::Country.find_by_name('Kenya').states.sort.first.constituencies %>
+        <div class="form-group" data-hook="store_location_state">
+          <%= f.label :constituency, Spree.t(:constituency) %><span class="required">*</span><br />
+          <%  data =   Spree::State.find(f.object.state_id).constituencies  %>
+          <span id="constituency_area" class="region">
+            <%= f.collection_select :constituency, data.sort || [], :id, :name, { include_blank: true }, {class: 'select2'}  %>
+          </span>
+        </div>
+        <% unless f.object.constituency.blank? %>
           <div class="form-group" data-hook="store_location_state">
-            <% if f.object.country %>
-                <%= f.label :state_id, Spree.t(:state) %><span class="required">*</span><br />
-              <span id="state" class="region">
-                <%= f.text_field :state_name, style: "#{f.object.country.states.empty? ? '' : 'display: none;'}", disabled: !f.object.country.states.empty?, class: 'state_name form-control' %>
-                <%= f.collection_select :state_id, f.object.country.states.sort, :id, :name, { include_blank: false }, {class: 'select2', style: "#{f.object.country.states.empty? ? 'display: none;' : '' };", disabled: f.object.country.states.empty?} %>
-              </span>
-            <% end %>
-
+            <%  data1 =  Spree::Constituency.find(f.object.constituency).locations %>
+            <%= f.label :location, Spree.t(:location) %><span class="required">*</span><br />
+            <span id="location" class="region">
+              <%= f.collection_select :location, data1.sort || [], :id, :name, { include_blank: true }, {class: 'select2'} %>
+            </span>
           </div>
+        <% end %>
+
+
+
 
       <% else %>
+        <div class="form-group" data-hook="store_location_country">
+          <%= f.label :country_id, Spree.t(:country) %><span class="required">*</span><br />
+          <span id="country"><%= f.collection_select :country_id, available_countries, :id, :name, {selected: Spree::Country.find_by_name('Kenya').id}, { class: 'select2' } %></span>
+        </div>
+        <div class="form-group" data-hook="store_location_state">
 
-          <%# p available_countries.first.states.sort %>
+          <%= f.label :state_id, Spree.t(:state) %><span class="required">*</span><br />
+            <span id="state" class="region">
+              <%= f.text_field :state_name, style: "#{Spree::Country.find_by_name('Kenya').states.empty? ? '' : 'display: none;'}", disabled: Spree::Country.find_by_name('Kenya').states.empty?, class: 'state_name form-control' %>
+              <%= f.collection_select :state_id, Spree::Country.find_by_name('Kenya').states.sort, :id, :name, { include_blank: false }, {class: 'select2', style: "#{Spree::Country.find_by_name('Kenya').states.empty? ? 'display: none;' : '' };", disabled: Spree::Country.find_by_name('Kenya').states.empty?} %>
+            </span>
+        </div>
+        <% constituencies = Spree::Country.find_by_name('Kenya').states.sort.first.constituencies %>
+        <div class="form-group" data-hook="store_location_state">
+          <%= f.label :constituency, Spree.t(:constituency) %><span class="required">*</span><br />
+          <span id="constituency_area" class="region">
+            <%= f.collection_select :constituency, constituencies.sort || [], :id, :name, { include_blank: true }, {class: 'select2'} %>
+          </span>
+        </div>
 
-          <div class="form-group" data-hook="store_location_country">
-            <%= f.label :country_id, Spree.t(:country) %><span class="required">*</span><br />
-            <span id="country"><%= f.collection_select :country_id, available_countries, :id, :name, {selected: Spree::Country.find_by_name('Kenya').id}, { class: 'select2' } %></span>
-          </div>
+        <div class="form-group" data-hook="store_location_state">
+          <%= f.label :location_id, Spree.t(:location) %><span class="required">*</span><br />
 
-          <div class="form-group" data-hook="store_location_state">
+          <span id="location" class="region">
+            <%= f.collection_select :location, constituencies.sort.first.locations || [], :id, :name, { include_blank: true }, {class: 'select2'} %>
+          </span>
+        </div>
 
-            <%= f.label :state_id, Spree.t(:state) %><span class="required">*</span><br />
-              <span id="state" class="region">
-                <%= f.text_field :state_name, style: "#{Spree::Country.find_by_name('Kenya').states.empty? ? '' : 'display: none;'}", disabled: Spree::Country.find_by_name('Kenya').states.empty?, class: 'state_name form-control' %>
-                <%= f.collection_select :state_id, Spree::Country.find_by_name('Kenya').states.sort, :id, :name, { include_blank: false }, {class: 'select2', style: "#{Spree::Country.find_by_name('Kenya').states.empty? ? 'display: none;' : '' };", disabled: Spree::Country.find_by_name('Kenya').states.empty?} %>
-              </span>
 
-          </div>
-
+        
       <% end %>
 
       <%= f.field_container :city, class: ['form-group'] do %>
 
-          <%= f.label :city, Spree.t(:city) %><span class="required">*</span><br />
+          <%= f.label :city, Spree.t(:city) %><span class="required"></span><br />
           <%= f.text_field :city, :class => 'form-control', required: true %>
           <%#= f.error_message_on :name %>
 
@@ -151,35 +184,11 @@
 
       <%= f.field_container :zipcode, class: ['form-group'] do %>
 
-          <%= f.label :zipcode, Spree.t(:zipcode) %><span class="required">*</span><br />
+          <%= f.label :zipcode, Spree.t(:zipcode) %><span class="required"></span><br />
           <%= f.text_field :zipcode, :class => 'form-control', required: true %>
           <%#= f.error_message_on :name %>
 
-      <% end %>
-
-      <% constituencies = Spree::Country.find_by_name('Kenya').states.sort.first.constituencies %>
-
-      <%= f.field_container :constituency, class: ['form-group'] do %>
-
-          <%= f.label :constituency, Spree.t(:constituency) %><span class="required">*</span><br />
-          <%#= f.text_field :constituency, :class => 'form-control', required: true %>
-
-          <span id="constituency" class="region">
-            <%= f.collection_select :constituency, constituencies.sort, :id, :name, { include_blank: false }, {class: 'select2', style: "#{constituencies.empty? ? 'display: none;' : '' };", disabled: constituencies.empty?} %>
-        </span>
-
-          <%#= f.error_message_on :name %>
-
-      <% end %>
-
-      <%= f.field_container :location, class: ['form-group'] do %>
-
-          <%= f.label :location, Spree.t(:location) %><span class="required">*</span><br />
-          <%#= f.text_field :location, :class => 'form-control', required: true     %>
-          <span id="location" class="region">
-            <%= f.collection_select :location, constituencies.sort.first.locations, :id, :name, { include_blank: false }, {class: 'select2', style: "#{constituencies.sort.first.locations.empty? ? 'display: none;' : '' };", disabled: constituencies.sort.first.locations.empty?} %>
-        </span>
-          <%#= f.error_message_on :name %>
+     
 
       <% end %>
 
@@ -207,7 +216,7 @@
     <%= javascript_tag do %>
         $(document).ready(function(){
 
-        <% if f.object.from_google_maps? %>
+        <% unless f.object.latitude.nil? %>
             $('#addr_frm').hide()
             $('#gmaps_frm').show()
             $.getScript('https://maps.googleapis.com/maps/api/js?key=AIzaSyDUpAyNtPcUNgPIXtUiJtUFXa2UZu4jI94&libraries=places&callback=initMap')
@@ -277,7 +286,7 @@
         var map = new google.maps.Map(document.getElementById('map'), {
             mapTypeControl: false,
             center: lat_lng,
-            zoom: <%= f.object.persisted? ? '13' : '3' %>
+            zoom: 17
         });
 
         google.maps.event.trigger(map, 'resize');

@@ -20,12 +20,11 @@
               </select>
               </label><br>
               
-             <input type="text" name="seller[email][0][phone]" class="form-control">
+             <input type="text" name="seller[email][0][phone]" class="form-control" value="dddd">
           </div>
         </div>
         <a href="javascript:void(0)" class="add-field"><i class="fa fa-plus-square-o" aria-hidden="true">Add Email</i></a>
       </div>
-
       <div class="multi-field-wrapper">
         <div class="multi-fields">
           <div class="multi-field">
@@ -33,7 +32,7 @@
             <label for="store_location_city">Email</label>
             <input type="hidden" name="seller[email][0][type]" value="email">
             <div data-hook="store_location_phone" class="form-group">
-               <input type="text" name="seller[email][0][phone]" class="form-control">
+               <input type="text" name="seller[email][0][phone]" class="form-control" value='<%= f.object.try(:email).first.last %>' >
             </div>
           </div>
         </div>
@@ -137,6 +136,18 @@
     <% end %>
 
   </div>
+
+<% content_for :head do %>
+  <%= javascript_tag do %>
+    $(document).ready(function(){
+      $('span#country .select2').on('change', function() { update_state(''); });
+      $('span#state .select2').on('change', function() { update_constituency(''); });
+      $('span#constituency_area .select2').on('change', function() { update_location(''); });
+    });
+  <% end %>
+<% end %>
+
+
 
 
 <script type="text/javascript">

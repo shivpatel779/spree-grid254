@@ -24,15 +24,11 @@
                         <div class="caption new-caption cartshare_<%=product.id %>">
                           <div class="sale-div">
                             <b>SAVE</b>
-                            <br />$<%=@save.to_i%>
+                            <br /><%=@save.to_i%>/=
                           </div>
                         
                           <div class="sale-div">
-                            <i class="fa fa-share-alt share1" aria-hidden="true"  data-name="<%= product.name%>" data-desc="<%= product.description %>"></i>
-                          </div>
-                          
-                          <div class="sale-div" style="background-color:#ed292d;border-color:#ed292d;">
-                            <!-- <i class="fa fa-shopping-cart" aria-hidden="true" ></i> -->
+                            <a href="javascript:void(0);"><i class="fa fa-share-alt share1" aria-hidden="true"  data-name="<%= product.name%>" data-desc="<%= product.description %>"></i></a>
                           </div>
                           <% if spree_current_user.present? and  (spree_current_user.id == product.favorites.first.try(:user_id)) %>
                             <div class="sale-div fav_lnk" style="background-color:#e85858;border-color:#e85858;">

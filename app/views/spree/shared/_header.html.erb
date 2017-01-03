@@ -33,8 +33,8 @@
         <%= render 'spree/shared/search' %>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="/cart">Cart <span class="glyphicon glyphicon-shopping-cart"></span></a>
-        </li>
+        <!-- <li><a href="/cart">Cart <span class="glyphicon glyphicon-shopping-cart"></span></a>
+        </li> -->
         <li>
           <% if spree_current_user %>
               <%#= link_to spree.logout_path do %>
@@ -48,8 +48,6 @@
               <% end %>
 
           <% end %>
-
-          <li><a style="padding-left: 0;padding-right: 0px;">|</a>
           </li>
           <li>
             <% if spree_current_user %>
