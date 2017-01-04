@@ -1,9 +1,9 @@
 Spree::ProductsController.class_eval do
 
-  def index
-    @products = Spree::Product.where("LOWER(name) LIKE ?", ("%"+params[:keywords].downcase+"%"))
-    @treding_deal_product = Spree::Product.where.not(total_discount:nil).order( 'total_discount desc').first(4)
-  end
+  # def index
+  #   @products = Spree::Product.where("LOWER(name) LIKE ?", ("%"+params[:keywords].downcase+"%"))
+  #   @treding_deal_product = Spree::Product.where.not(total_discount:nil).order( 'total_discount desc').first(4)
+  # end
 
   def favorite_a_product
     @product = Spree::Product.friendly.find(params[:id])
@@ -34,9 +34,10 @@ Spree::ProductsController.class_eval do
   end
 
   def product_offer_list
-    
     if params[:id].eql?("Todays trending deals")
      @product_offer_list = Spree::Product.where.not(total_discount:nil).order( 'total_discount desc')
+    elsif params[:id].eql?("input_search")
+     @product_offer_list = Spree::Product.where("LOWER(name) LIKE ?", ("%"+params[:keywords].downcase+"%"))
     else
       treding_deal_products = Spree::Product.where.not(total_discount:nil).order( 'total_discount desc')
       @product_offer_list = treding_deal_products.where(discontinue_on: Date.today.strftime("%Y-%m-%d")+" 00:00:00"..Date.today.days_ago(-5).strftime("%Y-%m-%d")+" 00:00:00")   
