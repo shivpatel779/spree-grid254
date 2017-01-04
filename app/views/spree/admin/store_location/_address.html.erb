@@ -66,7 +66,7 @@
 <div id="address_form">
   <div class="form-group" data-hook="store_location_address1">
     <%= f.label :address1, Spree.t(:street_address) %><span class="required">*</span><br />
-    <%= f.text_field :address1, class: 'form-control', required: true %>
+    <%= f.text_field :address1, class: 'form-control' %>
   </div>
 
   <div class="form-group" data-hook="store_location_address2">
@@ -75,7 +75,7 @@
   </div>
 
   <div class="form-group" data-hook="store_location_country">
-    <%= f.label :country_id, Spree.t(:county)+'/State' %><span class="required">*</span><br />
+    <%= f.label :country_id, Spree.t(:country) %><span class="required">*</span><br />
   
     <span id="country"><%= f.collection_select :country_id, available_countries, :id, :name, {}, { class: 'select2' } %></span>
   </div>
@@ -83,7 +83,7 @@
   <div class="form-group" data-hook="store_location_state">
     <% if f.object.country %>
     
-      <%= f.label :state_id, Spree.t(:state) %><span class="required">*</span><br />
+      <%= f.label :state_id, Spree.t(:county)+'/State' %><span class="required">*</span><br />
       <span id="state" class="region">
         <%= f.text_field :state_name, style: "#{f.object.country.states.empty? ? '' : 'display: none;'}", disabled: !f.object.country.states.empty?, class: 'state_name form-control' %>
         <%= f.collection_select :state_id, f.object.country.states.sort, :id, :name, { include_blank: true }, {class: 'select2', style: "#{f.object.country.states.empty? ? 'display: none;' : '' };", disabled: f.object.country.states.empty?} %>
@@ -92,7 +92,7 @@
   </div>
   
   <div class="form-group" data-hook="store_location_state">
-    <%= f.label :constituency_id, Spree.t(:constituency) %><span class="required">*</span><br />
+    <%= f.label :constituency_id, Spree.t(:constituency)+'/area' %><span class="required">*</span><br />
     <%  %>
     <span id="constituency_area" class="region">
       <%= f.collection_select :constituency_id, f.object.state.try(:constituencies).try(:sort) || [], :id, :name, { include_blank: true }, {class: 'select2', style: "#{f.object.country.states.empty? ? 'display: none;' : '' };", disabled: f.object.country.states.empty?} %>
@@ -117,12 +117,17 @@
   </div>
 </div>
 
-<div id='gmap_form'>
-  <%= f.field_container :address1, class: ['form-group'] do %>
-
-  <%= f.label :address1, 'Address' %>
-  <input id="pac-input_new" class="controls" type="text" placeholder="Enter your address" name="store_location[address1]">
+<% unless f.object.longitude.nil? %>
+ <% map_address = f.object.address1 %>
 <% end %>
+
+
+<div id='gmap_form'>
+  <%#= f.field_container :address1, class: ['form-group'] do %>
+
+  <%#= f.label :address1, 'Address' %>
+  <input id="pac-input_new" class="controls" type="text" placeholder="Enter your address" name="map_address">
+<%# end %>
 
 <div id="map" style='width: 100%; height: 400px;'></div>
 
@@ -133,10 +138,6 @@
 </div>
   
 
-
-
-
-
 <% content_for :head do %>
   <%= javascript_tag do %>
     $(document).ready(function(){
@@ -144,7 +145,7 @@
       $('#address_form').hide()
       $('#gmap_form').show()
       $.getScript('https://maps.googleapis.com/maps/api/js?key=AIzaSyDUpAyNtPcUNgPIXtUiJtUFXa2UZu4jI94&libraries=places&callback=initMap')
-      $("#pac-input_new").val("<%=f.object.address1%>")
+      $("#pac-input_new").val("<%=map_address%>")
     <% else %>
       $('#address_form').show()
       $('#gmap_form').hide()
@@ -161,7 +162,7 @@
           $('#gmap_form').show()
 
            $.getScript('https://maps.googleapis.com/maps/api/js?key=AIzaSyDUpAyNtPcUNgPIXtUiJtUFXa2UZu4jI94&libraries=places&callback=initMap')
-           $("#pac-input_new").val("<%=f.object.address1%>")
+           $("#pac-input_new").val("<%=map_address%>")
 
       }
     })

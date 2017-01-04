@@ -57,13 +57,14 @@ class Spree::Admin::SellersController < Spree::Admin::BaseController
   end
 
   def update
-
     if params.key?('seller_address')
 
       if params[:address_option] == false
 
       end
-
+      if params[:seller_address][:longitude].present?
+        params[:seller_address][:address1] = params[:map_address]  
+      end  
       # update address
       params[:seller_address].permit!
       @seller = Spree::Seller.find(params[:seller_address][:seller_id])

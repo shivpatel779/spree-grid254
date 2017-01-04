@@ -30,6 +30,9 @@ class Spree::Admin::StoreLocationController < Spree::Admin::BaseController
   def update
     params[:store_location].permit!
     @store_location = Spree::StoreLocation.find(params[:id])
+    if params[:store_location][:longitude].present?
+      params[:store_location][:address1] = params[:map_address]
+    end
     if @store_location.update_attributes(params[:store_location])
       flash.now[:success] = Spree.t(:account_updated)
     end
