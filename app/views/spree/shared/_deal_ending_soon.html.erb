@@ -44,7 +44,7 @@
             <div class="caption" style="padding:0px;">
               <div class="clearfix"></div>
               <p class="product-price">
-                <span class="money" data-currency-usd="$150.00" style="color:#EA4545;font: 500 14px/1.75">>Now <%=@sale_price%>/= ( Plus free <%=product.giveaway_name %> worth <%=product.giveaway_value %>/=)</span>
+                <span class="money" data-currency-usd="$150.00" style="color:#EA4545;font: 500 14px/1.75">Now <%=@sale_price%>/= ( Plus free <%=product.giveaway_name %> worth <%=product.giveaway_value.to_i %>/=)</span>
                 <span>|</span>
                 <s style="color: #848484;"><span class="money" data-currency-usd="$160.00">Before <%= product.price %></span></s>
               </p>
