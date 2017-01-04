@@ -25,6 +25,14 @@ Spree::ProductsController.class_eval do
     end
   end
 
+  def show
+    @product = Spree::Product.find(params[:id])
+    @variant  = Spree::Variant.where(product_id: params[:id])
+    @seller = Spree::Seller.find(params[:pdt_detail?])
+
+
+  end
+
   def product_offer_list
     
     if params[:id].eql?("Todays trending deals")

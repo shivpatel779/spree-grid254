@@ -1,3 +1,4 @@
+<%  calculation_price @product %>
 <div class="content" style="margin-top:70px;">
 <div class="thumb-box3">
   <div class="container">
@@ -8,12 +9,6 @@
           <div class="carousel-inner banner-slider">
             <div class="item active">
               <%= render :partial => 'image' %>
-            </div>
-            <div class="item">
-              <img src="img/2.jpg" alt="..." style="max-height:275px;">
-            </div>
-            <div class="item">
-              <img src="img/1.jpg" alt="..." style="max-height:275px;">
             </div>
             <!-- <div class="product-discount-price discount-price">
               15% off
@@ -34,8 +29,8 @@
           <div id="product-carousel" class="carousel slide" data-ride="carousel">
             <div class="item-title-desc">
               <div class="col-md-12 col-sm-12 col-xs-12" style="padding-left: 10px;">
-                <p class="item-title"><b  style="color: #EA4545;">Dominos Jackpot!</b></p>
-                <p class="sold_by">Sold by : <span class="item-subtitle" style="color: blue;">Baby Banda</span> </p>
+                <p class="item-title"><b  style="color: #EA4545;"><%= @seller.name %></b></p>
+                <p class="sold_by">Sold by : <span class="item-subtitle" style="color: blue;"><%= @seller.name %></span> </p>
               </div>
             </div>
             <div class="clearfix"></div>
@@ -58,19 +53,19 @@
                   <div class="col-md-12 col-sm-12 col-xs-12">
                     <p style="line-height: 20px;margin-bottom:5px;">
                       <small class="b-txt">Before</small> 
-                      <s><span class="money"><b>16,000/=</b></span></s>
+                      <s><span class="money"><b><%= @product.price%>/=</b></span></s>
                     </p>
                   </div>
                   <div class="col-md-12 col-sm-12 col-xs-12">
                     <p style="line-height: 20px;margin-bottom:5px;">
                       <small class="b-txt">Now</small> 
-                      <span class="money"><b style="color: green;">11,000/=</b></span>    
+                      <span class="money"><b style="color: green;"><%= @sale_price %>/=</b></span>    
                     </p>
                   </div>
                   <div class="col-md-12 col-sm-12 col-xs-12">
                     <p style="line-height: 20px;margin-bottom:5px;">
                       <small class="b-txt">Savings</small>
-                      <span class="money" style="color: orange;"><b>16,000/=</b></span>
+                      <span class="money" style="color: orange;"><b><%= @save%>/=</b></span>
                     </p>
                   </div>
                 </div>
@@ -80,10 +75,10 @@
                   <div class="col-md-12 col-sm-12 col-xs-12">
                     <p class="offer-detail">Offer details:</p>
                     <p style="line-height: 14px;">
-                      Runs from: 1-NOV-2016
+                      Runs from: <%= @product.available_on.strftime("%d-%m-%Y")%>
                     </p>
                     <p style="line-height: 14px;">
-                      Ends on: 30-NOV-2016
+                      Ends on: <%= @product.discontinue_on.strftime("%d-%m-%Y")%>
                     </p>
                   </div>
                 </div>
@@ -94,80 +89,37 @@
                     <p class="seller-title">Seller branches:</p>
                     <div class="seller-list">
                       <ul>
-                        <li class="seller-item">
-                          <a>
-                            <div class="orange-number">
-                              1
-                              <div class="down-arrow"></div>
+                        <% @seller.store_locations.each_with_index do |store,index| %>
+                          <li class="seller-item" id="store_<%= store.id %>" data-id="<%= store.id %>">
+                            <a>
+                              <div class="orange-number">
+                                <%= index+1 %>
+                                <div class="down-arrow"></div>
+                              </div>
+                              <%= store.address1 %>
+                            </a>
+                          </li>
+                          <li class="seller-item-selected" id="select_<%= store.id %>" data-id="<%= store.id %>" style="display: none;">
+                            <div class="close-btn">
+                              <i class="fa fa-times" aria-hidden="true"></i>
                             </div>
-                            Baby Banda, Sarit Center Westlands
-                          </a>
-                        </li>
-                        <li class="seller-item">
-                          <a href="#">
-                            <div class="orange-number">
-                              2
-                              <div class="down-arrow"></div>
-                            </div>
-                            Seller Branch 2
-                          </a>
-                        </li>
-                        <li class="seller-item">
-                          <a href="#">
-                            <div class="orange-number">
-                              3
-                              <div class="down-arrow"></div>
-                            </div>
-                            Seller Branch 3
-                          </a>
-                        </li>
-                        <li class="seller-item">
-                          <a href="#">
-                            <div class="orange-number">
-                              4
-                              <div class="down-arrow"></div>
-                            </div>
-                            Seller Branch 4
-                          </a>
-                        </li>
-                        <li class="seller-item">
-                          <a href="#">
-                            <div class="orange-number">
-                              5
-                              <div class="down-arrow"></div>
-                            </div>
-                            Seller Branch 5
-                          </a>
-                        </li>
-                        <li class="seller-item">
-                          <a href="#">
                             <div class="orange-number">
                               6
                               <div class="down-arrow"></div>
                             </div>
-                            Seller Branch 6
-                          </a>
-                        </li>
-                        <li class="seller-item-selected" style="display: none;">
-                          <div class="close-btn">
-                            <i class="fa fa-times" aria-hidden="true"></i>
-                          </div>
-                          <div class="orange-number">
-                            6
-                            <div class="down-arrow"></div>
-                          </div>
-                          <p class="seller-branch-details">Dominoz seller 1 from Kenya</p>
-                          <p class="seller-branch-details">David</p>
-                          <p class="seller-branch-details">2500 Mexicanos Avenue, Santa Rosa</p>
-                          <p class="seller-branch-details">95403-3115</p>
-                          <p class="seller-branch-details">david@gmail.com</p>
-                          <p class="seller-branch-timing">
-                            <b>Mon - Sun</b>
-                            <br />
-                            <b>Open 24hrs</b>
-                          </p>
-                          </a>
-                        </li>
+                            <p class="seller-branch-details"><%=store.name%> seller 1 from <%= store.country.name%></p>
+                            <p class="seller-branch-details"><%= store.name %></p>
+                            <p class="seller-branch-details"><%= store.address2 %></p>
+                            <p class="seller-branch-details">95403-3115</p>
+                            <p class="seller-branch-details"><%= store.email.first %></p>
+                            <p class="seller-branch-timing">
+                              <b>Mon - Sun</b>
+                              <br />
+                              <b>Open 24hrs</b>
+                            </p>
+                            </a>
+                          </li>
+                          <% end %>
                       </ul>
                     </div>
                   </div>
@@ -209,17 +161,24 @@
                   </div>
                 </div>
               </div>
+               <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="row">
+                  <h3>Gift Description:</h3>
+                  <div style="overflow:auto;height:100px;">
+                    <p><%= @product.giveaway_description %></p>
+                  </div>  
+                </div>
+              </div>
               <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="row">
                   <h3>Terms & Condition: </h3>
                   <div style="overflow:auto;height:100px;">
                     <ul>
-                      <li>Coupons valid on selected store</li>
-                      <li>Coupon can be redem once only</li>
-                      <li>Limited period offer</li>
-                      <li>Buy & Get 500 Flat off</li>
+                      <% @product.terms_conditions.split('.').reject(&:blank?).each do |term|  %>
+                        <li><%= term %></li>
+                      <% end %>  
                     </ul>
-                  </div>
+                  </div>  
                 </div>
               </div>
               <!-- /.col-lg-6 -->
@@ -236,19 +195,18 @@
   </div>
 </div>
 
-<script src="js/bootstrap.min.js"></script>
-<script src="js/tm-scripts.js"></script>
 <script type="text/javascript">
     $(document).ready(function(){
-
     $('.seller-item').click(function(){
-        $('.seller-item').hide();
-        $('.seller-item-selected').show();    
+      id = 'select_' + $(this).data('id');
+      $(this).hide();
+      $('#'+id).show();    
     })
 
     $('.seller-item-selected').click(function(){
-        $('.seller-item').show();
-        $('.seller-item-selected').hide();
+      id = 'store_' + $(this).data('id');
+      $(this).hide();
+      $('#'+id).show();
     })
 
     $("select").change(function(){
@@ -609,7 +567,7 @@ html {
     font: 600 21px/31px 'Raleway', "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 .seller-list {
-    height: 160px;
+    height: 200px;
     overflow: auto;
 }
 .seller-list ul {

@@ -47,17 +47,19 @@
       <div class="row">
         <ul id="myList">
           <% @treding_deal_products.each do |product| %>
-            <% calculation_price product %>
-            <li> 
+            <% product.seller_id.split(",").delete_if(&:blank?).each do |seller| %>
+              <% calculation_price product %>
+              <li> 
               <div class="col-lg-3 col-md-6 col-sm-6 new-rec ttd-div">
                 <div class="thumb-pad2">
                   <div class="thumbnail">
                     <div class="row">
                       <div class="col-md-9 col-sm-9 col-xs-12">
                         <figure>
+
                         <% if product.images.first.present? %>
                           <% image = product.images.first %>
-                          <%= link_to image_tag(image.attachment.url(:product)), product_path(product) %>
+                          <%= link_to image_tag(image.attachment.url(:product)), product_path(product.id, pdt_detail?:seller) %>
                         <% else %>
                           <%=link_to image_tag('missing.png'),product_path(product) %>
                         <% end %>
@@ -103,7 +105,8 @@
                   </div>
                 </div>
               </div>
-            </li>
+              </li>
+            <% end %>
           <% end %>
         </ul>        
         <div class="clearfix"></div>
