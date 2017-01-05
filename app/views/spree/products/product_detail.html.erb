@@ -59,13 +59,17 @@
                   <div class="col-md-12 col-sm-12 col-xs-12">
                     <p style="line-height: 20px;margin-bottom:5px;">
                       <small class="b-txt">Now</small> 
-                      <span class="money"><b style="color: green;"><%= @sale_price %>/=</b></span>    
+                      <span class="money"><b style="color: green;"><%= @sale_price %>/=</b></span>
                     </p>
                   </div>
                   <div class="col-md-12 col-sm-12 col-xs-12">
                     <p style="line-height: 20px;margin-bottom:5px;">
                       <small class="b-txt">Savings</small>
-                      <span class="money" style="color: orange;"><b><%= @save%>/=</b></span>
+                      <span class="money" style="color: orange;"><b><%= @save.to_i%>/=</b></span>
+                    </p>
+                    <p style="line-height: 20px;margin-bottom:5px;">
+                      <small class="b-txt">Gift Value</small>  
+                      <span class="money"><b style="color: red;"><%= @product.giveaway_value.to_i %>/=</b></span>    
                     </p>
                   </div>
                 </div>
