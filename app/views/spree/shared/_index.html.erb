@@ -45,72 +45,67 @@
     <%= link_to "View All",product_offer_list_product_path(:id=>"Todays trending deals"), :class=>"view_all_btn btn-primary btn view-button" %>   
       <h2>Todays trending deals</h2>
       <div class="row">
-        <ul id="myList">
-          <% @treding_deal_products.each do |product| %>
-            <% product.seller_id.split(",").delete_if(&:blank?).each do |seller| %>
-              <% calculation_price product %>
-              <li> 
-              <div class="col-lg-3 col-md-6 col-sm-6 new-rec ttd-div">
-                <div class="thumb-pad2">
-                  <div class="thumbnail">
-                    <div class="row">
-                      <div class="col-md-9 col-sm-9 col-xs-12">
-                        <figure>
+        <% @treding_deal_products.first(4).each do |product| %>
+          <% product.seller_id.split(",").delete_if(&:blank?).each do |seller| %>
+            <% calculation_price product %>
+            <div class="col-lg-3 col-md-6 col-sm-6 new-rec ttd-div">
+              <div class="thumb-pad2">
+                <div class="thumbnail">
+                  <div class="row">
+                    <div class="col-md-9 col-sm-9 col-xs-12">
+                      <figure>
 
-                        <% if product.images.first.present? %>
-                          <% image = product.images.first %>
-                          <%= link_to image_tag(image.attachment.url(:product)), product_path(product.id, pdt_detail?:seller) %>
-                        <% else %>
-                          <%=link_to image_tag('missing.png'),product_path(product) %>
-                        <% end %>
-                        </figure>
-                      </div>
-                      <div class="col-md-3 col-sm-3 col-xs-12">
-                        <div class="row">
-                          <div class="caption new-caption cartshare_<%=product.id %>">
-                            <div class="sale-div">
-                              <b>SAVE</b>
-                              <br />
-                              <%=@save.to_i%>/=
-                            </div>
-                            <div class="sale-div">
-                              <a href="javascript:void(0);"><i class="fa fa-share-alt share" aria-hidden="true"  data-name="<%= product.name%>" data-desc="<%= product.description %>"></i></a>
-                            </div>
-                            <% if spree_current_user.present? and (product.favorites.where(user_id:spree_current_user.id).present?) %>
-                            <div class="sale-div fav_lnk" style="background-color:#e85858;border-color:#e85858;">
-                              <a href="javascript:void(0);"><i class="fa fa-heart fav like" aria-hidden="true" id="<%=product.id%>" ></i></a>
-                            </div>
-                            <% else %>
-                            <div class="sale-div fav_lnk" style="background-color:#e85858;border-color:#e85858;">
-                              <a href="javascript:void(0);"><i class="fa fa-heart-o unlike" aria-hidden="true" id="<%=product.id%>" ></i></a>
-                            </div>
-                            <% end %> 
-                          
+                      <% if product.images.first.present? %>
+                        <% image = product.images.first %>
+                        <%= link_to image_tag(image.attachment.url(:product)), product_path(product.id,pdt_detail?:seller) %>
+                      <% else %>
+                        <%=link_to image_tag('missing.png'),product_path(product.id,pdt_detail?:seller) %>
+                      <% end %>
+                      </figure>
+                    </div>
+                    <div class="col-md-3 col-sm-3 col-xs-12">
+                      <div class="row">
+                        <div class="caption new-caption cartshare_<%=product.id %>">
+                          <div class="sale-div">
+                            <b>SAVE</b>
+                            <br />
+                            <%=@save.to_i%>/=
                           </div>
+                          <div class="sale-div">
+                            <a href="javascript:void(0);"><i class="fa fa-share-alt share" aria-hidden="true"  data-name="<%= product.name%>" data-desc="<%= product.description %>"></i></a>
+                          </div>
+                          <% if spree_current_user.present? and (product.favorites.where(user_id:spree_current_user.id).present?) %>
+                          <div class="sale-div fav_lnk" style="background-color:#e85858;border-color:#e85858;">
+                            <a href="javascript:void(0);"><i class="fa fa-heart fav like" aria-hidden="true" id="<%=product.id%>" ></i></a>
+                          </div>
+                          <% else %>
+                          <div class="sale-div fav_lnk" style="background-color:#e85858;border-color:#e85858;">
+                            <a href="javascript:void(0);"><i class="fa fa-heart-o unlike" aria-hidden="true" id="<%=product.id%>" ></i></a>
+                          </div>
+                          <% end %> 
+                        
                         </div>
                       </div>
                     </div>
-                    <div class="caption" style="padding:0px;">
-                      <div class="clearfix"></div>
-                      <p class="product-price">
-                        <span class="money" data-currency-usd="$150.00" style="color:#EA4545;font: 500 14px/1.75">Now <%=@sale_price%>/= ( Plus free <%=product.giveaway_name %> worth <%=product.giveaway_value.to_i %>/=)</span>
-                        <span>|</span>
-                        <s style="color: #848484;"><span class="money" data-currency-usd="$160.00">Before <%= product.price %></span></s>
-                      </p>
-                      <div class="clearfix"></div>
-                      <div class="product-description">
-                        <p><%= product.name %> + <%=product.total_discount.to_i%>% off </p>
-                      </div>
+                  </div>
+                  <div class="caption" style="padding:0px;">
+                    <div class="clearfix"></div>
+                    <p class="product-price">
+                      <span class="money" data-currency-usd="$150.00" style="color:#EA4545;font: 500 14px/1.75">Now <%=@sale_price%>/= ( Plus free <%=product.giveaway_name %> worth <%=product.giveaway_value.to_i %>/=)</span>
+                      <span>|</span>
+                      <s style="color: #848484;"><span class="money" data-currency-usd="$160.00">Before <%= product.price %></span></s>
+                    </p>
+                    <div class="clearfix"></div>
+                    <div class="product-description">
+                      <p><%= product.name %> + <%=product.total_discount.to_i%>% off </p>
                     </div>
                   </div>
                 </div>
               </div>
-              </li>
-            <% end %>
+            </div>
           <% end %>
-        </ul>        
-        <div class="clearfix"></div>
-        <div id="loadMore">See More</div> 
+        <% end %>       
+        <div class="clearfix"></div> 
          <%= link_to "View All",product_offer_list_product_path(:id=>"Deals ending soon"), :class=>"view_all_btn btn-primary btn view-button" %> 
         <h2>Deals ending soon </h2>
         <%= render 'spree/shared/deal_ending_soon' %>
@@ -120,44 +115,7 @@
 </div>
 
 
-<style type="text/css">
-#myList li{ display:none;
-    list-style: none;
-}
-#loadMore {
-    color:red;
-    cursor:pointer;
-    padding-left: 90%;
-}
-#loadMore:hover {
-    color:black;
-}
-#showLess {
-    color:red;
-    cursor:pointer;
-    display:none;
-}
-#showLess:hover {
-    color:black;
-}
 
-</style>
-
-<script type="text/javascript">
-  $(document).ready(function () {
-    size_li = $("#myList li").size();
-    x=8;
-    $('#myList li:lt('+x+')').show();
-    $('#loadMore').click(function () {
-      x=  size_li;
-      $('#myList li:lt('+x+')').show();
-      $('#showLess').show();
-      if(x == size_li){
-        $('#loadMore').hide();
-      }
-    });
-  });
-</script>
 
 <script type="text/javascript">
 $(document).on("click",".unlike",function() {

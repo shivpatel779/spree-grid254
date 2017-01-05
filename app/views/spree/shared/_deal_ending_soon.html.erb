@@ -1,105 +1,62 @@
- <ul id="Dealsoon">
-  <% @top_ending_deals_products.each do |product| %>
-  <% calculation_price product %> 
-    <li>   
-      <div class="col-lg-3 col-md-6 col-sm-6 new-rec ttd-div">
-        <div class="thumb-pad2">
-          <div class="thumbnail">
-            <div class="row">
-              <div class="col-md-9 col-sm-9 col-xs-12">
-                <figure>
-                <% if product.images.first.present? %>
-                  <% image = product.images.first %>
-                  <%= link_to image_tag(image.attachment.url(:product)), product_path(product) %>
-                <% else %>
-                  <%=link_to image_tag('missing.png'),product_path(product) %>  
-                <% end %> 
-                </figure>
-              </div>
-              <div class="col-md-3 col-sm-3 col-xs-12">
-                <div class="row">
-                  <div class="caption new-caption cartshare_<%=product.id %>">
-                    <div class="sale-div">
-                      <b>SAVE</b>
-                      <br /><%=@save.to_i%>/=
-                      </p>
-                    </div>
-                    <div class="sale-div">
-                      <a href="javascript:void(0);"><i class="fa fa-share-alt share" aria-hidden="true"  data-name="<%= product.name%>" data-desc="<%= product.description %>"></i></a>
-                    </div>
-                    <% if spree_current_user.present? and (product.favorites.where(user_id:spree_current_user.id).present?) %>
-                    <div class="sale-div fav_lnk" style="background-color:#e85858;border-color:#e85858;">
-                      <a href="javascript:void(0);"><i class="fa fa-heart fav like" aria-hidden="true" id="<%=product.id%>" ></i></a>
-                    </div>
-                    <% else %>
-                    <div class="sale-div fav_lnk" style="background-color:#e85858;border-color:#e85858;">
-                      <a href="javascript:void(0);"><i class="fa fa-heart-o unlike" aria-hidden="true" id="<%=product.id%>" ></i></a>
-                    </div>
-                    <% end %> 
-                  
+
+<% @top_ending_deals_products.first(4).each do |product| %>
+<% calculation_price product %> 
+  <% product.seller_id.split(",").delete_if(&:blank?).each do |seller| %>
+    <div class="col-lg-3 col-md-6 col-sm-6 new-rec ttd-div">
+      <div class="thumb-pad2">
+        <div class="thumbnail">
+          <div class="row">
+            <div class="col-md-9 col-sm-9 col-xs-12">
+              <figure>
+              <% if product.images.first.present? %>
+                <% image = product.images.first %>
+                <%= link_to image_tag(image.attachment.url(:product)), product_path(product.id,pdt_detail?:seller) %>
+              <% else %>
+                <%=link_to image_tag('missing.png'),product_path(product.id,pdt_detail?:seller) %>  
+              <% end %> 
+              </figure>
+            </div>
+            <div class="col-md-3 col-sm-3 col-xs-12">
+              <div class="row">
+                <div class="caption new-caption cartshare_<%=product.id %>">
+                  <div class="sale-div">
+                    <b>SAVE</b>
+                    <br /><%=@save.to_i%>/=
+                    </p>
                   </div>
+                  <div class="sale-div">
+                    <a href="javascript:void(0);"><i class="fa fa-share-alt share" aria-hidden="true"  data-name="<%= product.name%>" data-desc="<%= product.description %>"></i></a>
+                  </div>
+                  <% if spree_current_user.present? and (product.favorites.where(user_id:spree_current_user.id).present?) %>
+                  <div class="sale-div fav_lnk" style="background-color:#e85858;border-color:#e85858;">
+                    <a href="javascript:void(0);"><i class="fa fa-heart fav like" aria-hidden="true" id="<%=product.id%>" ></i></a>
+                  </div>
+                  <% else %>
+                  <div class="sale-div fav_lnk" style="background-color:#e85858;border-color:#e85858;">
+                    <a href="javascript:void(0);"><i class="fa fa-heart-o unlike" aria-hidden="true" id="<%=product.id%>" ></i></a>
+                  </div>
+                  <% end %> 
+                
                 </div>
               </div>
             </div>
-            <div class="caption" style="padding:0px;">
-              <div class="clearfix"></div>
-              <p class="product-price">
-                <span class="money" data-currency-usd="$150.00" style="color:#EA4545;font: 500 14px/1.75">Now <%=@sale_price%>/= ( Plus free <%=product.giveaway_name %> worth <%=product.giveaway_value.to_i %>/=)</span>
-                <span>|</span>
-                <s style="color: #848484;"><span class="money" data-currency-usd="$160.00">Before <%= product.price %></span></s>
-              </p>
-              <div class="clearfix"></div>
-              <div class="product-description">
-                <p><%= product.name %> + <%=product.total_discount.to_i%>% off </p>
-              </div>
+          </div>
+          <div class="caption" style="padding:0px;">
+            <div class="clearfix"></div>
+            <p class="product-price">
+              <span class="money" data-currency-usd="$150.00" style="color:#EA4545;font: 500 14px/1.75">Now <%=@sale_price%>/= ( Plus free <%=product.giveaway_name %> worth <%=product.giveaway_value.to_i %>/=)</span>
+              <span>|</span>
+              <s style="color: #848484;"><span class="money" data-currency-usd="$160.00">Before <%= product.price %></span></s>
+            </p>
+            <div class="clearfix"></div>
+            <div class="product-description">
+              <p><%= product.name %> + <%=product.total_discount.to_i%>% off </p>
             </div>
           </div>
         </div>
       </div>
-    </li>
+    </div>
   <% end %>
-</ul>
+<% end %>
+
 <div class="clearfix"></div>
-<div id="loadMore-deal-ending-soon">See More</div>
- 
-
-<script type="text/javascript">
-  $(document).ready(function () {
-    size_li = $("#Dealsoon li").size();
-    x=8;
-    $('#Dealsoon li:lt('+x+')').show();
-    $('#loadMore-deal-ending-soon').click(function () {
-      x=  size_li;
-      $('#Dealsoon li:lt('+x+')').show();
-      $('#showLess').show();
-      if(x == size_li){
-        $('#loadMore-deal-ending-soon').hide();
-      }
-    });
-  });
-</script>
-
-<style type="text/css">
-  #Dealsoon li{ display:none;
-    list-style: none;
-}
-#loadMore-deal-ending-soon {
-    color:green;
-    cursor:pointer;
-    padding-left: 90%;
-}
-.view-button.btn-primary{
-  float: right;
-}
-#loadMore-deal-ending-soon:hover {
-    color:black;
-}
-#loadMore-deal-ending-soon {
-    color:red;
-    cursor:pointer;
-    display:block;
-}
-#loadMore-deal-ending-soon:hover {
-    color:black;
-}
-</style>

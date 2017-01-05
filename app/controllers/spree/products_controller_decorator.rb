@@ -36,8 +36,9 @@ Spree::ProductsController.class_eval do
   def product_offer_list
     if params[:id].eql?("Todays trending deals")
      @product_offer_list = Spree::Product.where.not(total_discount:nil).order( 'total_discount desc')
-    elsif params[:id].eql?("input_search")
-     @product_offer_list = Spree::Product.where("LOWER(name) LIKE ?", ("%"+params[:keywords].downcase+"%"))
+    elsif params[:id].eql?("search")
+      products = Spree::Taxon.find(params[:product_type]).products if params[:product_type].present?
+      @product_offer_list = products.where("LOWER(name) LIKE ?", ("%"+params[:keywords].downcase+"%"))
     else
       treding_deal_products = Spree::Product.where.not(total_discount:nil).order( 'total_discount desc')
       @product_offer_list = treding_deal_products.where(discontinue_on: Date.today.strftime("%Y-%m-%d")+" 00:00:00"..Date.today.days_ago(-5).strftime("%Y-%m-%d")+" 00:00:00")   

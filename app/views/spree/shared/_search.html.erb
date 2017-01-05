@@ -1,5 +1,6 @@
 <li>
-  <%= form_tag product_offer_list_product_path(:id=>"input_search"), :method => :get, class: "navbar-form" do %>
+  <%= form_tag product_offer_list_product_path(:id=>"search"), :method => :get, class: "navbar-form" do %>
+    <span><%#= select_tag :product_type, options_for_select(Spree::Taxon.all.collect{ |u| [u.name, u.id]}, :selected=>'nil'), {:class =>"select_combobox"} %></span>
     <span><%= search_field_tag :keywords, params[:keywords], :placeholder => Spree.t(:search), class: "form-control" %></span> 
       <span><%= submit_tag Spree.t(:search), :name => nil, class: "btn" %></span>
   <% end %>
