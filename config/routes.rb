@@ -78,6 +78,7 @@ Rails.application.routes.draw do
         get 'favorite_a_product'
         get 'unfavorite_a_product'
         get 'product_offer_list'
+        get 'product_detail'
       end
       collection do
         get 'get_filter_query'        

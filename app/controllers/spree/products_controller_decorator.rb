@@ -25,12 +25,10 @@ Spree::ProductsController.class_eval do
     end
   end
 
-  def show
+  def product_detail
     @product = Spree::Product.find(params[:id])
     @variant  = Spree::Variant.where(product_id: params[:id])
-    @seller = Spree::Seller.find(params[:pdt_detail?])
-
-
+    @seller = Spree::Seller.find(params[:pdt])
   end
 
   def product_offer_list

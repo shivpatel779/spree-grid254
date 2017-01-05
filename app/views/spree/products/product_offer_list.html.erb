@@ -125,6 +125,7 @@
             <% sell_price = Spree::Variant.where(product_id:product.id).first.sale_price.to_f %>
             <% give_values = product.giveaway_value.to_f %>
             <% save = master_price - sell_price + give_values %>
+            <% product.seller_id.split(",").delete_if(&:blank?).each do |seller| %>  
               <div class="col-lg-4 col-md-4 col-sm-6 new-rec ttd-div">
                 <div class="thumb-pad2">
                   <div class="thumbnail">
@@ -133,9 +134,9 @@
                         <figure>
                         <% if product.images.first.present?  %>
                           <% image = product.images.first %>
-                          <%= link_to image_tag(image.attachment.url(:product)), product_path(product) %>
+                          <%= link_to image_tag(image.attachment.url(:product)), product_detail_product_path(product.id,pdt:seller) %>
                         <% else %>
-                          <%=link_to image_tag('missing.png'),product_path(product) %>
+                          <%=link_to image_tag('missing.png'),product_detail_product_path(product.id,pdt:seller) %>
                         <% end %>  
                         </figure>
                       </div>
@@ -178,7 +179,8 @@
                     </div>
                   </div>
                 </div>
-              </div>  
+              </div>
+            <% end %>    
           <% end %>
         <% else %>
           <h3>There is no product</h3>

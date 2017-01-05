@@ -57,9 +57,9 @@
 
                       <% if product.images.first.present? %>
                         <% image = product.images.first %>
-                        <%= link_to image_tag(image.attachment.url(:product)), product_path(product.id,pdt_detail?:seller) %>
+                        <%= link_to image_tag(image.attachment.url(:product)), product_detail_product_path(product.id,pdt:seller) %>
                       <% else %>
-                        <%=link_to image_tag('missing.png'),product_path(product.id,pdt_detail?:seller) %>
+                        <%=link_to image_tag('missing.png'),product_detail_product_path(product.id,pdt:seller) %>
                       <% end %>
                       </figure>
                     </div>
