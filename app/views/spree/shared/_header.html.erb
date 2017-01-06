@@ -160,7 +160,7 @@
             </div>
 
             <div class="col-xs-4 col-sm-4">
-                <button class="btn btn-lg btn-primary btn-block btn-signup" type="submit">Signup</button>
+                <button id="login-close" class="btn btn-lg btn-primary btn-block btn-signup" type="submit">Signup</button>
             </div>
         </div>
         <div class="clearfix"></div>
@@ -280,7 +280,7 @@
                         </div>
 
                         <div class="col-xs-4 col-sm-4">
-                            <button class="btn btn-lg btn-primary btn-block btn-signup" type="submit">Login</button>
+                            <button id='signup-close' class="btn btn-lg btn-primary btn-block btn-signup" type="submit">Login</button>
                         </div>
                     </div>
 
@@ -306,6 +306,21 @@
   </div>
 </div>
 <!-- end -->
+
+<script type="text/javascript">
+  $(function () {
+    $("#login-close").on('click', function() {
+        $('#login').modal('hide');
+        $('#signup').modal('show');
+    });
+  });
+  $(function () {
+    $("#signup-close").on('click', function() {
+        $('#signup').modal('hide');
+        $('#login').modal('show');
+    });
+  });
+</script>
 
 
 

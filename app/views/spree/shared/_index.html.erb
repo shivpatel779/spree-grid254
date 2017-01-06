@@ -42,8 +42,8 @@
 <div class="content">
   <div class="thumb-box3" style="padding-top:15px;">
     <div class="container">
-    <%= link_to "View All",product_offer_list_product_path(:id=>"Todays trending deals"), :class=>"view_all_btn btn-primary btn view-button" %>   
-      <h2>Todays trending deals</h2>
+    <%= link_to "View All",product_offer_list_product_path(:id=>"Todays trending deals"), :class=>"view_all_btn btn-primary btn view-button pull-right" %>   
+      <h2 style="display: inline;">Todays trending deals</h2>
       <div class="row">
         <% @treding_deal_products.first(4).each do |product| %>
           <% product.seller_id.split(",").delete_if(&:blank?).each do |seller| %>
@@ -106,8 +106,8 @@
           <% end %>
         <% end %>       
         <div class="clearfix"></div> 
-         <%= link_to "View All",product_offer_list_product_path(:id=>"Deals ending soon"), :class=>"view_all_btn btn-primary btn view-button" %> 
-        <h2>Deals ending soon </h2>
+         <%= link_to "View All",product_offer_list_product_path(:id=>"Deals ending soon"), :class=>"view_all_btn btn-primary btn view-button pull-right" %> 
+        <h2 style="display: inline;">Deals ending soon </h2>
         <%= render 'spree/shared/deal_ending_soon' %>
       </div>
     </div>
