@@ -93,15 +93,26 @@
                     <p class="seller-title">Seller branches:</p>
                     <div class="seller-list">
                       <ul>
-                        <% @seller.store_locations.each_with_index do |store,index| %>
+                        <% if @store_locations.present? %>
+                          <% @temp = [] %>
+                        <% else %>
+                          <%@temp = [["Shree Ji Consultancy City Center Gwalior MP, Gwalior, Madhya Pradesh, India", 26.206038, 78.1900252]] %>
+                        <% end %>  
+                        
+                        <% @store_locations.each_with_index do |store,index| %>
                           <li class="seller-item" id="store_<%= store.id %>" data-id="<%= store.id %>">
                             <a>
                               <div class="orange-number">
                                 <%= index+1 %>
                                 <div class="down-arrow"></div>
                               </div>
-                              <%= store.address1 %>
+                              <%= store.store_location.address1 %>
                             </a>
+                            <% a = [] %> 
+                            <% a << store.store_location.address1 %>
+                            <% a << store.store_location.latitude %>
+                            <% a << store.store_location.longitude %>
+                            <% @temp << a %>
                           </li>
                           <li class="seller-item-selected" id="select_<%= store.id %>" data-id="<%= store.id %>" style="display: none;">
                             <div class="close-btn">
@@ -111,19 +122,21 @@
                               6
                               <div class="down-arrow"></div>
                             </div>
-                            <p class="seller-branch-details"><%=store.name%> seller 1 from <%= store.country.name%></p>
-                            <p class="seller-branch-details"><%= store.name %></p>
-                            <p class="seller-branch-details"><%= store.address2 %></p>
+                            <p class="seller-branch-details"><%=store.store_location.name%> seller 1 </p>
+                            <p class="seller-branch-details"><%= store.store_location.name %></p>
+                            <p class="seller-branch-details"><%= store.store_location.address2 %></p>
                             <p class="seller-branch-details">95403-3115</p>
-                            <p class="seller-branch-details"><%= store.email.first %></p>
+                            <p class="seller-branch-details"><%= store.store_location.email.first %></p>
                             <p class="seller-branch-timing">
                               <b>Mon - Sun</b>
                               <br />
                               <b>Open 24hrs</b>
                             </p>
                             </a>
+                            <h1>
                           </li>
                           <% end %>
+                          <h3><%= @message %></h3>
                       </ul>
                     </div>
                   </div>
@@ -193,14 +206,89 @@
         </div>
       </div>
       <div class="col-md-8 col-md-offset-4 col-sm-8 col-md-offset-4 col-xs-12">
-        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3300244.5746615618!2d-121.57026819591495!3d36.12041349170728!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8094680032b2c325%3A0xfe7f31e6687360a!2sDomino&#39;s+Pizza!5e0!3m2!1sen!2sin!4v1479813341711" width="100%" height="250" frameborder="0" style="border:0" allowfullscreen></iframe>
+      <div id="map_wrapper">
+        <div id="map_canvas" class="mapping">
+      </div>
       </div>
     </div>
   </div>
 </div>
+<style type="text/css">
+  #map_wrapper {
+    height: 400px;
+  }
+
+  #map_canvas {
+      width: 100%;
+      height: 100%;
+  }
+</style>
 
 <script type="text/javascript">
-    $(document).ready(function(){
+jQuery(function($) {
+      // Asynchronously Load the map API 
+      var script = document.createElement('script');
+      script.src = "https://maps.googleapis.com/maps/api/js?key=AIzaSyDUpAyNtPcUNgPIXtUiJtUFXa2UZu4jI94&libraries=places&callback=initialize";
+      document.body.appendChild(script);
+
+  });
+  var markers = <%= raw @temp %>
+  function initialize() {
+    var map;
+    var bounds = new google.maps.LatLngBounds();
+    var mapOptions = {
+        mapTypeId: 'roadmap'
+    };
+                    
+    // Display a map on the page
+    map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
+    map.setTilt(45);
+        
+    // Multiple Markers
+    var markers = <%= raw @temp%>
+                        
+    // Info Window Content
+    var infoWindowContent = <%= raw @temp %> 
+        
+    // Display multiple markers on a map
+    var infoWindow = new google.maps.InfoWindow(), marker, i;
+    
+    // Loop through our array of markers & place each one on the map  
+    for( i = 0; i < markers.length; i++ ) {
+        var position = new google.maps.LatLng(markers[i][1], markers[i][2]);
+        bounds.extend(position);
+        marker = new google.maps.Marker({
+            position: position,
+            map: map,
+            title: markers[i][0]
+        });
+        
+        // Allow each marker to have an info window    
+        google.maps.event.addListener(marker, 'click', (function(marker, i) {
+            return function() {
+                infoWindow.setContent(infoWindowContent[i][0]);
+                infoWindow.open(map, marker);
+            }
+        })(marker, i));
+
+        // Automatically center the map fitting all markers on the screen
+        map.fitBounds(bounds);
+    }
+
+    // Override our map zoom level once our fitBounds function runs (Make sure it only runs once)
+    var boundsListener = google.maps.event.addListener((map), 'bounds_changed', function(event) {
+        this.setZoom(5);
+        google.maps.event.removeListener(boundsListener);
+    });
+    
+}
+</script>
+
+
+
+
+<script type="text/javascript">
+  $(document).ready(function(){
     $('.seller-item').click(function(){
       id = 'select_' + $(this).data('id');
       $(this).hide();
@@ -214,29 +302,28 @@
     })
 
     $("select").change(function(){
-        $(this).find("option:selected").each(function(){
-            if($(this).attr("value")=="red"){
-                $(".box").not(".red").hide();
-                $(".red").show();
-            }
+      $(this).find("option:selected").each(function(){
+          if($(this).attr("value")=="red"){
+              $(".box").not(".red").hide();
+              $(".red").show();
+          }
 
-            else if($(this).attr("value")=="green"){
-                $(".box").not(".green").hide();
-                $(".green").show();
-            }
+          else if($(this).attr("value")=="green"){
+              $(".box").not(".green").hide();
+              $(".green").show();
+          }
 
-            else if($(this).attr("value")=="blue"){
-                $(".box").not(".blue").hide();
-                $(".blue").show();
-            }
-            else{
-                $(".box").hide();
-            }
+          else if($(this).attr("value")=="blue"){
+              $(".box").not(".blue").hide();
+              $(".blue").show();
+          }
+          else{
+              $(".box").hide();
+          }
         });
 
     }).change();
-
-        });
+  });
 </script>
 <style type="text/css">
 /* body,html{

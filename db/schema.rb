@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170102110318) do
+ActiveRecord::Schema.define(version: 20170106101449) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -972,12 +972,15 @@ ActiveRecord::Schema.define(version: 20170102110318) do
 
   create_table "spree_stock_movements", force: :cascade do |t|
     t.integer  "stock_item_id"
-    t.integer  "quantity",        default: 0
+    t.integer  "quantity",          default: 0
     t.string   "action"
-    t.datetime "created_at",                  null: false
-    t.datetime "updated_at",                  null: false
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
     t.integer  "originator_id"
     t.string   "originator_type"
+    t.string   "message"
+    t.integer  "product_id"
+    t.integer  "store_location_id"
   end
 
   add_index "spree_stock_movements", ["stock_item_id"], name: "index_spree_stock_movements_on_stock_item_id", using: :btree

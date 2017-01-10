@@ -27,15 +27,18 @@ Spree::ProductsController.class_eval do
 
   def product_detail
     @product = Spree::Product.find(params[:id])
-    @variant  = Spree::Variant.where(product_id: params[:id])
+    @message = @product.stock_movements.collect(&:message).reject(&:blank?).first
+    @variant = Spree::Variant.where(product_id: params[:id])
     @seller = Spree::Seller.find(params[:pdt])
+
+    @store_ids = Spree::Seller.find(params[:pdt]).store_locations.collect(&:id)
+    @store_locations = Spree::StockMovement.where(product_id:params[:id]).where(store_location_id:@store_ids)
   end
 
   def product_offer_list
     if params[:id].eql?("Todays trending deals")
      @product_offer_list = Spree::Product.where.not(total_discount:nil).order( 'total_discount desc')
     elsif params[:id].eql?("search")
-
       products = Spree::Taxon.find_by_name(params[:product_type]).products if params[:product_type].present?
       products = Spree::Product.where.not(seller_id:"") unless params[:product_type].present?
       @product_offer_list = products.where("LOWER(name) LIKE ?", ("%"+params[:keywords].downcase+"%"))

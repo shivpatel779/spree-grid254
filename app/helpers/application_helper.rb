@@ -1,5 +1,13 @@
 module ApplicationHelper
 
+
+	def update_stock_movement product
+		seller_id = @product.seller_id
+		seller_ids = @product.seller_id.split(",").reject(&:blank?)
+		seller = Spree::Seller.find(seller_ids)
+		@store_locations = seller.map(&:store_locations).flatten
+	end
+
 	def calculation_price product
 		@master_price =  product.price.to_f
 		@sale_price = Spree::Variant.where(product_id:product.id).first.sale_price.to_f 
