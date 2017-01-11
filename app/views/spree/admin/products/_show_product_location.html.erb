@@ -1,0 +1,27 @@
+<% if @product.stock_movements.any? %>
+  <table class="table" id='listing_store_locations' data-hook>
+    <thead>
+	    <tr data-hook="store_locations_header">
+	      <th><%= Spree.t(:name) %></th>
+	      <th><%= Spree.t(:address) %></th>
+	      <th class="actions"></th>
+	    </tr>
+    </thead>
+    <tbody>
+    <% @product.stock_movements.reject(&:message).each do |stock| %>
+      <tr data-hook="store_location_row">
+        <td><%= stock.try(:store_location).try(:name) %></span></td>
+        <td><%= stock.try(:store_location).try(:address1) %></span></td>
+        <td class="actions actions-2 text-center">  
+          <%= link_to "",delete_location_admin_stock_movement_path(stock.id), method: :put, data: {confirm: "You sure?"},class: "icon icon-delete btn btn-danger btn-sm"  %>
+        </td>
+      </tr>
+    <% end %>
+  </table>
+<% else %>
+  <div class="alert alert-info no-objects-found">
+   <p>No stock </p>	
+  </div>
+<% end %>
+
+<div id="modal_body"></div>

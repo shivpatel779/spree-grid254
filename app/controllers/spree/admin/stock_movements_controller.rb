@@ -27,7 +27,12 @@ module Spree
         redirect_to :back
       end
 
-      
+      def delete_location
+        @stock = Spree::StockMovement.find(params[:id])
+        @stock.delete
+        redirect_to :back
+      end
+
       private
 
       def stock_location

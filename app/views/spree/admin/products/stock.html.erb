@@ -85,7 +85,11 @@
           <% end %>
         </tr>
       <% end %>
-
     </tbody>
   </table>
 </div>
+<% if can? :create, Spree::StockMovement %>
+  <div id="add_stock_form" class="panel panel-default">
+    <%= render 'show_product_location' %>
+  </div>
+<% end %>

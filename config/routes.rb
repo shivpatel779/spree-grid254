@@ -151,7 +151,11 @@ Rails.application.routes.draw do
         end
         resources :variants_including_master, only: [:update]
       end
-      resources :stock_movements
+      resources :stock_movements do
+        member do
+          put :delete_location
+        end
+      end
     end
   end
 end
