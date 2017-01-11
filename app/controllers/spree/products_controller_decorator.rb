@@ -32,10 +32,6 @@ Spree::ProductsController.class_eval do
     @variant = Spree::Variant.where(product_id: params[:id])
     seller_ids = @product.seller_id.split(",").reject(&:blank?)
     @seller = Spree::Seller.find(seller_ids)
-    
-    # @seller_store_ids = @seller.map(&:store_locations).flatten
-
-    # @store_ids = Spree::Seller.find(params[:pdt]).store_locations.collect(&:id)
     @store_ids = @seller.map(&:store_locations).flatten.collect(&:id)  
     @store_locations = Spree::StockMovement.where(product_id:params[:id]).where(store_location_id:@store_ids)
   end

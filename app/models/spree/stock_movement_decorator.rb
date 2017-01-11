@@ -2,7 +2,7 @@ Spree::StockMovement.class_eval do
 	belongs_to :product
 	belongs_to :store_location
 
-	validates :product_id, uniqueness: true, if: 'Spree::StockMovement.where(store_location_id: self.store_location_id).present?', on: :create
+	validates_uniqueness_of :product_id, :scope => :store_location_id
 
 	def readonly?
 		false

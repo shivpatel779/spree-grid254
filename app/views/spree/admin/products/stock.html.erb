@@ -6,7 +6,14 @@
     <%= render 'add_stock_form' %>
   </div>
 <% end %>
-<% if can? :create, Spree::StockMovement %>
+
+<% unless @product.stock_movements.map(&:message).compact.empty? %>
+  
+  <div id="add_stock_form" class="panel panel-default">
+    <%= render 'message_update' %>
+  </div>
+
+<% else %>  
   <div id="add_stock_form" class="panel panel-default">
     <%= render 'add_message_for_product' %>
   </div>

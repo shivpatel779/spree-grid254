@@ -22,7 +22,9 @@ module Spree
       end
 
       def update
-        debugger
+        @stock = Spree::StockMovement.find(params[:id])
+        @stock.update_attributes(message:params[:stock_movement][:message])
+        redirect_to :back
       end
 
       
