@@ -26,7 +26,7 @@
         <div class="form-group">
           <%= f.field_container :message do %>
             <%= f.label :message, Spree.t(:message) %>
-             <%= f.text_field :message, class: 'form-control', value: @product.stock_movements.collect(&:message).compact %>
+             <%= f.text_area :message, class: 'form-control' %>
           <% end %>
         </div>
       </div>    
@@ -48,6 +48,36 @@
     </div>
   <% end %>
 </div>
+
+<% if @product.stock_movements.any? %>
+  <table class="table" id='listing_store_locations' data-hook>
+    <thead>
+      <tr data-hook="store_locations_header">
+        <th><%= Spree.t(:message) %></th>
+        <th><%#= Spree.t(:address) %></th>
+        <th class="actions"></th>
+      </tr>
+    </thead>
+    <tbody>
+    <% @product.stock_movements.reject(&:store_location_id).each do |stock| %>
+      <tr data-hook="store_location_row">
+        <td><%= stock.message %></span></td>
+        <td><%#= stock.try(:store_location).try(:address1) %></span></td>
+        <td class="actions actions-2 text-center">  
+          <%= link_to "Remove",delete_location_admin_stock_movement_path(stock.id), method: :put, data: {confirm: "You sure?"},class: "btn btn-danger btn-sm"  %>
+        </td>
+      </tr>
+    <% end %>
+  </table>
+<% else %>
+  <div class="alert alert-info no-objects-found">
+   <p>No Message</p> 
+  </div>
+<% end %>
+
+
+
+
 <style type="text/css">
   #stock_movement_store_location_id{
     height: 38px;
@@ -65,3 +95,31 @@
 
   }
 </style>
+<script type="text/javascript">
+var showChar = 5;
+var ellipsestext = "...";
+var moretext = "See More";
+var lesstext = "See Less";
+$('.comments-space').each(function () {
+    var content = $(this).html();
+    if (content.length > showChar) {
+        var show_content = content.substr(0, showChar);
+        var hide_content = content.substr(showChar, content.length - showChar);
+        var html = show_content + '<span class="moreelipses">' + ellipsestext + '</span><span class="remaining-content"><span>' + hide_content + '</span>&nbsp;&nbsp;<a href="" class="morelink">' + moretext + '</a></span>';
+        $(this).html(html);
+    }
+});
+
+$(".morelink").click(function () {
+    if ($(this).hasClass("less")) {
+        $(this).removeClass("less");
+        $(this).html(moretext);
+    } else {
+        $(this).addClass("less");
+        $(this).html(lesstext);
+    }
+    $(this).parent().prev().toggle();
+    $(this).prev().toggle();
+    return false;
+});
+</script>

@@ -8,7 +8,7 @@
           <!-- Wrapper for slides -->
           <div class="carousel-inner banner-slider">
             <div class="item active">
-              <%= render :partial => 'image' %>
+              <%= render 'product_image' %>
             </div>
             <!-- <div class="product-discount-price discount-price">
               15% off
@@ -135,15 +135,30 @@
                             </a>
                             <h1>
                           </li>
-                          <% end %>
-                          <h3><%= @message %></h3>
+                        <% end %>
                       </ul>
                     </div>
                   </div>
                 </div>
               </div>
             </section>
-          </div>
+
+            <div class="col-md-12 col-sm-12 col-xs-12">
+              <div class="row">
+                <h3>Message : </h3>
+                <div>
+                  <ul class="message">
+                    <% @message.each do |message|  %>
+                      <div class='forum-content'>
+                          <li class='comments-space'><%= message %></li>
+                      </div>
+                    <% end %>  
+                  </ul>
+                </div>  
+              </div>
+            </div>
+
+           </div>
         </div>
       </div>
       <div class="col-md-4 col-sm-4 col-xs-12">
@@ -715,3 +730,67 @@ html {
 }
        
 </style>
+
+<style type="text/css">
+  body {
+    font-family:'arial';
+    font-size:12px;
+}
+a, a:visited {
+    text-decoration:none;
+    color: #0000ff;
+    font-weight:400;
+}
+.forum-content {
+    width:500px;
+    height:auto;
+    padding:0px 10px;
+}
+.comments-space {
+    width:100%;
+    height:auto;
+    margin-bottom: 5px;
+    padding: 0px 5px;
+    text-align: justify;
+}
+.remaining-content span {
+    display:none;
+}
+.message{
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.message li{
+
+}
+</style>
+
+<script type="text/javascript">
+  var showChar = 30;
+var ellipsestext = "...";
+var moretext = "See More";
+var lesstext = "See Less";
+$('.comments-space').each(function () {
+    var content = $(this).html();
+    if (content.length > showChar) {
+        var show_content = content.substr(0, showChar);
+        var hide_content = content.substr(showChar, content.length - showChar);
+        var html = show_content + '<span class="moreelipses">' + ellipsestext + '</span><span class="remaining-content"><span>' + hide_content + '</span>&nbsp;&nbsp;<a href="" class="morelink">' + moretext + '</a></span>';
+        $(this).html(html);
+    }
+});
+
+$(".morelink").click(function () {
+    if ($(this).hasClass("less")) {
+        $(this).removeClass("less");
+        $(this).html(moretext);
+    } else {
+        $(this).addClass("less");
+        $(this).html(lesstext);
+    }
+    $(this).parent().prev().toggle();
+    $(this).prev().toggle();
+    return false;
+});
+</script>

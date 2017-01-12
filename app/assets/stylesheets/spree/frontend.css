@@ -8,6 +8,7 @@
  *= require spree/frontend/font-awesome
  *= require spree/frontend/fontello
  *= require spree/frontend/asRange
+ *= require spree/frontend/magiczoomplus
 
  *= require chosen-compass
  *= require chosen

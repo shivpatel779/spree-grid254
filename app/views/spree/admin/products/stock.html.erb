@@ -10,7 +10,8 @@
 <% unless @product.stock_movements.map(&:message).compact.empty? %>
   
   <div id="add_stock_form" class="panel panel-default">
-    <%= render 'message_update' %>
+    <%#= render 'message_update' %>
+    <%= render 'add_message_for_product' %>
   </div>
 
 <% else %>  

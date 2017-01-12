@@ -35,6 +35,7 @@
 
 //= require spree/frontend/underscore-min
 //= require spree/frontend/jquery-asRange
+//= require spree/frontend/magiczoomplus
 
 //= require gmaps/google
 

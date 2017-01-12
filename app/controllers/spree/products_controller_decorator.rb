@@ -26,9 +26,8 @@ Spree::ProductsController.class_eval do
   end
 
   def product_detail
-    
     @product = Spree::Product.find(params[:id])
-    @message = @product.stock_movements.collect(&:message).reject(&:blank?).first
+    @message = @product.stock_movements.collect(&:message).compact
     @variant = Spree::Variant.where(product_id: params[:id])
     seller_ids = @product.seller_id.split(",").reject(&:blank?)
     @seller = Spree::Seller.find(seller_ids)
