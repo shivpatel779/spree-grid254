@@ -147,7 +147,7 @@
 
             <div class="col-md-12 col-sm-12 col-xs-12">
               <div class="row">
-                <h3>Message : </h3>
+                <h3>Message: </h3>
                 <div>
                   <ul class="message">
                     <% @message.each do |message|  %>
@@ -174,24 +174,11 @@
           <!-- Blog Categories Well -->
           <div class="well deal-type" style="box-shadow:none;border:none;margin-top:35px;">
             <div class="row">
-              <h3>Specification: </h3>
+              <h3>Description:</h3>
               <div class="col-md-12 col-sm-12 col-xs-12" style="border-bottom:1px solid #eee;">
                 <div class="row">
                   <div style="overflow:auto;height:150px;margin-bottom:10px;">
-                    <ul>
-                      <li>Coupons valid on selected store</li>
-                      <li>Coupon can be redem once only</li>
-                      <li>Limited period offer</li>
-                      <li>Buy & Get 500 Flat off</li>
-                      <li>Coupons valid on selected store</li>
-                      <li>Coupon can be redem once only</li>
-                      <li>Limited period offer</li>
-                      <li>Buy & Get 500 Flat off</li>
-                      <li>Coupons valid on selected store</li>
-                      <li>Coupon can be redem once only</li>
-                      <li>Limited period offer</li>
-                      <li>Buy & Get 500 Flat off</li>
-                    </ul>
+                   <%= @product.description %>
                   </div>
                 </div>
               </div>
