@@ -32,7 +32,7 @@
             <label for="store_location_city">Email</label>
             <input type="hidden" name="seller[email][0][type]" value="email">
             <div data-hook="store_location_phone" class="form-group">
-               <input type="text" name="seller[email][0][phone]" class="form-control">
+               <input type="text" name="seller[email][0][phone]" class="form-control" value="<%= @seller.email.try(:first).try(:last)%>">
             </div>
           </div>
         </div>
@@ -67,7 +67,7 @@
              <label for="store_location_city">Phone</label>
             <input type="hidden" name="seller[phone_number][0][type_phone]" value="phone">
             <div data-hook="store_location_phone" class="form-group">
-               <input type="text" name="seller[phone_number][0][phone1]" class="form-control">
+               <input type="text" name="seller[phone_number][0][phone1]" class="form-control" value="<%= @seller.phone_number.try(:first).try(:last)%>">
             </div>
           </div>
         </div>
@@ -113,7 +113,7 @@
              <label for="store_location_city">Contact Person Phone</label>
             <input type="hidden" name="seller[contact_person_phone][0][contact_phone]" value="contact_person">
             <div data-hook="store_location_phone" class="form-group">
-               <input type="text" name="seller[contact_person_phone][0][phone2]" class="form-control">
+               <input type="text" name="seller[contact_person_phone][0][phone2]" class="form-control" value="<%= @seller.contact_person_phone.try(:first).try(:last)%>">
             </div>
           </div>
         </div>

@@ -57,6 +57,9 @@ class Spree::Admin::SellersController < Spree::Admin::BaseController
   end
 
   def update
+    update_params
+    update_params_phone
+    update_params_contact_phone
     if params.key?('seller_address')
 
       if params[:address_option] == false
