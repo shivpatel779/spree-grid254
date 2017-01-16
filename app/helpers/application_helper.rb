@@ -90,8 +90,8 @@ module ApplicationHelper
     html << "data-url='#{opts[:url]}' data-desc='#{opts[:desc]}' data-via='#{opts[:via]}'>"
 
 
-    ref_text = "Join #{spree_current_user.full_name} and thousands of households in Kenya using Grid254 to stay informed and access the discount offers on different products and services in your location"
-    
+    ref_text = "Join #{spree_current_user.full_name} would like you view this product #{@product.name} that is on offer and is currently listed on Grid254".
+
     opts[:allow_sites].each do |name|
 
       if name.eql?('whatsapp')
