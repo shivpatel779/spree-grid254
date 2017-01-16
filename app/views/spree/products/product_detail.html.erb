@@ -12,18 +12,7 @@
             <div class="item active">
               <%= render 'product_image' %>
             </div>
-            <!-- <div class="product-discount-price discount-price">
-              15% off
-              </div> -->
           </div>
-          <!-- <div class="cartshare-btn" style="right:auto;top:0px;">
-            <button class="align-left"><i class="fa fa-shopping-cart" aria-hidden="true"></i>
-            </button>
-            <button class="align-left"><i class="fa fa-heart" aria-hidden="true"></i>
-            </button>
-            <button class="align-right"><i class="fa fa-share-alt" aria-hidden="true"></i>
-            </button>
-            </div> -->
         </div>
       </div>
       <div class="col-md-4 col-sm-5 col-xs-12">
@@ -31,8 +20,9 @@
           <div id="product-carousel" class="carousel slide" data-ride="carousel">
             <div class="item-title-desc">
               <div class="col-md-12 col-sm-12 col-xs-12" style="padding-left: 10px;">
-                <p class="item-title"><b  style="color: #EA4545;"><%#= @seller.name %></b></p>
-                <p class="sold_by">Sold by : <span class="item-subtitle" style="color: blue;"><%#= @seller.name %></span> </p>
+              
+                <p class="item-title"><b  style="color: #EA4545;"><%= @product.name %></b></p>
+                <p class="sold_by">Sold by : <span class="item-subtitle" style="color: blue;"><%= Spree::Seller.find(@seller_ids).collect(&:name).join(",") %></span> </p>
               </div>
             </div>
             <div class="clearfix"></div>
@@ -144,33 +134,18 @@
                 </div>
               </div>
             </section>
-
-            <div class="col-md-12 col-sm-12 col-xs-12">
-              <div class="row">
-                <h3>Message: </h3>
-                <div>
-                  <ul class="message">
-                    <% @message.each do |message|  %>
-                      <div class='forum-content'>
-                          <li class='comments-space'><%= message %></li>
-                      </div>
-                    <% end %>  
-                  </ul>
-                </div>  
-              </div>
-            </div>
-
-           </div>
+          </div>
         </div>
       </div>
       <div class="col-md-4 col-sm-4 col-xs-12">
         <div class="col-md-12 deal-list">
           <div class="cartshare-btn" style="top:0px;text-align:right;">
             <span style= "float:left;">Share : </span>
-           <!--  <button class="align-left"><i class="fa fa-facebook" aria-hidden="true"></i></button>
-            <button class="align-left"><i class="fa fa-linkedin" aria-hidden="true"></i></button>
-            <button class="align-right"><i class="fa fa-twitter" aria-hidden="true"></i></button> -->
-              <%= social_share_button1_tag('', {url: product_share_url}) %>
+            <div class="addthis_inline_share_toolbox_5az5"
+            data-title="<%= @product.name %>" data-description="<%= spree_current_user.try(:full_name) %> would like you view this product <%= @product.name%> that is on offer and is currently listed on Grid254" data-url="<%= root_url%>">  </div>
+
+            <!-- <button class="align-left"><i class="fa fa-facebook share" aria-hidden="true" data-name="<%= @product.try(:name)%>" data-desc="<%= spree_current_user.try(:full_name) %> would like you view this product <%= @product.name%> that is on offer and is currently listed on Grid254"></i></button> -->
+              <%#= social_share_button1_tag('', {url: product_share_url}) %>
           </div>
           <!-- Blog Categories Well -->
           <div class="well deal-type" style="box-shadow:none;border:none;margin-top:35px;">
@@ -228,6 +203,34 @@
       height: 100%;
   }
 </style>
+
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-585b87906f100625"></script>
+
+<script type="text/javascript">
+  $(document).ready(function(){
+    $('.share').click(function(e){
+      var user = "<%= spree_current_user.present? %>"
+      if (user == "true"){
+        name = $(this).data('name')
+        desc = $(this).data('desc')
+        e.preventDefault();
+        FB.ui(
+        {
+        method: 'feed',
+        name: name,
+        link: "spree.com",
+        description: desc,
+        message: ""
+        });
+      }
+      else{
+        alert("Please first login...");
+      }
+    });
+  });
+</script>
+
+
 
 <script type="text/javascript">
 jQuery(function($) {
@@ -722,56 +725,8 @@ html {
        
 </style>
 
-<style type="text/css">
-  body {
-    font-family:'arial';
-    font-size:12px;
-}
-a, a:visited {
-    text-decoration:none;
-    color: #0000ff;
-    font-weight:400;
-}
-.forum-content {
-    width:500px;
-    height:auto;
-    padding:0px 10px;
-}
-.comments-space {
-    width:100%;
-    height:auto;
-    margin-bottom: 5px;
-    padding: 0px 5px;
-    text-align: justify;
-}
-.remaining-content span {
-    display:none;
-}
-.message{
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-.message li{
-
-}
-</style>
 
 <script type="text/javascript">
-  var showChar = 30;
-var ellipsestext = "...";
-var moretext = "See More";
-var lesstext = "See Less";
-$('.comments-space').each(function () {
-    var content = $(this).html();
-    if (content.length > showChar) {
-        var show_content = content.substr(0, showChar);
-        var hide_content = content.substr(showChar, content.length - showChar);
-        var html = show_content + '<span class="moreelipses">' + ellipsestext + '</span><span class="remaining-content"><span>' + hide_content + '</span>&nbsp;&nbsp;<a href="" class="morelink">' + moretext + '</a></span>';
-        $(this).html(html);
-    }
-});
-
 $(".morelink").click(function () {
     if ($(this).hasClass("less")) {
         $(this).removeClass("less");
