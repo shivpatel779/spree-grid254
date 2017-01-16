@@ -83,11 +83,11 @@ module ApplicationHelper
     rel        = opts[:rel]
     html       = []
     # html << "<div class='social-share-button' data-title='#{h title}' data-img='#{opts[:image]}'"
-	
+
 		html << "<div class='social-share-button' data-title='#{@product.name}' data-img='#{opts[:image]}'"
       
 
-    html << "data-url='#{opts[:url]}' data-desc='#{opts[:desc]}' data-via='#{opts[:via]}'>"
+    html << "data-url='#{opts[:url]}' data-desc='#{@product.description}' data-via='#{opts[:via]}'>"
 
 
     ref_text = "Join #{spree_current_user.full_name} would like you view this product #{@product.name} that is on offer and is currently listed on Grid254"
