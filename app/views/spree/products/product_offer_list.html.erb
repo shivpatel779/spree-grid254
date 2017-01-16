@@ -112,7 +112,7 @@
             <form class="form-inline" style="float:right;margin-bottom:5px;">
               <div class="form-group">
                 <label for="email">Sort By</label>
-                <%= select_tag(:option, options_for_select([['All','all'],['Newest','newest'],['Oldest','oldest'],['AtoZ','atoz'], ['Price','price'],['Nearest Location','nearest/location']],   :selected => params[:sort_by])) %>
+                <%= select_tag(:option, options_for_select([['All','all'],['Newest','newest'],['Oldest','oldest'],['AtoZ','atoz'], ['Price','price']],   :selected => params[:sort_by])) %>
               </div>
             </form>
           </div>
