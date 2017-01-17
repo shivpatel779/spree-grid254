@@ -68,7 +68,7 @@ module ApplicationHelper
 
 	def product_share_url
     #"http://fierce-reef-22139.herokuapp.com/signup?c=#{spree_current_user.referral_code}"
-    "#{request.protocol}#{request.host}#{Rails.env.development? ? (':'+request.port.to_s) : ''}/signup?c=#{spree_current_user.referral_code}"
+    "#{request.protocol}#{request.host}#{Rails.env.development? ? (':'+request.port.to_s) : ''}/signup?c=#{spree_current_user.try(:referral_code)}"
   end
 
   def touch_device?
@@ -90,7 +90,7 @@ module ApplicationHelper
     html << "data-url='#{opts[:url]}' data-desc='#{@product.description}' data-via='#{opts[:via]}'>"
 
 
-    ref_text = "Join #{spree_current_user.full_name} would like you view this product #{@product.name} that is on offer and is currently listed on Grid254"
+    ref_text = "Join #{spree_current_user.try(:full_name)} would like you view this product #{@product.try(:name)} that is on offer and is currently listed on Grid254"
 
     opts[:allow_sites].each do |name|
 
@@ -106,28 +106,28 @@ module ApplicationHelper
       else
 
         if name.eql?('telegram')
-          html << link_to(image_tag('1477523495_Telegram.png', height: '18', width: '18'), "#{ref_text} https://telegram.me/share/url?url=#{opts[:url]}", target: '_false')
+          # html << link_to(image_tag('1477523495_Telegram.png', height: '18', width: '18'), "#{ref_text} https://telegram.me/share/url?url=#{opts[:url]}", target: '_false')
         else
 
-          if name.eql?('email')
-            html << link_to(image_tag('1477606885_mail-icon.png', height: '18', width: '18'), "/invite")
-          else
+          # if name.eql?('email')
+          #   # html << link_to(image_tag('1477606885_mail-icon.png', height: '18', width: '18'), "/invite")
+          # else
 
-            extra_data = opts.select { |k, _| k.to_s.start_with?('data') } if name.eql?('tumblr')
+          #   extra_data = opts.select { |k, _| k.to_s.start_with?('data') } if name.eql?('tumblr')
             
 
-            special_data = opts.select { |k, _| k.to_s.start_with?('data-' + name) }
+          #   special_data = opts.select { |k, _| k.to_s.start_with?('data-' + name) }
 
-            special_data["data-wechat-footer"] = t "social_share_button.wechat_footer" if name == "wechat"
+          #   special_data["data-wechat-footer"] = t "social_share_button.wechat_footer" if name == "wechat"
 
-            link_title = t "social_share_button.share_to", :name => t("social_share_button.#{name.downcase}")
+          #   link_title = t "social_share_button.share_to", :name => t("social_share_button.#{name.downcase}")
 
-            html << link_to("", "#", { :rel        => ["nofollow", rel],
-                                       "data-site" => name,
-                                       :class      => "ssb-icon ssb-#{name}",
-                                       :onclick    => "return SocialShareButton.share(this)",
-                                       :title      => h(link_title) }.merge(extra_data).merge(special_data).merge('data-quote' => ref_text)).html_safe
-          end
+          #   html << link_to("", "#", { :rel        => ["nofollow", rel],
+          #                              "data-site" => name,
+          #                              :class      => "ssb-icon ssb-#{name}",
+          #                              :onclick    => "return SocialShareButton.share(this)",
+          #                              :title      => h(link_title) }.merge(extra_data).merge(special_data).merge('data-quote' => ref_text)).html_safe
+          # end
 
         end
 

@@ -1,5 +1,5 @@
-<link rel="stylesheet" href="/assets/spree/frontend/magiczoomplus.css">
-<script src="/assets/spree/frontend/magiczoomplus.js"></script>
+<!-- <link rel="stylesheet" href="/assets/spree/frontend/magiczoomplus.css"> -->
+<!-- <script src="/assets/spree/frontend/magiczoomplus.js"></script> -->
 <%  calculation_price @product %>
 <div class="content" style="margin-top:70px;">
 <div class="thumb-box3">
@@ -141,11 +141,18 @@
         <div class="col-md-12 deal-list">
           <div class="cartshare-btn" style="top:0px;text-align:right;">
             <span style= "float:left;">Share : </span>
-            <div class="addthis_inline_share_toolbox_5az5"
-            data-title="<%= @product.name %>" data-description="<%= spree_current_user.try(:full_name) %> would like you view this product <%= @product.name%> that is on offer and is currently listed on Grid254" data-url="<%= root_url%>">  </div>
 
-            <!-- <button class="align-left"><i class="fa fa-facebook share" aria-hidden="true" data-name="<%= @product.try(:name)%>" data-desc="<%= spree_current_user.try(:full_name) %> would like you view this product <%= @product.name%> that is on offer and is currently listed on Grid254"></i></button> -->
-              <%#= social_share_button1_tag('', {url: product_share_url}) %>
+            <div class="social_icons_list">
+              <button class="align-left">
+              <img src="/assets/facebook.png" class="share" aria-hidden="true" data-name="<%= @product.try(:name)%>" data-desc="<%= spree_current_user.try(:full_name) %> would like you view this product <%= @product.name%> that is on offer and is currently listed on Grid254">
+
+             </button>
+              <button><%= social_share_button1_tag('', {url: product_share_url})  %></button>
+
+              <button class="addthis_inline_share_toolbox_8rrh" data-name="<%= @product.try(:name)%>" data-desc="<%= spree_current_user.try(:full_name) %> would like you view this product <%= @product.name%> that is on offer and is currently listed on Grid254 data-url="<%= root_url%>"></button>
+            </div>
+
+
           </div>
           <!-- Blog Categories Well -->
           <div class="well deal-type" style="box-shadow:none;border:none;margin-top:35px;">
@@ -205,6 +212,7 @@
 </style>
 
 <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-585b87906f100625"></script>
+
 
 <script type="text/javascript">
   $(document).ready(function(){
@@ -520,7 +528,7 @@ html {
     position: absolute;
     top: 70%;
     right: 0px;
-    left: 0;
+    left: 153px;
     text-align: center;
     padding: 5px;
     margin: 0 auto;
@@ -528,9 +536,12 @@ html {
     display: block;
 }
 .cartshare-btn button {
-    border: 1px solid #ccc;
+    border: 0;
     color: #888;
     background-color: #fff;
+    border-radius: 50%;
+    height: 30px;
+    width: 30px;
 }
 .cart-div .descr-div {
     padding: 5px 0px 2px;
@@ -722,7 +733,41 @@ html {
     right: 0px;
     padding: 5px;
 }
-       
+
+.atss .at-share-btn{
+  display: none;
+}
+.social_icons_list button {
+    clear: inherit !important;
+    margin-left: 10px;
+} 
+.at-style-responsive .at-share-btn {
+  padding: 1px !important;
+}
+.social-share-button img {
+  width: 27px;
+  height: 27px;
+  border-radius: 20px;
+  margin-left: -5px;
+}   
+.at-share-btn-elements a {
+  border-radius: 20px;
+  background-color: rgb(0, 136, 204);
+  width: 30px;
+  height: 30px;
+  margin-left: -5px !important;
+} 
+.at-share-btn-elements .at-icon-wrapper  {
+  line-height: 40px !important;
+  height: 28px !important;
+  width: 28px !important;
+}
+.align-left img {
+  width: 28px;
+  height: 28px;
+  border-radius: 20px;
+  margin-left: -5px;
+}
 </style>
 
 
