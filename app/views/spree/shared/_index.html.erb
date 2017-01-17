@@ -69,7 +69,7 @@
                           <div class="sale-div">
                             <b>SAVE</b>
                             <br />
-                            <%=@save.to_i%>/=
+                            <%= number_to_currency(@save,precision: 0,unit:"") %>/=
                           </div>
                           <div class="sale-div">
                             <a href="javascript:void(0);"><i class="fa fa-share-alt share" aria-hidden="true"  data-name="<%= product.name%>" data-desc="<%= product.description %>"></i></a>
@@ -91,13 +91,13 @@
                   <div class="caption" style="padding:0px;">
                     <div class="clearfix"></div>
                     <p class="product-price">
-                      <span class="money" data-currency-usd="$150.00" style="color:#EA4545;font: 500 14px/1.75">Now <%=@sale_price%>/= ( Plus free <%=product.giveaway_name %> worth <%=product.giveaway_value.to_i %>/=)</span>
+                      <span class="money" data-currency-usd="$150.00" style="color:green;font: 500 14px/1.75">Now <%=number_to_currency(@sale_price,precision: 0,unit:"")%>/= ( Plus free <%=product.giveaway_name %> worth <%=number_to_currency(product.giveaway_value,precision: 0,unit:"") %>/=)</span>
                       <span>|</span>
-                      <s style="color: #848484;"><span class="money" data-currency-usd="$160.00">Before <%= product.price %></span></s>
+                      <s style="color: #848484;"><span class="money" data-currency-usd="$160.00">Before <%=number_to_currency(product.price,precision: 0,unit:"")  %></span></s>
                     </p>
                     <div class="clearfix"></div>
                     <div class="product-description">
-                      <p><%= product.name %> + <%=product.total_discount.to_i%>% off </p>
+                      <p><%= product.name %>  (<%=product.total_discount.to_i%>% off )</p>
                     </div>
                   </div>
                 </div>
@@ -108,6 +108,7 @@
         <div class="clearfix"></div> 
          <%= link_to "View All",product_offer_list_product_path(:id=>"Deals ending soon"), :class=>"view_all_btn btn-primary btn view-button pull-right" %> 
         <h2 style="display: inline;">Deals ending soon </h2>
+        <div class="clearfix"></div>
         <%= render 'spree/shared/deal_ending_soon' %>
       </div>
     </div>

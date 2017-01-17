@@ -1,5 +1,5 @@
-<link rel="stylesheet" href="/assets/spree/frontend/magiczoomplus.css">
-<script src="/assets/spree/frontend/magiczoomplus.js"></script>
+<!-- <link rel="stylesheet" href="/assets/spree/frontend/magiczoomplus.css"> -->
+<!-- <script src="/assets/spree/frontend/magiczoomplus.js"></script> -->
 <%  calculation_price @product %>
 <div class="content" style="margin-top:70px;">
 <div class="thumb-box3">
@@ -45,23 +45,23 @@
                   <div class="col-md-12 col-sm-12 col-xs-12">
                     <p style="line-height: 20px;margin-bottom:5px;">
                       <small class="b-txt">Before</small> 
-                      <s><span class="money"><b><%= @product.price%>/=</b></span></s>
+                      <s><span class="money"><b><%= number_to_currency(@product.price,precision: 0,unit:"")  %>/=</b></span></s>
                     </p>
                   </div>
                   <div class="col-md-12 col-sm-12 col-xs-12">
                     <p style="line-height: 20px;margin-bottom:5px;">
                       <small class="b-txt">Now</small> 
-                      <span class="money"><b style="color: green;"><%= @sale_price %>/=</b></span>
+                      <span class="money"><b style="color: green;"><%=number_to_currency(@sale_price,precision: 0,unit:"")%>/=</b></span>
                     </p>
                   </div>
                   <div class="col-md-12 col-sm-12 col-xs-12">
                     <p style="line-height: 20px;margin-bottom:5px;">
                       <small class="b-txt">Savings</small>
-                      <span class="money" style="color: orange;"><b><%= @save.to_i%>/=</b></span>
+                      <span class="money" style="color: orange;"><b><%=number_to_currency(@save,precision: 0,unit:"")%>/=</b></span>
                     </p>
                     <p style="line-height: 20px;margin-bottom:5px;">
                       <small class="b-txt">Gift Value</small>  
-                      <span class="money"><b style="color: red;"><%= @product.giveaway_value.to_i %>/=</b></span>    
+                      <span class="money"><b style="color: red;"><%=number_to_currency(@product.giveaway_value,precision: 0,unit:"") %>/=</b></span>    
                     </p>
                   </div>
                 </div>
@@ -352,6 +352,11 @@ html {
     /*font-family: 'Raleway', sans-serif;*/
     /*font-family: 'Raleway', sans-serif;*/
     /*font-family: 'Open Sans', sans-serif;*/
+}
+
+.at-resp-share-element .at-share-btn:hover{
+    -webkit-transform: inherit !important;
+    transform: inherit !important;
 }
 .product-container {
     margin-bottom: 20px;

@@ -52,7 +52,7 @@
           <li>
             <% if spree_current_user %>
               <div class="dropdown">
-                <a href="javascript:void(0);" onclick="myFunction()" class="dropbtn manu">MY Account</a>
+                <a href="javascript:void(0);" onclick="myFunction()" class="dropbtn manu">My Account</a>
                   <div id="myDropdown" class="dropdown-content">
                     <a href="javascript:void(0);">Profile</a>  
                     <a href="<%= spree.edit_account_path %>">Account</a>
@@ -874,7 +874,7 @@ window.onclick = function(event) {
         /* Banner slider Css */
         .banner-slider .item img{
             width: 100%;
-            height: 250px;
+           /* height: 250px;*/
         }
 
         .banner-slider .carousel-control.left,
