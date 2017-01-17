@@ -22,7 +22,7 @@
               <div class="col-md-12 col-sm-12 col-xs-12" style="padding-left: 10px;">
               
                 <p class="item-title"><b  style="color: #EA4545;"><%= @product.name %></b></p>
-                <p class="sold_by">Sold by : <span class="item-subtitle" style="color: blue;"><%= Spree::Seller.find(@seller_ids).collect(&:name).join(",") %></span> </p>
+                <p class="sold_by">Sold by : <span class="item-subtitle" style="color: blue;"><%= Spree::Seller.find(@seller_ids).collect(&:name).join(", ") %></span> </p>
               </div>
             </div>
             <div class="clearfix"></div>
