@@ -32,7 +32,8 @@ Spree::ProductsController.class_eval do
     @seller_ids = @product.seller_id.split(",").reject(&:blank?)
     @seller = Spree::Seller.find(@seller_ids)
     @store_ids = @seller.map(&:store_locations).flatten.collect(&:id)  
-    @store_locations = Spree::StockMovement.where(product_id:params[:id]).where(store_location_id:@store_ids)
+    # @store_locations = Spree::StockMovement.where(product_id:params[:id]).where(store_location_id:@store_ids)
+    @store_locations = Spree::StockMovement.where(product_id:params[:id])
   end
 
   def product_offer_list

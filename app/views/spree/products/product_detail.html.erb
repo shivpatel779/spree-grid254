@@ -98,35 +98,54 @@
                                 <%= index+1 %>
                                 <div class="down-arrow"></div>
                               </div>
+                            <% if store.store_location_id.present? %>  
                               <%= store.store_location.address1 %>
-                            </a>
-                            <% a = [] %> 
-                            <% a << store.store_location.address1 %>
-                            <% a << store.store_location.latitude %>
-                            <% a << store.store_location.longitude %>
-                            <% @temp << a %>
-                          </li>
-                          <li class="seller-item-selected" id="select_<%= store.id %>" data-id="<%= store.id %>" style="display: none;">
-                            <div class="close-btn">
-                              <i class="fa fa-times" aria-hidden="true"></i>
-                            </div>
-                            <div class="orange-number">
-                              6
-                              <div class="down-arrow"></div>
-                            </div>
-                            <p class="seller-branch-details"><%=store.store_location.name%> seller 1 </p>
-                            <p class="seller-branch-details"><%= store.store_location.name %></p>
-                            <p class="seller-branch-details"><%= store.store_location.address2 %></p>
-                            <p class="seller-branch-details">95403-3115</p>
-                            <p class="seller-branch-details"><%= store.store_location.email.first %></p>
-                            <p class="seller-branch-timing">
-                              <b>Mon - Sun</b>
-                              <br />
-                              <b>Open 24hrs</b>
-                            </p>
-                            </a>
-                            <h1>
-                          </li>
+                              <% a = [] %> 
+                              <% a << store.store_location.address1 %>
+                              <% a << store.store_location.latitude %>
+                              <% a << store.store_location.longitude %>
+                              <% @temp << a %>
+                              <li class="seller-item-selected" id="select_<%= store.id %>" data-id="<%= store.id %>" style="display: none;">
+                                <div class="close-btn">
+                                  <i class="fa fa-times" aria-hidden="true"></i>
+                                </div>
+                                <div class="orange-number">
+                                  6
+                                  <div class="down-arrow"></div>
+                                </div>
+                                <p class="seller-branch-details"><%=store.store_location.try(:name)%> seller 1 </p>
+                                <p class="seller-branch-details"><%= store.store_location.try(:name) %></p>
+                                <p class="seller-branch-details"><%= store.store_location.try(:address2) %></p>
+                                <p class="seller-branch-details">95403-3115</p>
+                                <p class="seller-branch-details"><%= store.store_location.try(:email).try(:first) %></p>
+                                <p class="seller-branch-timing">
+                                  <b>Mon - Sun</b>
+                                  <br />
+                                  <b>Open 24hrs</b>
+                                </p>
+                                </a>
+                                <h1>
+                              </li>
+                            <% else %>
+                              <%= store.message[0,10] %>...
+                              <li class="seller-item-selected" id="select_<%= store.id %>" data-id="<%= store.id %>" style="display: none;">
+                                <div class="close-btn">
+                                  <i class="fa fa-times" aria-hidden="true"></i>
+                                </div>
+                                <div class="orange-number">
+                                  6
+                                  <div class="down-arrow"></div>
+                                </div>
+                                <p class="seller-branch-details"><%=store.message%> seller 1 </p>
+                                
+                                </a>
+                                <h1>
+                              </li>
+                                <% end %>
+                                </a>
+                                
+                            </li>
+                          
                         <% end %>
                       </ul>
                     </div>
