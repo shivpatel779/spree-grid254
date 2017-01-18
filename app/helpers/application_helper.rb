@@ -106,7 +106,8 @@ module ApplicationHelper
       else
 
         if name.eql?('telegram')
-          # html << link_to(image_tag('1477523495_Telegram.png', height: '18', width: '18'), "#{ref_text} https://telegram.me/share/url?url=#{opts[:url]}", target: '_false')
+           # html << link_to(image_tag('1477523495_Telegram.png', height: '18', width: '18'), "#{ref_text} https://telegram.me/share/url?url=#{opts[:url]}", target: '_false')
+        	html<< link_to(image_tag('1477523495_Telegram.png', height: '18', width: '18'), ("https://telegram.me/share/url?url=#{ref_text} #{opts[:url]}").html_safe)
         else
 
           # if name.eql?('email')
