@@ -45,7 +45,7 @@ module Spree
 
     scope :admin, -> { includes(:spree_roles).where("#{roles_table_name}.name" => "admin") }
 
-    after_create :create_wallet, :create_referral_credit, :create_payment_account
+    after_create :create_wallet, :create_referral_credit
     before_create :set_referral_code
 
     def full_name
@@ -53,37 +53,38 @@ module Spree
       "#{detail.first_name} #{detail.last_name}"
     end
 
-    def create_payment_account
-      lipisha_payment_method = Spree::PaymentMethod.find_by(name: 'Lipisha')
+    # def create_payment_account
+    #   debugger
+    #   lipisha_payment_method = Spree::PaymentMethod.find_by(name: 'Lipisha')
 
-      # payment_account_create_url = 'https://lipisha.com/payments/accounts/index.php/v2/api/create_payment_account' # live
+    #   # payment_account_create_url = 'https://lipisha.com/payments/accounts/index.php/v2/api/create_payment_account' # live
 
-      payment_account_create_url = 'http://developer.lipisha.com/index.php/v2/api/create_payment_account' # sandbox
+    #   payment_account_create_url = 'http://developer.lipisha.com/index.php/v2/api/create_payment_account' # sandbox
 
-      post = {}
-      post[:api_key] = '08d17fe398450430c20ed24963ad38cd'
-      post[:api_signature] = 'ZEIosXGjxTUpAByigXQ1EQZxu58ZyEZBl+nQNEvTPrnDLsVIOHgorxYcqQhts6hf4+W5MYl1tUOYyqrwH0oRXUWOWmnXhqMq8jYhtcVcuC22N1LVwVmKCesPoib7/Wvk7y6lEe3nuOWA2GMbhA9btSjFY9F0pPoA/DWR45OGE0A='
-      post[:api_version] = '1.3.0'
-      post[:api_type] = 'Callback'
-      post[:transaction_account_type] = 1
-      post[:transaction_account_name] = self.email.split('@').first
-      post[:transaction_account_manager] = lipisha_payment_method.preferences[:login]
+    #   post = {}
+    #   post[:api_key] = '08d17fe398450430c20ed24963ad38cd'
+    #   post[:api_signature] = 'ZEIosXGjxTUpAByigXQ1EQZxu58ZyEZBl+nQNEvTPrnDLsVIOHgorxYcqQhts6hf4+W5MYl1tUOYyqrwH0oRXUWOWmnXhqMq8jYhtcVcuC22N1LVwVmKCesPoib7/Wvk7y6lEe3nuOWA2GMbhA9btSjFY9F0pPoA/DWR45OGE0A='
+    #   post[:api_version] = '1.3.0'
+    #   post[:api_type] = 'Callback'
+    #   post[:transaction_account_type] = 1
+    #   post[:transaction_account_name] = self.email.split('@').first
+    #   post[:transaction_account_manager] = lipisha_payment_method.preferences[:login]
 
-      response = JSON.parse ActiveMerchant::Billing::LipishaGateway.new.create_lipisha_payment_account(self, post, payment_account_create_url)
+    #   # response = JSON.parse ActiveMerchant::Billing::LipishaGateway.new.create_lipisha_payment_account(self, post, payment_account_create_url)
 
-      status = response['status']['status']
-      if status == 'SUCCESS'
-        payment_acc_info = {
-            account_num: response['content']['transaction_account_number'],
-            account_name: response['content']['transaction_account_name'],
-            account_manager: response['content']['transaction_account_manager'],
-            user_id: self.id
-        }
+    #   status = response['status']['status']
+    #   if status == 'SUCCESS'
+    #     payment_acc_info = {
+    #         account_num: response['content']['transaction_account_number'],
+    #         account_name: response['content']['transaction_account_name'],
+    #         account_manager: response['content']['transaction_account_manager'],
+    #         user_id: self.id
+    #     }
 
-        Spree::LipishaPaymentAccount.create(payment_acc_info)
-      end
+    #     Spree::LipishaPaymentAccount.create(payment_acc_info)
+    #   end
 
-    end
+    # end
 
     def earn_referral_credit
       ref_cr = spree_referral_credit

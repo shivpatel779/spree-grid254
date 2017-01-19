@@ -10,6 +10,10 @@
 #Spree::Core::Engine.load_seed if defined?(Spree::Core)
 #Spree::Auth::Engine.load_seed if defined?(Spree::Auth)
 
+role = Spree::Role.create([{ name: 'admin' }, { name: 'user' }, {name: 'seller'}])
+user = Spree::User.create(email: 'admin@gmail.com',password:'12345678')
+roleuser = Spree::RoleUser.create(role_id: '1',user_id: '1')
+
 require 'csv'
 
 csv_path = Rails.public_path+'kenya_location_data.csv'
