@@ -1,8 +1,7 @@
-
-development:
+production:
   adapter: postgresql
   encoding: unicode
-  database: spree_development
+  database: spree_production
   username: postgres
   password: 12345678
   pool: 5

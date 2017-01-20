@@ -24,6 +24,11 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 
 gem 'pg'
 
+gem 'aws-sdk', '> 2.0'
+gem 'aws-sdk-v1'
+
+gem 'simple-spreadsheet'
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
@@ -84,3 +89,8 @@ gem 'spree_simple_sales', '3.1.0', git: 'https://github.com/shivpatel779/sales_e
 gem 'shareable'
 
 gem 'social-share-button'	
+
+
+group :development do
+  gem "capistrano"
+end

@@ -14,30 +14,32 @@ role = Spree::Role.create([{ name: 'admin' }, { name: 'user' }, {name: 'seller'}
 user = Spree::User.create(email: 'admin@gmail.com',password:'12345678')
 roleuser = Spree::RoleUser.create(role_id: '1',user_id: '1')
 
-require 'csv'
+country = Spree::Country.create(iso_name: "KENYA", iso: "KE", iso3: "KEN", name: "Kenya", numcode: 404)
 
-csv_path = Rails.public_path+'kenya_location_data.csv'
-country = Spree::Country.find_by_name('Kenya')
+# require 'csv'
 
-csv_text = File.read(csv_path)
-csv = CSV.parse(csv_text, :headers => true)
+# csv_path = Rails.public_path+'kenya_location_data.csv'
+# country = Spree::Country.find_by_name('Kenya')
 
-csv.each do |row|
+# csv_text = File.read(csv_path)
+# csv = CSV.parse(csv_text, :headers => true)
 
-  break if row[0] == ''
+# csv.each do |row|
 
-  p '==============='
-  county = row[0].titleize
-  consti = row[1].titleize
-  locat = row[2].titleize
+#   break if row[0] == ''
 
-  p 'Started Processing... '
-  p county
-  p consti
-  p locat
+#   p '==============='
+#   county = row[0].titleize
+#   consti = row[1].titleize
+#   locat = row[2].titleize
 
-  state = country.states.find_or_create_by(name: county, abbr: county)
-  constituency = state.constituencies.find_or_create_by(name: consti)
-  constituency.locations.find_or_create_by(name: locat)
+#   p 'Started Processing... '
+#   p county
+#   p consti
+#   p locat
 
-end
+#   state = country.states.find_or_create_by(name: county, abbr: county)
+#   constituency = state.constituencies.find_or_create_by(name: consti)
+#   constituency.locations.find_or_create_by(name: locat)
+
+# end

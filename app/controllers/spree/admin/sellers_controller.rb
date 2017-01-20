@@ -112,22 +112,27 @@ class Spree::Admin::SellersController < Spree::Admin::BaseController
   private
 
   def update_params
-    hash = {}
-    params[:seller][:email].map{|k,v| hash[v[:type]] = v[:phone] }
-    params[:seller][:email] = hash
+    if params[:seller].present?
+      hash = {}
+      params[:seller][:email].map{|k,v| hash[v[:type]] = v[:phone] }
+      params[:seller][:email] = hash
+    end
   end
 
   def update_params_phone
-    hash = {}
-    params[:seller][:phone_number].map{|k,v| hash[v[:type_phone]] = v[:phone1] }  
-    params[:seller][:phone_number] = hash
+    if params[:seller].present?
+      hash = {}
+      params[:seller][:phone_number].map{|k,v| hash[v[:type_phone]] = v[:phone1] }  
+      params[:seller][:phone_number] = hash
+    end
   end
 
   def update_params_contact_phone
-    hash = {}
-    params[:seller][:contact_person_phone].map{|k,v| hash[v[:type_contact]] = v[:phone2] }
-    params[:seller][:contact_person_phone] = hash
-
+    if params[:seller].present?
+      hash = {}
+      params[:seller][:contact_person_phone].map{|k,v| hash[v[:type_contact]] = v[:phone2] }
+      params[:seller][:contact_person_phone] = hash
+    end  
   end
   
   def seller_params

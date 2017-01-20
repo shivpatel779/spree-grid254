@@ -25,3 +25,35 @@ Spree::PermittedAttributes.user_attributes.push :phone, :personal_detail, :locat
 
 # register Lipisha payment gateway
 Rails.application.config.spree.payment_methods << Spree::Gateway::Lipisha
+
+
+if Rails.env.production? then
+	attachment_config = {
+
+	  s3_credentials: {
+	    access_key_id:     'AKIAJUW5A7KXJDZPK2VA',
+	    secret_access_key: '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',
+	    bucket:            'grid254'
+	  },
+
+	  storage:        :s3,
+	  s3_headers:     { "Cache-Control" => "max-age=31557600" },
+	  s3_protocol:    "https",
+	  bucket:         ENV['S3_BUCKET_NAME'],
+
+	  styles: {
+	      mini:     "48x48>",
+	      small:    "100x100>",
+	      product:  "240x240>",
+	      large:    "600x600>"
+	  },
+
+	  path:           "/spree-grid254/products/:id/:style/:basename.:extension",
+	  default_url:    "/:class/:id/:style/:basename.:extension"
+	}
+
+	attachment_config.each do |key, value|
+	  Spree::Image.attachment_definitions[:attachment][key.to_sym] = value
+	end
+end
+
