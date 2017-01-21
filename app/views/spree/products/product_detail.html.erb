@@ -99,7 +99,7 @@
                                 <div class="down-arrow"></div>
                               </div>
                             <% if store.store_location_id.present? %>  
-                              <%= store.store_location.address1 %>
+                              <%= store.store_location.address1[0,40] %>
                               <% a = [] %> 
                               <% a << store.store_location.address1 %>
                               <% a << store.store_location.latitude %>
@@ -110,7 +110,7 @@
                                   <i class="fa fa-times" aria-hidden="true"></i>
                                 </div>
                                 <div class="orange-number">
-                                  6
+                                  <%= index+1 %>
                                   <div class="down-arrow"></div>
                                 </div>
                                 <p class="seller-branch-details"><%=store.store_location.try(:name)%> seller 1 </p>
@@ -127,13 +127,13 @@
                                 <h1>
                               </li>
                             <% else %>
-                              <%= store.message[0,10] %>...
+                              <%= store.message[0,40] %>
                               <li class="seller-item-selected" id="select_<%= store.id %>" data-id="<%= store.id %>" style="display: none;">
                                 <div class="close-btn">
                                   <i class="fa fa-times" aria-hidden="true"></i>
                                 </div>
                                 <div class="orange-number">
-                                  6
+                                  <%= index+1 %>
                                   <div class="down-arrow"></div>
                                 </div>
                                 <p class="seller-branch-details"><%=store.message%> seller 1 </p>

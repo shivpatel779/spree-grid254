@@ -43,7 +43,7 @@
   <div class="thumb-box3" style="padding-top:15px;">
     <div class="container">   
     <h2 style="display: inline;">Todays trending deals</h2>
-    <%= link_to "View All",product_offer_list_product_path(:id=>"Todays trending deals"), :class=>"view-button" %>
+    <%= link_to "view all",product_offer_list_product_path(:id=>"Todays trending deals"), :class=>"view-button" %>
     <div class="row">
       <% @treding_deal_products.first(4).each do |product| %>
         <% product.seller_id.split(",").delete_if(&:blank?).each do |seller| %>
@@ -96,7 +96,7 @@
                     <s style="color: #848484;"><span class="money" data-currency-usd="$160.00">Before <%=number_to_currency(product.price,precision: 0,unit:"")  %></span></s>
                   </p>
                   <div class="clearfix"></div>
-                  <div class="product-description">
+                  <div class="product-description off">
                     <p><%= product.name %>  (<%=product.total_discount.to_i%>% off )</p>
                   </div>
                 </div>
@@ -107,7 +107,7 @@
       <% end %>       
       <div class="clearfix"></div>  
       <h2 style="display: inline;">Deals ending soon </h2>
-      <%= link_to "View All",product_offer_list_product_path(:id=>"Deals ending soon") %>
+      <%= link_to "view all",product_offer_list_product_path(:id=>"Deals ending soon") %>
       <div class="clearfix"></div>
       <%= render 'spree/shared/deal_ending_soon' %>
       </div>
