@@ -50,7 +50,7 @@ module Spree
 
     def full_name
       detail = personal_detail
-      "#{detail.first_name} #{detail.last_name}"
+      "#{detail.try(:first_name)} #{detail.try(:last_name)}"
     end
 
     # def create_payment_account

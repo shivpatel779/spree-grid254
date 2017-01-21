@@ -449,9 +449,9 @@
     <div class="app-figure" id="zoom-fig">
         
         <a id="Zoom-1" class="MagicZoom" title="Show your product in stunning detail with Magic Zoom Plus."
-            href="<%= @product.images.first.attachment.url %>"
+            href="<%= @product.try(:images).first.try(:attachment).try(:url) %>"
         >
-            <img src="<%= @product.images.first.attachment.url%>"/>
+            <img src="<%= @product.try(:images).first.try(:attachment).try(:url)%>"/>
         </a>
 
         <div class="selector-box">
