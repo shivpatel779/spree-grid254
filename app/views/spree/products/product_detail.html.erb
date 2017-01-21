@@ -166,7 +166,9 @@
               <img src="/assets/facebook.png" class="share" aria-hidden="true" data-name="<%= @product.try(:name)%>" data-desc="<%= spree_current_user.try(:full_name) %> would like you view this product <%= @product.name%> that is on offer and is currently listed on Grid254">
 
              </button>
-              <button><%= social_share_button1_tag('', {url: product_share_url})  %></button>
+              <button>
+              <%= social_share_button1_tag('', {url: product_share_url}) %>
+              </button>
 
               <!-- <button class="addthis_inline_share_toolbox_8rrh" data-name="<%= @product.try(:name)%>" data-desc="<%= spree_current_user.try(:full_name) %> would like you view this product <%= @product.name%> that is on offer and is currently listed on Grid254 data-url="<%= root_url%>"></button> -->
             </div>
@@ -791,6 +793,11 @@ html {
   height: 28px;
   border-radius: 20px;
   margin-left: -5px;
+}
+.tele-btn {
+  position: absolute;
+  top: 7px;
+  left: 146px;
 }
 </style>
 
