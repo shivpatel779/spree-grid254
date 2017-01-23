@@ -89,6 +89,7 @@
                       <ul>
                         <% if @store_locations.present? %>
                           <% @temp = [] %>
+                          <% @store_location_name = [] %>
                         <% else %>
                           <%@temp = [["Shree Ji Consultancy City Center Gwalior MP, Gwalior, Madhya Pradesh, India", 26.206038, 78.1900252]] %>
                         <% end %>  
@@ -102,11 +103,16 @@
                               </div>
                             <% if store.store_location_id.present? %>  
                               <%= store.store_location.address1[0,40] %>
+                              <%  %>
                               <% a = [] %> 
+                              <% store_name = [] %>
                               <% a << store.store_location.address1 %>
                               <% a << store.store_location.latitude %>
                               <% a << store.store_location.longitude %>
                               <% @temp << a %>
+                              <%  %>
+                              <% store_name << store.store_location.name %>
+                              <% @store_location_name << store_name %>
                               <li class="seller-item-selected" id="select_<%= store.id %>" data-id="<%= store.id %>" style="display: none;">
                                 <div class="close-btn">
                                   <i class="fa fa-times" aria-hidden="true"></i>
@@ -287,7 +293,7 @@ jQuery(function($) {
     var markers = <%= raw @temp%>
                         
     // Info Window Content
-    var infoWindowContent = <%= raw @temp %> 
+    var infoWindowContent = <%= raw @store_location_name %> 
         
     // Display multiple markers on a map
     var infoWindow = new google.maps.InfoWindow(), marker, i;

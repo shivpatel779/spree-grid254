@@ -79,7 +79,21 @@
                               <% else %>
                                 <input type="checkbox" id="discount_<%= index %>">
                               <% end %>
-                              <%= (discount == '50..100' ? '50 or more' : discount) %>%
+                              <% case discount %>
+                                <% when "0..10" %>
+                                  <%= (discount == '50..100' ? '50 or more' : '0-10') %>%
+                                <% when '10..20' %>  
+                                  <%= (discount == '50..100' ? '50 or more' : '10-20') %>%
+                                <% when '20..30' %>  
+                                  <%= (discount == '50..100' ? '50 or more' : '20-30') %>%
+                                <% when '30..40' %>  
+                                  <%= (discount == '50..100' ? '50 or more' : '30-40') %>%
+                                <% when '40..50' %>  
+                                  <%= (discount == '50..100' ? '50 or more' : '40-50') %>%
+                                <% when '50..100' %>  
+                                  <%= (discount == '50..100' ? '50 or more' : '50 or more') %>%  
+                                <% else %>
+                              <% end %>
                             </label>
                           </a>
                         </div>
