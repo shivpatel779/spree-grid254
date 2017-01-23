@@ -95,6 +95,11 @@ Spree::ProductsController.class_eval do
   end
 
   def filter_range
-    @product_offer_list =@product_offer_list.select{|p| p if (p.price.to_i > params[:min].to_i && p.price.to_i < params[:max].to_i) } unless params[:max].nil?
+   # @product_offer_list =@product_offer_list.select{|p| p if (p.price.to_i > params[:min].to_i && p.price.to_i < params[:max].to_i) } unless params[:max].nil?
+   if ((params[:min].to_i > 0) && (params[:max].to_i > 0) && (params[:min].present?) && (params[:max].present?))
+      @product_offer_list = @product_offer_list.collect{|p| p.variants}.flatten.select{|p| p if (p.sale_price.to_i > params[:min].to_i && p.sale_price.to_i < params[:max].to_i) } unless params[:max].nil?
+    else
+      @product_offer_list
+    end
   end
 end

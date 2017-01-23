@@ -1,6 +1,7 @@
 Spree::Product.class_eval do
   has_many :favorites, class_name: 'Spree::Favorite', foreign_key: :product_id
   has_many :stock_movements
+  has_many :variants
   def total_favorites
     favorites.count.to_s
   end

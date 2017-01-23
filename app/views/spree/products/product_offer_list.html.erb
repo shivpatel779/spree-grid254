@@ -48,25 +48,25 @@
                   <div class="deal-list-li">
                     <li class="deal-list-title">Price Range</li>
                     <li class="item location-item">
-                        <div class="example range-field" >              
-                          <%= form_tag '#', method: :get do %>
-                          <div class="col-md-3 clear-box">
-                            <%= text_field_tag 'min'  %>
-                          </div>
-                          <div class="col-md-2">to</div>
-                          <div class="col-md-3 clear-box">
-                            <%= text_field_tag 'max'  %>
-                          </div>
-                          <div class="col-md-4">
-                            <%= submit_tag 'Go', :id => 'go' %>
-                          </div>
-
-                          <% end %>
-                          <br>
-                          <br>
+                      <div class="example range-field" >              
+                        <%= form_tag '#', method: :get do %>
+                        <div class="col-md-3 clear-box">
+                          <%= text_field_tag 'min',params[:min]%>
                         </div>
+                        <div class="col-md-2">to</div>
+                        <div class="col-md-3 clear-box">
+                          <%= text_field_tag 'max',params[:max]%>
+                        </div>
+                        <div class="col-md-4">
+                          <%= submit_tag 'Go', :id => 'go' %>
+                        </div>
+
+                        <% end %>
+                        <br>
+                        <br>
+                      </div>
                     </li>
-                </div>
+                   </div>
                   <div class="deal-list-li">
                     <li class="deal-list-title">Discount Range</li>
                     <% ['0..10', '10..20', '20..30', '30..40', '40..50', '50..100'].each_with_index do |discount,index| %>
@@ -133,6 +133,9 @@
         </div>
         <h3><%= params[:id] %></h3>
         <div class="row">
+        <% if ((params[:min].to_i > 0) && (params[:max].to_i > 0) && (params[:min].present?) && (params[:max].present?)) %>
+          <% @product_offer_list = @product_offer_list.collect{|id| id.product} %>
+        <% end %>
         <% if  @product_offer_list.present? %>
           <% @product_offer_list.each do |product| %>
             <% master_price =  product.price.to_f  %>
