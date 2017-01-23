@@ -73,9 +73,11 @@
                     <p style="line-height: 14px;">
                       Runs from: <%= @product.available_on.strftime("%d-%m-%Y")%>
                     </p>
-                    <p style="line-height: 14px;">
-                      Ends on: <%#= @product.discontinue_on.strftime("%d-%m-%Y")%>
-                    </p>
+                    <% if @product.discontinue_on.present? %>
+                      <p style="line-height: 14px;">
+                        Ends on: <%= @product.discontinue_on.strftime("%d-%m-%Y")%>
+                      </p>
+                    <% end %>
                   </div>
                 </div>
               </div>
