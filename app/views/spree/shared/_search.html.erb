@@ -10,7 +10,7 @@
 
 
 <script type="text/javascript">
-  $(document).on('change', '#product_type', function(){
+  $(document).on('click', '#product_type', function(){
     $.ajax({
       type: 'get',
       data: { url: "<%= raw product_offer_list_product_path('All')  %>", data: { browse: $(this).val() } },
