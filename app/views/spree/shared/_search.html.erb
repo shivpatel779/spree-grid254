@@ -9,6 +9,20 @@
 </li>
 
 
+<script type="text/javascript">
+  $(document).on('change', '#product_type', function(){
+    $.ajax({
+      type: 'get',
+      data: { url: "<%= raw product_offer_list_product_path('All')  %>", data: { browse: $(this).val() } },
+      url: "<%= get_filter_query_products_path %>",
+      success: function(response){
+        window.location = response.data
+      }
+    })
+  });
+</script>
+
+
 <style type="text/css">
 .select_combobox{
     border: none;
