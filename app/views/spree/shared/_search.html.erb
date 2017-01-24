@@ -1,7 +1,7 @@
 <li>
   <%= form_tag product_offer_list_product_path(:id=>"search"), :method => :get, class: "navbar-form" do %>
 
-    <span><%= select_tag :product_type, options_for_select(Spree::Taxon.all.collect{ |u| [u.name, u.name]}.unshift(['Browse',nil]), selected: params[:product_type]),{:class =>"select_combobox"} %></span>
+    <span><%= select_tag :browse, options_for_select(Spree::Taxon.all.collect{ |u| [u.name, u.name]}, selected: params[:browse]),{ :onChange => "update_versions_div(this.value)", :include_blank=>'browse', :class =>"select_combobox"} %></span>
      
     <span><%= search_field_tag :keywords, params[:keywords], :placeholder => Spree.t(:search), class: "form-control search-input" %></span> 
     <span class="search-link"><%= submit_tag "", :class => "search-icon-box" %><i class="fa fa-search"></i></span>
@@ -10,16 +10,16 @@
 
 
 <script type="text/javascript">
-  $(document).on('click', '#product_type', function(){
+  function update_versions_div(product_category) { 
     $.ajax({
       type: 'get',
-      data: { url: "<%= raw product_offer_list_product_path('All')  %>", data: { browse: $(this).val() } },
+      data: { url: "<%= raw product_offer_list_product_url('All') %>", data: { browse: product_category} },
       url: "<%= get_filter_query_products_path %>",
       success: function(response){
         window.location = response.data
       }
     })
-  });
+  }
 </script>
 
 

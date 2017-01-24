@@ -41,11 +41,12 @@ Spree::ProductsController.class_eval do
      @product_offer_list = Spree::Product.where.not(total_discount:nil).order( 'total_discount desc')
     
     elsif params[:id].eql?("search")
-      products = Spree::Taxon.find_by_name(params[:product_type]).products if params[:product_type].present?
-      products = Spree::Product.where.not(seller_id:"") unless params[:product_type].present?
+      products = Spree::Taxon.find_by_name(params[:browse]).products if params[:browse].present?
+      products = Spree::Product.where.not(seller_id:"") unless params[:browse].present?
       @product_offer_list = products.where("LOWER(name) LIKE ?", ("%"+params[:keywords].downcase+"%"))
-      @product_offer_list = Spree::Product.where.not(seller_id:"") if params[:product_type].present? && params[:keywords].present?
+      # @product_offer_list = Spree::Product.where.not(seller_id:"") if params[:browse].present? && params[:keywords].present?
     elsif params[:id].eql?("All")
+
      @product_offer_list = Spree::Taxon.find_by_name(params[:browse]).products if params[:browse].present?
     else
       treding_deal_products = Spree::Product.where.not(total_discount:nil).order( 'total_discount desc')
