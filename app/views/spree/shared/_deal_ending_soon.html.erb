@@ -45,7 +45,10 @@
             <div class="caption" style="padding:0px;">
               <div class="clearfix"></div>
               <p class="product-price">
-                <span class="money" data-currency-usd="$150.00" style="color:green;font: 500 14px/1.75">Now <%=number_to_currency(@sale_price,precision: 0,unit:"") %>/= ( Plus free <%=product.giveaway_name %> worth <%=number_to_currency(product.giveaway_value,precision: 0,unit:"") %>/=)</span>
+                <span class="money" data-currency-usd="$150.00" style="color:green;font: 500 14px/1.75">Now <%=number_to_currency(@sale_price,precision: 0,unit:"") %>/=
+                  <% if product.giveaway_value > 0 %>  
+                    ( Plus free <%=product.giveaway_name %> worth <%=number_to_currency(product.giveaway_value,precision: 0,unit:"") %>/=)
+                  <% end %></span>
                 <span>|</span>
                 <s style="color: #848484;"><span class="money" data-currency-usd="$160.00">Before <%=number_to_currency(product.price,precision: 0,unit:"")  %></span></s>
               </p>

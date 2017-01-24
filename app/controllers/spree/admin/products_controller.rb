@@ -19,6 +19,7 @@ module Spree
       end
 
       def update
+        
         if params[:product][:taxon_ids].present?
           params[:product][:taxon_ids] = params[:product][:taxon_ids].split(',')
         end
@@ -31,10 +32,9 @@ module Spree
         end
 
         invoke_callbacks(:update, :before)
-
         if params[:product].key?(:variant)
           variant = Spree::Variant.find(params[:product][:variant][:id])
-          variant.update_attributes(sale_price: params[:product][:variant][:sale_price]) if variant
+          variant.update_attributes(sale_price: params[:product][:variant][:sale_price].gsub(",", "")) if variant
           params[:product].delete(:variant)
         end
 

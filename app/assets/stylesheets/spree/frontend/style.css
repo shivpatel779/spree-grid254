@@ -3158,6 +3158,10 @@ html {
 .item .checkbox {
     margin-top: 0px;
 }
- .off{
+.off{
     text-align: center;
-  }
+}
+
+.new-rec .thumb-pad2{
+    min-height: 300px;
+}
