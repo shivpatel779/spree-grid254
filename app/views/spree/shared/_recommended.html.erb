@@ -1,4 +1,4 @@
-<% @top_ending_deals_products.first(4).each do |product| %>
+<% @recommended.first(4).each do |product| %>
   <% product.seller_id.split(",").delete_if(&:blank?).each do |seller| %>
     <% calculation_price product %>
     <div class="col-lg-3 col-md-6 col-sm-6 new-rec ttd-div">
@@ -62,4 +62,5 @@
     </div>
   <% end %>
 <% end %> 
+
 <div class="clearfix"></div>

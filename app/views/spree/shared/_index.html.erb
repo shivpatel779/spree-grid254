@@ -114,6 +114,10 @@
       <%= link_to "view all",product_offer_list_product_path(:id=>"Deals ending soon") %>
       <div class="clearfix"></div>
       <%= render 'spree/shared/deal_ending_soon' %>
+      <h2 style="display: inline;">Recommended for you</h2>
+      <%= link_to "view all",product_offer_list_product_path(:id=>"recommended") %>
+      <div class="clearfix"></div>
+      <%= render 'spree/shared/recommended' %>
       </div>
     </div>
   </div>
