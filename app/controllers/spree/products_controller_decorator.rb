@@ -70,9 +70,6 @@ Spree::ProductsController.class_eval do
 
     @product_offer_list = @product_offer_list.where(total_discount:@arr) unless params[:discount].nil?
     filter_date
-    # @product_offer_list = @product_offer_list.where.not(total_discount:nil) if params[:deal_type].present?
-
-    # @product_offer_list = @product_offer_list.where.not(total_discount:nil) if params[:deal_type].present?
     filter_range
   end
 
@@ -92,7 +89,6 @@ Spree::ProductsController.class_eval do
     @product_offer_list = @product_offer_list.sort_by(&:created_at).reverse if params[:sort_by].eql?("newest")
     @product_offer_list = @product_offer_list.sort_by(&:created_at) if params[:sort_by].eql?("oldest")
     @product_offer_list = @product_offer_list.sort_by(&:name) if params[:sort_by].eql?("atoz")
-    # @product_offer_list = @product_offer_list.sort_by(&:price) if params[:sort_by].eql?("price")
     @product_offer_list = @product_offer_list.collect{|p| p.variants}.flatten.sort_by {|u| u.sale_price || 0}.collect{|pp| pp.product} if params[:sort_by].eql?("price")
   end
 
