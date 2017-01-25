@@ -37,6 +37,7 @@ Spree::ProductsController.class_eval do
   end
 
   def product_offer_list
+    
     if params[:id].eql?("Todays trending deals")
      @product_offer_list = Spree::Product.where.not(total_discount:nil).order( 'total_discount desc')
     
@@ -52,10 +53,11 @@ Spree::ProductsController.class_eval do
       end
 
     elsif params[:id].eql?("search")
+      
       products = Spree::Taxon.find_by_name(params[:browse]).products if params[:browse].present?
       products = Spree::Product.where.not(seller_id:"") unless params[:browse].present?
-      @product_offer_list = products.where("LOWER(name) LIKE ?", ("%"+params[:keywords].downcase+"%"))
-      # @product_offer_list = Spree::Product.where.not(seller_id:"") if params[:browse].present? && params[:keywords].present?
+      @product_offer_list = products.where("LOWER(name) LIKE ?", ("%"+params[:keywords].downcase+"%")) if params[:keywords].present?
+      @product_offer_list = Spree::Product.where.not(seller_id:"") unless params[:browse].present? && params[:keywords].present?
     elsif params[:id].eql?("All")
       @product_offer_list = Spree::Taxon.find_by_name(params[:browse]).products if params[:browse].present?
     else
@@ -78,7 +80,9 @@ Spree::ProductsController.class_eval do
     new_query_arr = Hash[*URI.decode_www_form(uri.query || '').flatten].merge(params[:data]).to_a
     uri.query = URI.encode_www_form(new_query_arr)
     respond_to do |format|
-      format.json { render json: { data: (uri.path + '?' + uri.query) } }
+      if params[:data]["browse"].present?
+        format.json { render json: { data: (uri.path + '?' + uri.query) } }
+      end
     end
   end
 
@@ -107,6 +111,7 @@ Spree::ProductsController.class_eval do
   end
 
   def filter_range
+
    # @product_offer_list =@product_offer_list.select{|p| p if (p.price.to_i > params[:min].to_i && p.price.to_i < params[:max].to_i) } unless params[:max].nil?
    if ((params[:min].to_i > 0) && (params[:max].to_i > 0) && (params[:min].present?) && (params[:max].present?))
       @product_offer_list = @product_offer_list.collect{|p| p.variants}.flatten.select{|p| p if (p.sale_price.to_i > params[:min].to_i && p.sale_price.to_i < params[:max].to_i) } unless params[:max].nil?
