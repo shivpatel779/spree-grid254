@@ -37,9 +37,8 @@ Spree::ProductsController.class_eval do
   end
 
   def product_offer_list
-    
     if params[:id].eql?("Todays trending deals")
-     @product_offer_list = Spree::Product.where.not(total_discount:nil).order( 'total_discount desc')
+      @product_offer_list = Spree::Product.where.not(total_discount:nil).order( 'total_discount desc') 
     
     elsif params[:id].eql?("recommended")
       if spree_current_user
@@ -53,14 +52,13 @@ Spree::ProductsController.class_eval do
       end
 
     elsif params[:id].eql?("search")
-      
       products = Spree::Taxon.find_by_name(params[:browse]).products if params[:browse].present?
       products = Spree::Product.where.not(seller_id:"") unless params[:browse].present?
       @product_offer_list = products.where("LOWER(name) LIKE ?", ("%"+params[:keywords].downcase+"%")) if params[:keywords].present?
       @product_offer_list = Spree::Product.where.not(seller_id:"") unless params[:browse].present? && params[:keywords].present?
+    
     elsif params[:id].eql?("All")
       @product_offer_list = Spree::Taxon.find_by_name(params[:browse]).products if params[:browse].present?
-    
     else
       treding_deal_products = Spree::Product.where.not(total_discount:nil).order( 'total_discount desc')
       @product_offer_list = treding_deal_products.where(discontinue_on: Date.today.strftime("%Y-%m-%d")+" 00:00:00"..Date.today.days_ago(-5).strftime("%Y-%m-%d")+" 00:00:00")   
@@ -68,16 +66,14 @@ Spree::ProductsController.class_eval do
 
     filter_category
     update_array
-    
-    @product_offer_list = @product_offer_list.where(total_discount:@arr) unless params[:discount].nil?
-    filter_date
-    @product_offer_list = @product_offer_list.where.not(total_discount:nil) if params[:deal_type].present?
-
-    @product_offer_list = @product_offer_list.where.not(total_discount:nil) if params[:deal_type].present?
-    filter_range
-
     @product_offer_list = @product_offer_list.where.not(seller_id:"").where.not(giveaway_value:0) if params[:deal_type].eql?("giveaways")
 
+    @product_offer_list = @product_offer_list.where(total_discount:@arr) unless params[:discount].nil?
+    filter_date
+    # @product_offer_list = @product_offer_list.where.not(total_discount:nil) if params[:deal_type].present?
+
+    # @product_offer_list = @product_offer_list.where.not(total_discount:nil) if params[:deal_type].present?
+    filter_range
   end
 
   def get_filter_query
@@ -96,7 +92,8 @@ Spree::ProductsController.class_eval do
     @product_offer_list = @product_offer_list.sort_by(&:created_at).reverse if params[:sort_by].eql?("newest")
     @product_offer_list = @product_offer_list.sort_by(&:created_at) if params[:sort_by].eql?("oldest")
     @product_offer_list = @product_offer_list.sort_by(&:name) if params[:sort_by].eql?("atoz")
-    @product_offer_list = @product_offer_list.sort_by(&:price) if params[:sort_by].eql?("price")
+    # @product_offer_list = @product_offer_list.sort_by(&:price) if params[:sort_by].eql?("price")
+    @product_offer_list = @product_offer_list.collect{|p| p.variants}.flatten.sort_by {|u| u.sale_price || 0}.collect{|pp| pp.product} if params[:sort_by].eql?("price")
   end
 
   def update_array
@@ -115,8 +112,6 @@ Spree::ProductsController.class_eval do
   end
 
   def filter_range
-    
-   # @product_offer_list =@product_offer_list.select{|p| p if (p.price.to_i > params[:min].to_i && p.price.to_i < params[:max].to_i) } unless params[:max].nil?
    if ((params[:min].to_i > 0) && (params[:max].to_i > 0) && (params[:min].present?) && (params[:max].present?))
       @product_offer_list = @product_offer_list.collect{|p| p.variants}.flatten.select{|p| p if (p.sale_price.to_i > params[:min].to_i && p.sale_price.to_i < params[:max].to_i) } unless params[:max].nil?
     else
