@@ -109,13 +109,16 @@ module ApplicationHelper
         end
 
       else
-
         if name.eql?('telegram')
-           if spree_current_user.present?
-        		html<< link_to(image_tag('1477523495_Telegram.png', height: '18', width: '18', class:"tele-btn"), ("https://telegram.me/share/url?url=#{ref_text} #{opts[:url]}").html_safe)
-        	else
-        		html<< link_to(image_tag('1477523495_Telegram.png', height: '18', width: '18', class:"tele-btn user_validate"))			
-        	end
+        	if touch_device?
+	          if spree_current_user.present?
+	        		html<< link_to(image_tag('1477523495_Telegram.png', height: '18', width: '18', class:"tele-btn"), ("https://telegram.me/share/url?url=#{ref_text} #{opts[:url]}").html_safe)
+	        	else
+	        		html<< link_to(image_tag('1477523495_Telegram.png', height: '18', width: '18', class:"tele-btn user_validate"))			
+	        	end
+	        else
+	        	html<< link_to(image_tag('1477523495_Telegram.png', height: '18', width: '18', class:"tele-btn"), ("https://telegram.me/share/url?url=#{ref_text} #{opts[:url]}").html_safe)
+	        end
         else
 
           # if name.eql?('email')
@@ -137,11 +140,8 @@ module ApplicationHelper
           #                              :onclick    => "return SocialShareButton.share(this)",
           #                              :title      => h(link_title) }.merge(extra_data).merge(special_data).merge('data-quote' => ref_text)).html_safe
           # end
-
         end
-
       end
-
     end
     html << "</div>"
     raw html.join("\n")
