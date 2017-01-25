@@ -98,16 +98,24 @@ module ApplicationHelper
 
 
         if touch_device?
-          html<< link_to(image_tag('1477405766_whatsapp.png', height: '18', width: '18'), ("whatsapp://send?text=#{ref_text} #{opts[:url]}").html_safe)
+        	if spree_current_user.present?
+          		html<< link_to(image_tag('1477405766_whatsapp.png', height: '18', width: '18'), ("whatsapp://send?text=#{ref_text} #{opts[:url]}").html_safe)
+          	else
+          		html<< link_to(image_tag('1477405766_whatsapp.png', height: '18', width: '18',class: "user_validate"))
+          	end
         else
           html << link_to(image_tag('1477405766_whatsapp.png', height: '18', width: '18'), 'https://web.whatsapp.com', target: '_false')
+          # html<< link_to(image_tag('1477405766_whatsapp.png', height: '18', width: '18',class:"user_validate"))
         end
 
       else
 
         if name.eql?('telegram')
-           # html << link_to(image_tag('1477523495_Telegram.png', height: '18', width: '18'), "#{ref_text} https://telegram.me/share/url?url=#{opts[:url]}", target: '_false')
-        	html<< link_to(image_tag('1477523495_Telegram.png', height: '18', width: '18', class:"tele-btn"), ("https://telegram.me/share/url?url=#{ref_text} #{opts[:url]}").html_safe)
+           if spree_current_user.present?
+        		html<< link_to(image_tag('1477523495_Telegram.png', height: '18', width: '18', class:"tele-btn"), ("https://telegram.me/share/url?url=#{ref_text} #{opts[:url]}").html_safe)
+        	else
+        		html<< link_to(image_tag('1477523495_Telegram.png', height: '18', width: '18', class:"tele-btn user_validate"))			
+        	end
         else
 
           # if name.eql?('email')
