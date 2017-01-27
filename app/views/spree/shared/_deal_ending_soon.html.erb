@@ -45,7 +45,7 @@
             <div class="clearfix"></div>
             <p class="product-price">
               <span class="money" data-currency-usd="$150.00" style="color:green;font: 500 14px/1.75">Now <%=number_to_currency(@sale_price,precision: 0,unit:"")%>/=
-                <% if product.giveaway_value > 0 %>  
+                <% if !product.giveaway_value.blank? && (product.giveaway_value > 0) %>   
                   ( Plus free <%=product.giveaway_name %> worth <%=number_to_currency(product.giveaway_value,precision: 0,unit:"") %>/=)
                 <% end %>
                   </span>
